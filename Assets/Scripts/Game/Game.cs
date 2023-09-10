@@ -8,8 +8,8 @@ public class Game
     public int _turnCount = 1;
     public PlayerData[] _players;
 
-    public Map map;
-    public Stack stack;
+    // public Map map;
+    // public Stack stack;
 
     public int CurrentPlayer
     {
