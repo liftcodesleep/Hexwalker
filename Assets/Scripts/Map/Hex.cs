@@ -14,13 +14,13 @@ using System.Linq;
 public class Hex
 {
     private readonly string name = "Hex.Name";
-    private HashSet<Unit> units;
+    // private HashSet<Unit> units;
     private int seed;
     public readonly int column;
     public readonly int row;
     public readonly int sum;
     //TODO determine job of elevation
-    public readonly int elevation;
+    public int elevation;
 
     public Hex(int q, int r)
     {
@@ -28,16 +28,17 @@ public class Hex
         this.row = r;
         this.sum = -(q + r);
         this.seed = CalcuateStyle();
-        this.Units = new HashSet<Unit>();
+       // this.Units = new HashSet<Unit>();
     }
 
     public int CalcuateStyle()
     {
-        Random rand = new Random();
+        System.Random rand = new System.Random();
         float smoothness = 1;
         float scale = 10;
-        //int LocalSeed = (int)(Mathf.PerlinNoise(((Column * smoothness) + HexDimensions.GetOffset() + (int)(Row / 2)) / scale, ((Row * smoothness) + HexDimensions.GetOffset()) / scale) * 100);
-        elevation = (int)(Mathf.PerlinNoise(((Column * smoothness) + HexDimensions.GetOffset() + (int)(Row / 2)) / scale, ((Row * smoothness) + HexDimensions.GetOffset()) / scale) * 100);
+        //int LocalSeed = (int)(Mathf.PerlinNoise(((column * smoothness) + HexDimensions.GetOffset() + (int)(row / 2)) / scale, ((row * smoothness) + HexDimensions.GetOffset()) / scale) * 100);
+        
+        //elevation = (int)(Mathf.PerlinNoise(((column * smoothness) + HexDimensions.GetOffset() + (int)(row / 2)) / scale, ((row * smoothness) + HexDimensions.GetOffset()) / scale) * 100);
 
         if (elevation > 75)
         {
@@ -87,44 +88,21 @@ public class Hex
         }
     }
     
-    public void AddUnit(Unit unit)
-    {
-        Units.Add(unit);
-    }
+//    public void AddUnit(Unit unit)
+//    {
+//        Units.Add(unit);
+//    }
+//
+//    public void RemoveUnit(Unit unit)
+//    {
+//        if (Units.Count != 0)
+//        {
+//            Units.Remove(unit);
+//        }
+//    }
 
-    public void RemoveUnit(Unit unit)
-    {
-        if (Units.Count != 0)
-        {
-            Units.Remove(unit);
-        }
-    }
-
-    public Unit[] GetUnitsArray()
-    {
-        return Units.ToArray();
-    }
-
-    public float DistanceFrom(Hex b)
-    {
-
-        int dQ = Mathf.Abs(this.Column - b.Column);
-
-        if (dQ > HexMap.NumColumns / 2)
-        {
-            dQ = HexMap.NumColumns - dQ;
-        }
-
-        int dS = Mathf.Abs(this.Sum - b.Sum);
-        if (dS > HexMap.NumColumns / 2)
-        {
-            dS = Mathf.Abs(dS - HexMap.NumColumns);
-        }
-
-        return Mathf.Max(
-            dQ,
-            Mathf.Abs(this.Row - b.Row),
-            dS
-            );
-    }
+//    public Unit[] GetUnitsArray()
+//    {
+//        return Units.ToArray();
+//    }
 }

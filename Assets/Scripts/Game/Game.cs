@@ -6,14 +6,10 @@ public class Game
 {
     private int _currentPlayer;
     public int _turnCount = 1;
-    public PlayerData[] _players;
+    public Player[] _players;
 
     // public Map map;
     // public Stack stack;
 
-    public int CurrentPlayer
-    {
-        get { return current_player; }
-        set { current_player = value; }
-    }
+    public int CurrentPlayer {get; set;}
 }
