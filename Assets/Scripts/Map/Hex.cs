@@ -13,7 +13,7 @@ using System.Linq;
 
 public class Hex
 {
-    private readonly string name = "Hex.Name";
+    //private readonly string name = "Hex.Name";
     // private HashSet<Unit> units;
     private int seed;
     public readonly int column;
@@ -34,8 +34,8 @@ public class Hex
     public int CalcuateStyle()
     {
         System.Random rand = new System.Random();
-        float smoothness = 1;
-        float scale = 10;
+        //float smoothness = 1;
+        //float scale = 10;
         //int LocalSeed = (int)(Mathf.PerlinNoise(((column * smoothness) + HexDimensions.GetOffset() + (int)(row / 2)) / scale, ((row * smoothness) + HexDimensions.GetOffset()) / scale) * 100);
         
         //elevation = (int)(Mathf.PerlinNoise(((column * smoothness) + HexDimensions.GetOffset() + (int)(row / 2)) / scale, ((row * smoothness) + HexDimensions.GetOffset()) / scale) * 100);
