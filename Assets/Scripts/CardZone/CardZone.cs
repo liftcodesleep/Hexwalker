@@ -8,7 +8,6 @@ public class CardZone
     static Random _random = new Random();
     public int Capacity{ get; set; }
     public List<Card> Cards;
-    public Player owner { get; set; }
 
     public CardZone()
     {
