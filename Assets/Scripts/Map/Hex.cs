@@ -13,96 +13,102 @@ using System.Linq;
 
 public class Hex
 {
-    private readonly string name = "Hex.Name";
+
+    public string Name { get; set; }
+    public readonly Map.HexType type;
     // private HashSet<Unit> units;
-    private int seed;
+    
     public readonly int column;
     public readonly int row;
     public readonly int sum;
+
     //TODO determine job of elevation
     public int elevation;
+
+    
 
     public Hex(int q, int r)
     {
         this.column = q;
         this.row = r;
         this.sum = -(q + r);
-        this.seed = CalcuateStyle();
-       // this.Units = new HashSet<Unit>();
+
+        this.type = CalcuateType();
+
+        //TODO:
+        // this.Units = new HashSet<Unit>();
     }
 
-    public int CalcuateStyle()
+    private Map.HexType CalcuateType()
     {
-        System.Random rand = new System.Random();
-        float smoothness = 1;
-        float scale = 10;
-        //int LocalSeed = (int)(Mathf.PerlinNoise(((column * smoothness) + HexDimensions.GetOffset() + (int)(row / 2)) / scale, ((row * smoothness) + HexDimensions.GetOffset()) / scale) * 100);
+
+        float x;
+        float scale;
+        float y;
+        float noiseValue;
+
+        scale = .55f;
+        x = (float)column / (float)(Game.columns * scale);
+        y = (float)row / (float)(Game.rows * scale);
+        noiseValue = Mathf.PerlinNoise(x, y) * 100f;
         
-        //elevation = (int)(Mathf.PerlinNoise(((column * smoothness) + HexDimensions.GetOffset() + (int)(row / 2)) / scale, ((row * smoothness) + HexDimensions.GetOffset()) / scale) * 100);
+        elevation = (int)noiseValue;
 
-        if (elevation > 75)
-        {
 
-            return 4;
-        }
-        else if (elevation > 53)
-        {
-            if (rand.Next(0, 20) == 1)
-            {
-                return 0;
-            }
+        scale = .1f;
+        x = (float)column / (float)(Game.columns * scale);
+        y = (float)row / (float)(Game.rows * scale);
+        noiseValue = Mathf.PerlinNoise(x, y) + .5f;
 
-            if (rand.Next(0, 10) == 1)
-            {
-                return 1;
-            }
-            return 3;
-        }
-        else if (elevation > 38)
+        noiseValue = Mathf.Pow(noiseValue, 2) * 20 - 24;
+
+        if(Mathf.Abs(noiseValue) > 10)
         {
-            if (rand.Next(0, 20) == 1)
-            {
-                return 0;
-            }
-            if (rand.Next(0, 30) == 1)
-            {
-                return 4;
-            }
-            return 2;
+            elevation += (int)noiseValue;
         }
-        else if (elevation > 28)
+
+        
+
+
+
+        int from_center = Game.rows / 2 - row;
+
+
+        float island_steapness = 30f;
+        float island_width = 70;
+        float island_hight_increase = 50;
+        float island_offset = Mathf.Pow(2, -Mathf.Pow(from_center, 2) / island_steapness) * island_width - island_hight_increase;
+        Debug.Log(island_offset);
+
+        if ( island_offset > 0)
         {
-            if (rand.Next(0, 30) == 1)
-            {
-                return 4;
-            }
-            return 1;
+            island_offset = 0;
         }
-        else
+
+        elevation += (int)island_offset;
+
+        if (elevation < 40)
         {
-            if (rand.Next(0, 30) == 1)
-            {
-                return 4;
-            }
-            return 0;
+            Name = "Water";
+            return Map.HexType.Water;
+        }else if (elevation < 50)
+        {
+            Name = "Flat";
+            return Map.HexType.Flat;
         }
+        else if (elevation < 63)
+        {
+            Name = "Forest";
+            return Map.HexType.Forest;
+        }
+        Name = "High";
+        return Map.HexType.High;
     }
-    
-//    public void AddUnit(Unit unit)
-//    {
-//        Units.Add(unit);
-//    }
-//
-//    public void RemoveUnit(Unit unit)
-//    {
-//        if (Units.Count != 0)
-//        {
-//            Units.Remove(unit);
-//        }
-//    }
 
-//    public Unit[] GetUnitsArray()
-//    {
-//        return Units.ToArray();
-//    }
+
+    
+
+
+    
+
 }
