@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyControlls : MonoBehaviour
+public class KeyControls : MonoBehaviour
 {
     private Vector3 oldPosition;
     int speed = 100;
@@ -35,12 +35,12 @@ public class KeyControlls : MonoBehaviour
         }
         else
         {
-            CamaraControlls();
+            CamaraControls();
         }
 
     }
 
-    private void CamaraControlls()
+    private void CamaraControls()
     {
         float xChange = Input.GetAxis("Horizontal");
         float yChange = -Input.GetAxis("Vertical");
