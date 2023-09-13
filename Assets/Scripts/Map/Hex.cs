@@ -42,56 +42,15 @@ public class Hex
     private Map.HexType CalcuateType()
     {
 
-        float x;
-        float scale;
-        float y;
-        float noiseValue;
+        this.elevation = CalculateElevation();
 
-        scale = .55f;
-        x = (float)column / (float)(Game.columns * scale);
-        y = (float)row / (float)(Game.rows * scale);
-        noiseValue = Mathf.PerlinNoise(x, y) * 100f;
-        
-        elevation = (int)noiseValue;
-
-
-        scale = .1f;
-        x = (float)column / (float)(Game.columns * scale);
-        y = (float)row / (float)(Game.rows * scale);
-        noiseValue = Mathf.PerlinNoise(x, y) + .5f;
-
-        noiseValue = Mathf.Pow(noiseValue, 2) * 20 - 24;
-
-        if(Mathf.Abs(noiseValue) > 10)
-        {
-            elevation += (int)noiseValue;
-        }
-
-        
-
-
-
-        int from_center = Game.rows / 2 - row;
-
-
-        float island_steapness = 30f;
-        float island_width = 70;
-        float island_hight_increase = 50;
-        float island_offset = Mathf.Pow(2, -Mathf.Pow(from_center, 2) / island_steapness) * island_width - island_hight_increase;
-        Debug.Log(island_offset);
-
-        if ( island_offset > 0)
-        {
-            island_offset = 0;
-        }
-
-        elevation += (int)island_offset;
+        this.elevation += CalculateIslandElevationOffset();
 
         if (elevation < 40)
         {
             Name = "Water";
             return Map.HexType.Water;
-        }else if (elevation < 50)
+        }else if (elevation < 52)
         {
             Name = "Flat";
             return Map.HexType.Flat;
@@ -106,8 +65,56 @@ public class Hex
     }
 
 
-    
 
+
+    ///////////////////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
+
+    private int CalculateElevation()
+    {
+        float x, y, noiseValue, elevation;
+        float scale = .55f;
+
+        // First layer of noise
+        x = (float)column / (float)(Game.columns * scale);
+        y = (float)row / (float)(Game.rows * scale);
+        noiseValue = Mathf.PerlinNoise(x, y) * 100f;
+        elevation = (int)noiseValue;
+
+        // Second layer of noise (more chaotic)
+        scale = .1f;
+        x = (float)column / (float)(Game.columns * scale);
+        y = (float)row / (float)(Game.rows * scale);
+        noiseValue = Mathf.PerlinNoise(x, y) + .5f;
+
+        // Only change the largest values
+        noiseValue = Mathf.Pow(noiseValue, 2) * 20 - 24;
+        if (Mathf.Abs(noiseValue) > 10)
+        {
+            elevation += (int)noiseValue;
+        }
+
+        return (int)elevation;
+
+    }
+
+
+    private int CalculateIslandElevationOffset()
+    {
+        int from_center = (Game.rows-1) / 2 - row;
+
+        float island_steapness = 30f;
+        float island_width = 70;
+        float island_hight_increase = 50;
+        // Bell like curve
+        float island_offset = Mathf.Pow(2, -Mathf.Pow(from_center, 2) / island_steapness) * island_width - island_hight_increase;
+
+        if (island_offset > 0)
+        {
+            island_offset = 0;
+        }
+
+        return (int)island_offset;
+    }
 
     
 

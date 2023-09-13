@@ -4,10 +4,19 @@ using UnityEngine;
 
 
 [System.Serializable]
+public struct TileStyle
+{
+    public int minElevation;
+    public int maxElevation;
+    public int chanceOfSpawning;
+    public GameObject style;
+}
+
+[System.Serializable]
 public struct TileDictionary
 {
     public Map.HexType type;
-    public GameObject[] styles;
+    public TileStyle[] styles;
 }
 
 public class Map : MonoBehaviour
@@ -20,12 +29,16 @@ public class Map : MonoBehaviour
 
     public int seed;
     public enum HexType {Water, Flat, Forest, High }
-
+    public static readonly int WaterStartElevation = 20;
     
 
 
     private void Start()
     {
+        while (transform.childCount > 0)
+        {
+            DestroyImmediate(transform.GetChild(0).gameObject);
+        }
         GenerateMap();
         seed = Random.Range(0, 1000);
     }
@@ -43,22 +56,8 @@ public class Map : MonoBehaviour
             {
 
                 Hex h = new Hex(column, row);
-
-                switch (h.type)
-                {
-                    case HexType.Water:
-                        hexGo = Make_Water_Tile(h);
-                        break;
-                    case HexType.Flat:
-                        hexGo = Make_Flat_Tile(h);
-                        break;
-                    case HexType.Forest:
-                        hexGo = Make_Forest_Tile(h);
-                        break;
-                    default:
-                        hexGo = Make_High_Tile(h);
-                        break;
-                }
+                hexGo = MakeTile(h);
+                
                 hexGo.name = h.column + ", " + h.row;
 
                 HexComponent component = hexGo.GetComponent<HexComponent>();
@@ -81,99 +80,46 @@ public class Map : MonoBehaviour
 ///////////////////////////// Helper Functions ///////////////////////////////
 
 
-    private GameObject Make_Water_Tile(Hex hex)
+    private GameObject MakeTile(Hex hex)
     {
+        List<TileStyle> posibleStyles = GetStyles(hex);
+
+        int index = Random.Range(0, posibleStyles.Count);
+
         Quaternion rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
-        float scale = .1f;
-
-        float x = (float)hex.column / (float)(Game.columns * scale);
-        float y = (float)hex.row / (float)(Game.rows * scale);
-        float noiseValue = Mathf.PerlinNoise(x, y);
-
+        GameObject hexGo = Instantiate(
+                 posibleStyles[index].style,
+                 new Vector3(0, 0, 0),
+                 rotation,
+                 this.transform
+                 );
+        return hexGo;
         
-        int subType = noiseValue > .2 ? 0 : 1;
-
-        GameObject hexGo = (GameObject)Instantiate(
-                 GetStyles(Map.HexType.Water)[subType],
-                 new Vector3(0, 0, 0),
-                 rotation,
-                 this.transform
-                 );
-
-        return hexGo;
-    }
-    private GameObject Make_Flat_Tile(Hex hex)
-    {
-        Quaternion rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
-        float scale = .1f;
-
-        float x = (float)hex.column / (float)(Game.columns * scale);
-        float y = (float)hex.row / (float)(Game.rows * scale);
-        float noiseValue = Mathf.PerlinNoise(x, y);
-
-       
-        int subType = noiseValue > .4 ? 0 : 1;
-        GameObject hexGo = (GameObject)Instantiate(
-                 GetStyles(Map.HexType.Flat)[subType],
-                 new Vector3(0, 0, 0),
-                 rotation,
-                 this.transform
-                 );
-
-        return hexGo;
-    }
-    private GameObject Make_Forest_Tile(Hex hex)
-    {
-        Quaternion rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
-
-        float scale = .1f;
-
-        float x = (float)hex.column / (float)(Game.columns * scale);
-        float y = (float)hex.row / (float)(Game.rows * scale);
-        float noiseValue = Mathf.PerlinNoise(x, y) ;
-
-       
-        int subType = noiseValue > .4 ? 0 : 1;
-
-        GameObject hexGo = (GameObject)Instantiate(
-                 GetStyles(Map.HexType.Forest)[subType],
-                 new Vector3(0, 0, 0),
-                 rotation,
-                 this.transform
-                 );
-
-        return hexGo;
-    }
-    private GameObject Make_High_Tile(Hex hex)
-    {
-        Quaternion rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
-        float scale = .1f;
-
-        float x = (float)hex.column / (float)(Game.columns * scale);
-        float y = (float)hex.row / (float)(Game.rows * scale);
-        float noiseValue = Mathf.PerlinNoise(x, y);
-
-        
-        int subType = noiseValue > .4 ? 0 : 1;
-
-        GameObject hexGo = (GameObject)Instantiate(
-                 GetStyles(Map.HexType.High)[subType],
-                 new Vector3(0, 0, 0),
-                 rotation,
-                 this.transform
-                 );
-
-        return hexGo;
     }
 
-
-    private GameObject[] GetStyles(Map.HexType type)
+    private List<TileStyle> GetStyles(Hex hex)
     {
-        foreach(TileDictionary current_item in tileDictionary)
+        List<TileStyle> posibleStyles = new List<TileStyle>();
+
+        foreach(TileDictionary styleArray in tileDictionary)
         {
-            if (type == current_item.type)
+            if (hex.type == styleArray.type)
             {
-                return current_item.styles;
+                foreach(TileStyle style in styleArray.styles)
+                {
+
+                    if(style.minElevation < hex.elevation && style.maxElevation > hex.elevation)
+                    {
+                        for(int i = 0; i < style.chanceOfSpawning; i++)
+                        {
+                            posibleStyles.Add(style);
+                        }
+                    }
+                }
+
+                return posibleStyles;
+
+
             }
         }
         return null;

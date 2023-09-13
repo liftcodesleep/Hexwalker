@@ -11,8 +11,8 @@ public static class Game
     // public Map map;
     // public Stack stack;
 
-    public static readonly int rows = 28;
-    public static readonly int columns = 40;
+    public static readonly int rows = 26;
+    public static readonly int columns = 38;
 
     public static int  CurrentPlayer {get; set;}
 }

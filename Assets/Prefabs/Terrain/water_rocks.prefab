@@ -55,14 +55,14 @@ PrefabInstance:
     - target: {fileID: -4151401113414989868, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: bdcef40a603e8d34cb234df3f0456588, type: 2}
+      objectReference: {fileID: 2100000, guid: bed9970ad0c75814f9784309c736128b, type: 2}
     - target: {fileID: -3919345679058906578, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b43ad35a8597096418a8e1a8004ab7e8, type: 2}
     - target: {fileID: 919132149155446097, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
       propertyPath: m_Name
-      value: water_rocks Variant
+      value: water_rocks
       objectReference: {fileID: 0}
     - target: {fileID: 6378358387506287701, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
