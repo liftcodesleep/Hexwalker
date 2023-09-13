@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: water_plain
       objectReference: {fileID: 0}
+    - target: {fileID: 9000107344292248105, guid: 1b928f3951d53aa4d8b10a7d2db995f9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

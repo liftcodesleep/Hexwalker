@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: water_rocks
       objectReference: {fileID: 0}
+    - target: {fileID: 3197060977830938787, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6378358387506287701, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

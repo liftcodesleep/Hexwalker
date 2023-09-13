@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+////////////////For Organazation //////////////////////////////////////
+
 [System.Serializable]
 public struct TileStyle
 {
@@ -18,11 +20,16 @@ public struct TileDictionary
     public Map.HexType type;
     public TileStyle[] styles;
 }
+//////////////////////////////////////////////////////
+
 
 public class Map : MonoBehaviour
 {
     private Hex[,] _hexes;
     private Dictionary<Hex, GameObject> _hexToGameObject;
+
+    [SerializeField]
+    private GameObject ocean;
 
     [SerializeField]
     private TileDictionary[] tileDictionary;
@@ -68,6 +75,18 @@ public class Map : MonoBehaviour
 
                 _hexes[row, column] = h;
                 _hexToGameObject[h] = hexGo;
+
+                if(row == Game.rows/2 && column == Game.columns/2)
+                {
+                    GameObject heoceaGo = Instantiate(
+                     ocean,
+                     new Vector3(0, 0, 0),
+                     Quaternion.identity,
+                     hexGo.transform
+                     );
+
+                    hexGo.name += " Ocean";
+                }
             }
 
         }
