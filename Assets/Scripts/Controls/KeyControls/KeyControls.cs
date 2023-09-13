@@ -18,6 +18,10 @@ public class KeyControls : MonoBehaviour
     private Vector3 shiftingTarget;
     private Vector3 shiftingTargetz;
     private float shiftingSpeed = 3f;
+
+    public float zoomSpeed = 10;
+    public float minZoom = 10.0f;
+    public float maxZoom = 100.0f;
     void Start()
     {
         oldPosition = this.transform.position;
@@ -54,6 +58,20 @@ public class KeyControls : MonoBehaviour
         {
             HexMap.transform.position = new_vert;
         }
+
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        //Debug.Log(scroll + " "+ Camera.main.fieldOfView);
+        if(scroll < 0 || Input.GetKey(KeyCode.Q) )
+        {
+            
+            Camera.main.fieldOfView += zoomSpeed;
+        }else if(scroll > 0 || Input.GetKey(KeyCode.E))
+        {
+            Camera.main.fieldOfView -= zoomSpeed;
+        }
+        
+
     }
     private void CheckIfCameraMoved()
     {
