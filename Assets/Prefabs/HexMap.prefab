@@ -44,18 +44,88 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23bd98cfb684e904fa65681d6b6dcebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seed: 0
+  ocean: {fileID: 0}
   tileDictionary:
   - type: 0
     styles:
-    - {fileID: 3556377583263683334, guid: 783de16646edc7a41a052f165b4f45eb, type: 3}
+    - minElevation: -999
+      maxElevation: 35
+      chanceOfSpawning: 11
+      style: {fileID: 3556377583263683334, guid: 783de16646edc7a41a052f165b4f45eb, type: 3}
+    - minElevation: 30
+      maxElevation: 41
+      chanceOfSpawning: 3
+      style: {fileID: 4660949725425825273, guid: 9fb73aa39c017c04aa2dad049fab71cc, type: 3}
+    - minElevation: 30
+      maxElevation: 999
+      chanceOfSpawning: 10
+      style: {fileID: 4803335399279325678, guid: 5c1d25dea007078498498c3fab88ef93, type: 3}
   - type: 1
     styles:
-    - {fileID: 4198258114216666177, guid: 12c37744079bbc74e905e6b12f844aef, type: 3}
+    - minElevation: -999
+      maxElevation: 999
+      chanceOfSpawning: 6
+      style: {fileID: 4198258114216666177, guid: 12c37744079bbc74e905e6b12f844aef, type: 3}
+    - minElevation: 45
+      maxElevation: 999
+      chanceOfSpawning: 1
+      style: {fileID: 4198258114216666177, guid: 8823ea7cb3997df4dad9a81c1b39a0c7, type: 3}
+    - minElevation: -999
+      maxElevation: 45
+      chanceOfSpawning: 1
+      style: {fileID: 3556377583263683334, guid: b4a7e5ab882e5b241a77e1176e0b55e9, type: 3}
+    - minElevation: 49
+      maxElevation: 999
+      chanceOfSpawning: 2
+      style: {fileID: 7414644856421005167, guid: 4175b69e666ea35408bfdfe0951b9082, type: 3}
+    - minElevation: 48
+      maxElevation: 999
+      chanceOfSpawning: 4
+      style: {fileID: 1227108647967677348, guid: ca8738b2e606f034184740a464c10b8b, type: 3}
   - type: 2
     styles:
-    - {fileID: 2735702734221089735, guid: aaea11dacd21b6742b81f33d495dcae9, type: 3}
+    - minElevation: -999
+      maxElevation: 60
+      chanceOfSpawning: 7
+      style: {fileID: 2735702734221089735, guid: aaea11dacd21b6742b81f33d495dcae9, type: 3}
+    - minElevation: -999
+      maxElevation: 58
+      chanceOfSpawning: 15
+      style: {fileID: 2735702734221089735, guid: 80d334cd50d62134b8f635a1f4eb8e8b, type: 3}
+    - minElevation: 58
+      maxElevation: 999
+      chanceOfSpawning: 7
+      style: {fileID: 7606144481817921789, guid: 7c19e93cd49b5b941a8101117af6d3c6, type: 3}
+    - minElevation: 57
+      maxElevation: 999
+      chanceOfSpawning: 1
+      style: {fileID: 2735702734221089735, guid: 6c8f272fe89cc4746aa1e9a6e48f1ba3, type: 3}
   - type: 3
     styles:
-    - {fileID: 7330309247982341254, guid: d90c3fed32090684298f0e72e887241a, type: 3}
-    - {fileID: 7211838154322373935, guid: 6bab8aa59b793734995132fde0a4c4e7, type: 3}
+    - minElevation: -999
+      maxElevation: 66
+      chanceOfSpawning: 10
+      style: {fileID: 7211838154322373935, guid: 6bab8aa59b793734995132fde0a4c4e7, type: 3}
+    - minElevation: 65
+      maxElevation: 999
+      chanceOfSpawning: 3
+      style: {fileID: 7330309247982341254, guid: d90c3fed32090684298f0e72e887241a, type: 3}
+    - minElevation: 65
+      maxElevation: 999
+      chanceOfSpawning: 1
+      style: {fileID: 7330309247982341254, guid: d90c3fed32090684298f0e72e887241a, type: 3}
+  - type: 3
+    styles:
+    - minElevation: -999
+      maxElevation: 66
+      chanceOfSpawning: 10
+      style: {fileID: 7211838154322373935, guid: 6bab8aa59b793734995132fde0a4c4e7, type: 3}
+    - minElevation: 65
+      maxElevation: 999
+      chanceOfSpawning: 3
+      style: {fileID: 7330309247982341254, guid: d90c3fed32090684298f0e72e887241a, type: 3}
+    - minElevation: 65
+      maxElevation: 999
+      chanceOfSpawning: 1
+      style: {fileID: 7330309247982341254, guid: d90c3fed32090684298f0e72e887241a, type: 3}
+  seed: 0

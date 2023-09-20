@@ -11,7 +11,7 @@ using System.Linq;
 /// </summary>
 
 
-public class Hex
+public class Hex 
 {
 
     public string Name { get; set; }
@@ -25,7 +25,7 @@ public class Hex
     //TODO determine job of elevation
     public int elevation;
 
-    
+    public List<Card> cards;
 
     public Hex(int q, int r)
     {
@@ -34,6 +34,8 @@ public class Hex
         this.sum = -(q + r);
 
         this.type = CalcuateType();
+
+        cards = new List<Card>();
 
         //TODO:
         // this.Units = new HashSet<Unit>();
@@ -116,6 +118,29 @@ public class Hex
         return (int)island_offset;
     }
 
-    
+
+    public float DistanceFrom(Hex b)
+    {
+
+        int dQ = Mathf.Abs(this.column - b.column);
+
+        if (dQ > Game.columns / 2)
+        {
+            dQ = Game.columns - dQ;
+        }
+
+        int dS = Mathf.Abs(this.sum - b.sum);
+        if (dS > Game.columns / 2)
+        {
+            dS = Mathf.Abs(dS - Game.columns);
+        }
+
+        return Mathf.Max(
+            dQ,
+            Mathf.Abs(this.row - b.row),
+            dS
+            );
+    }
+
 
 }

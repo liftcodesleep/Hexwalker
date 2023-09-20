@@ -21,6 +21,8 @@ public class Player
         this.Hand = new CardZone();
         this.Sources = new List<Charge>();
         Hand.Capacity = 6;
+
+        this.Hand.Cards.Add(new Knight());
     }
 
     public int GainCharge(Charge charge)

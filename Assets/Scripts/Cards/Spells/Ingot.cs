@@ -9,4 +9,9 @@ public class Ingot : Artifact
         Cost = new Charge(0, 1, 0, 0, false);
         Health = 4;
     }
+
+    public override bool IsPlayableHex(Hex hex)
+    {
+        throw new System.NotImplementedException();
+    }
 }

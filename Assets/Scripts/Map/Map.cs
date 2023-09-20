@@ -37,17 +37,27 @@ public class Map : MonoBehaviour
     public int seed;
     public enum HexType {Water, Flat, Forest, High }
     public static readonly int WaterStartElevation = 20;
-    
 
+    private GameObject oceanHex;
 
     private void Start()
     {
+        Game.map = this;
         while (transform.childCount > 0)
         {
             DestroyImmediate(transform.GetChild(0).gameObject);
         }
         GenerateMap();
         seed = Random.Range(0, 1000);
+
+        GameObject heoceaGo = Instantiate(
+                     ocean,
+                     new Vector3(0, 0, 0),
+                     Quaternion.identity,
+                     oceanHex.transform
+                     );
+
+        oceanHex.name += " Ocean";
     }
 
 
@@ -78,14 +88,8 @@ public class Map : MonoBehaviour
 
                 if(row == Game.rows/2 && column == Game.columns/2)
                 {
-                    GameObject heoceaGo = Instantiate(
-                     ocean,
-                     new Vector3(0, 0, 0),
-                     Quaternion.identity,
-                     hexGo.transform
-                     );
-
-                    hexGo.name += " Ocean";
+                    oceanHex = hexGo;
+                    
                 }
             }
 
@@ -144,4 +148,9 @@ public class Map : MonoBehaviour
         return null;
     }
 
+
+    public GameObject GetHexGO(Hex hex)
+    {
+        return _hexToGameObject[hex];
+    }
 }

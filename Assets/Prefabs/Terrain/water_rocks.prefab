@@ -60,9 +60,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b43ad35a8597096418a8e1a8004ab7e8, type: 2}
+    - target: {fileID: -61967813345510309, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
       propertyPath: m_Name
       value: water_rocks
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2520770271037427099, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3197060977830938787, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -72,6 +84,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b43ad35a8597096418a8e1a8004ab7e8, type: 2}
+    - target: {fileID: 8039765736737727803, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -79,6 +95,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
       insertIndex: -1
       addedObject: {fileID: -4586946949881147311}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2111843019228930638}
   m_SourcePrefab: {fileID: 100100000, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}
 --- !u!1 &4660949725425825273 stripped
 GameObject:
@@ -97,3 +116,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3cbeff1ca02ef4b928d105009150c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!64 &2111843019228930638
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4660949725425825273}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1285196054944692571, guid: 0a6c3dc03170b5e489a25306277a47a3, type: 3}

@@ -11,4 +11,7 @@ public abstract class Card
     public int Priority;
     public int Range;
     public int IsCard;
+    public Hex Location;
+
+    public abstract bool IsPlayableHex(Hex hex);
 }

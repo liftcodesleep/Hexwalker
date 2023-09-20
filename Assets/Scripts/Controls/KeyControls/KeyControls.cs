@@ -7,6 +7,7 @@ public class KeyControls : MonoBehaviour
     private Vector3 oldPosition;
     int speed = 100;
     [SerializeField] GameObject HexMap;
+    [SerializeField] Camera otherCamera;
 
     private Vector3 lastMousePosition;
     public float rotationSpeed = 10.0f;
@@ -47,28 +48,36 @@ public class KeyControls : MonoBehaviour
     private void CamaraControls()
     {
         float xChange = Input.GetAxis("Horizontal");
-        float yChange = -Input.GetAxis("Vertical");
+        float yChange = Input.GetAxis("Vertical");
 
         Vector3 change_heriz = new Vector3(xChange, 0, 0);
         this.transform.position += change_heriz * Time.deltaTime * speed;
 
         Vector3 change_vert = new Vector3(0, 0, yChange);
-        Vector3 new_vert = HexMap.transform.position + change_vert * Time.deltaTime * speed;
+
+        // Change so that we move the camera and not the map
+        //Vector3 new_vert = HexMap.transform.position + change_vert * Time.deltaTime * speed;
+        this.transform.position += change_vert * Time.deltaTime * speed;
+        /*
         if (new_vert.z < southhBound && new_vert.z > northBound)
         {
             HexMap.transform.position = new_vert;
         }
+        */
 
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        //Debug.Log(scroll + " "+ Camera.main.fieldOfView);
+        
         if(scroll < 0 || Input.GetKey(KeyCode.Q) )
         {
             
             Camera.main.fieldOfView += zoomSpeed;
-        }else if(scroll > 0 || Input.GetKey(KeyCode.E))
+            otherCamera.fieldOfView += zoomSpeed;
+        }
+        else if(scroll > 0 || Input.GetKey(KeyCode.E))
         {
             Camera.main.fieldOfView -= zoomSpeed;
+            otherCamera.fieldOfView -= zoomSpeed;
         }
         
 
