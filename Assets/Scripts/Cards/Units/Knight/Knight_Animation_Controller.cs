@@ -9,9 +9,18 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
 
     public void AttackAnimation()
     {
-        _animator.SetBool("attacked", true);
+        
+        StartCoroutine(attack());
+        
     }
+    IEnumerator attack()
+    {
+        Debug.Log("Aniimation Attack");
+        _animator.SetBool("attacked", true);
+        yield return new WaitForSeconds(.1f);
+        _animator.SetBool("attacked", false);
 
+    }
     public void DeathAnimation()
     {
         throw new System.NotImplementedException();
@@ -19,23 +28,25 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
 
     public void IdleAnimation()
     {
-        if(!_animator.GetBool("isMoving"))
+        
+        if (!_animator.GetBool("Moving"))
         {
             return;
         }
         Debug.Log("Starting Idel animation");
-        _animator.SetBool("isMoving", false);
+        _animator.SetBool("Moving", false);
        
     }
 
     public void MoveAnimation()
     {
-        if (_animator.GetBool("isMoving"))
+        
+        if (_animator.GetBool("Moving"))
         {
             return;
         }
         Debug.Log("Starting run animation");
-        _animator.SetBool("isMoving", true);
+        _animator.SetBool("Moving", true);
         
     }
 
@@ -55,7 +66,7 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
 
         _animator.applyRootMotion = false;
 
-        unitGO = this.GetComponent<UnitComponent>();
+        unitGO = this.transform.parent.gameObject.GetComponent<UnitComponent>();
         if(!unitGO)
         {
             throw new System.Exception("Animator is not attached to a unit");
@@ -66,7 +77,7 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
 
     private void Update()
     {
-        _animator.SetBool("attacked", false);
+        //_animator.SetBool("attacked", false);
 
         //if(unitGO.currentVelocity.magnitude > 1)
         //{

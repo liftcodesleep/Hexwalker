@@ -34,11 +34,14 @@ public class Map : MonoBehaviour
     [SerializeField]
     private TileDictionary[] tileDictionary;
 
+    [SerializeField]
+    UnitDatabase data;
+
     public int seed;
     public enum HexType {Water, Flat, Forest, High }
     public static readonly int WaterStartElevation = 20;
 
-    private GameObject oceanHex;
+    //private GameObject oceanHex;
 
     private void Start()
     {
@@ -50,14 +53,47 @@ public class Map : MonoBehaviour
         GenerateMap();
         seed = Random.Range(0, 1000);
 
-        GameObject heoceaGo = Instantiate(
-                     ocean,
-                     new Vector3(0, 0, 0),
-                     Quaternion.identity,
-                     oceanHex.transform
-                     );
+        //GameObject heoceaGo = Instantiate(
+        //             ocean,
+        //             new Vector3(0, 0, 0),
+        //             Quaternion.identity,
+        //             oceanHex.transform
+        //             );
+        //
+        //oceanHex.name += " Ocean";
 
-        oceanHex.name += " Ocean";
+        foreach(Player player in Game.players)
+        {
+            player.placeAvatar();
+        }
+        
+    }
+
+    public void PlaceItem(Construct item, Hex location)
+    {
+
+        //UnitDatabase data = cardGO.PreFabs.GetComponent<UnitDatabase>();
+        
+        GameObject itemPreFab = data.GetPrefab(item.Name);
+        GameObject unitGO = Instantiate(itemPreFab, GetHexGO(location).transform.position, Quaternion.identity, GetHexGO(location).transform);
+        unitGO.GetComponent<UnitComponent>().unit = (Unit)item;
+        item.Location = location;
+        location.cards.Add(item);
+
+        unitGO.transform.rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
+
+        if (item.Owner == Game.players[0])
+        {
+            //GameObject playereffect = data.GetPrefab("PlayerAura");
+            //Instantiate(playereffect, unitGO.transform.position, Quaternion.identity, unitGO.transform);
+        }
+
+        item.Pieces.Add(unitGO);
+    }
+
+    public Hex GetRandomHex()
+    {
+        return _hexes[Random.Range(0, Game.rows-1), Random.Range(0, Game.columns-1)];
     }
 
 
@@ -86,11 +122,7 @@ public class Map : MonoBehaviour
                 _hexes[row, column] = h;
                 _hexToGameObject[h] = hexGo;
 
-                if(row == Game.rows/2 && column == Game.columns/2)
-                {
-                    oceanHex = hexGo;
-                    
-                }
+                
             }
 
         }

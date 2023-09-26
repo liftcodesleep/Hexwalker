@@ -34,6 +34,13 @@ public class UnitDatabase : MonoBehaviour
         }
 
         return null;
+    }
+
+
+    public void PlaceGameObject(string name, Hex location)
+    {
 
     }
+
+
 }

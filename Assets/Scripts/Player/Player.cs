@@ -14,15 +14,19 @@ public class Player
     public int SourcePlays;
     public int SourcesPlayed;
 
+    public Unit Avatar;
+
     public Player()
     {
-        this.Deck = new CardZone();
+        this.Deck = new KnightsDeck(this);
         this.Graveyard = new CardZone();
         this.Hand = new CardZone();
         this.Sources = new List<Charge>();
         Hand.Capacity = 6;
 
-        this.Hand.Cards.Add(new Knight());
+        Avatar = new Avatar(this);
+        //placeAvatar();
+        Draw(5);
     }
 
     public int GainCharge(Charge charge)
@@ -76,4 +80,35 @@ public class Player
     {
         return SourcePlays - SourcesPlayed;
     }
+
+
+    public void Draw(int amount)
+    {
+        Hand.GetNCardsFromZone(amount, Deck);
+    }
+
+
+    public virtual void OnTurnStart()
+    {
+        Draw(1);
+    }
+
+    public virtual void OnTurnEnd()
+    {
+
+    }
+
+
+    public void placeAvatar()
+    {
+        Hex avatarLocation = Game.map.GetRandomHex();
+
+        while(avatarLocation.type == Map.HexType.Water || avatarLocation.type == Map.HexType.High)
+        {
+            avatarLocation = Game.map.GetRandomHex();
+        }
+
+        Game.map.PlaceItem(Avatar, avatarLocation);
+    }
+
 }

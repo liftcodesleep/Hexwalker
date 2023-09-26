@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 8678414594759039624}
   - component: {fileID: 8678414594759039625}
   - component: {fileID: 8678414594759039630}
+  - component: {fileID: 7588849909586673205}
   m_Layer: 0
   m_Name: Ocean
   m_TagString: Untagged
@@ -184,3 +185,15 @@ MonoBehaviour:
   waveFrequency: 0.15
   waveLength: 0.75
   waveOriginPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &7588849909586673205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8678414594759039631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f522acc6d60ac1c47b88dfdc54e085bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

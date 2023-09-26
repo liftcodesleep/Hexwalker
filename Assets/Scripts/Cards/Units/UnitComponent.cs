@@ -19,18 +19,23 @@ public class UnitComponent : MonoBehaviour
     //private float shrinkSpeed = .9f;
     //private int oldHealth;
     //
+    private Vector3 originalScale;
     private void Start()
     {
-    
+        originalScale = this.transform.GetChild(0).transform.localScale;
+        this.transform.GetChild(0).transform.localScale = new Vector3(.01f, .01f, .01f);
+
         oldPostion = newPosition = this.transform.position;
-        //this.transform.localScale = new Vector3(.01f, .01f, .01f);
-        anomator = this.GetComponent<IUnitAnomator>();
+        
+        anomator = this.GetComponentInChildren<IUnitAnomator>();
 
         if(anomator == null)
         {
             throw new System.Exception(unit.Name + " Has no animations");
         }
 
+        
+        
         //this.oldHealth = unit.HealthPoints;
     }
     //
@@ -41,10 +46,10 @@ public class UnitComponent : MonoBehaviour
         //    HandleDeath();
         //    return;
         //}
-        //else if (this.transform.localScale.x < 1)
-        //{
-        //    this.transform.localScale += new Vector3(.01f, .01f, .01f);
-        //}
+        if (this.transform.GetChild(0).transform.localScale.x < originalScale.x)
+        {
+            this.transform.GetChild(0).transform.localScale += new Vector3(.01f, .01f, .01f);
+        }
     
         //if (this.oldHealth != unit.HealthPoints)
         //{
@@ -52,6 +57,7 @@ public class UnitComponent : MonoBehaviour
         //}
         UpdatePosition();
         UpdateHexPosition();
+
     }
     //
     private void UpdateHexPosition()
@@ -63,6 +69,7 @@ public class UnitComponent : MonoBehaviour
             return;
         }
         Hex parentHex = parentComponent.hex;
+        
         if (this.unit.Location != parentHex)
         {
             
@@ -114,27 +121,38 @@ public class UnitComponent : MonoBehaviour
     //
     //}
     //
-    //public void HandleAttack()
-    //{
-    //    
-    //}
-    //
+    public void HandleAttack()
+    {
+        anomator.AttackAnimation();
+        
+    }
+    
     private void UpdatePosition()
     {
         if (newPosition == oldPostion)
         {
-            anomator.IdleAnimation();
+            if(anomator != null)
+            {
+                anomator.IdleAnimation();
+            }
+            
             
         }
         else if (FinishedMove())
         {
-            anomator.IdleAnimation();
+            if (anomator != null)
+            {
+                anomator.IdleAnimation();
+            }
             oldPostion = newPosition;
         }
         else
         {
-            anomator.MoveAnimation();
-            Debug.Log("Calling move");
+            if (anomator != null)
+            {
+                anomator.MoveAnimation();
+            }
+            
             this.transform.position = Vector3.SmoothDamp(this.transform.position, newPosition, ref currentVelocity, smoothTime);
             Vector3 lookDirection = newPosition - transform.position;
             Quaternion rotation = Quaternion.LookRotation(lookDirection);

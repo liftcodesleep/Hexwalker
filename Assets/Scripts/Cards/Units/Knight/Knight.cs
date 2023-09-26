@@ -7,8 +7,8 @@ public class Knight : Unit
 
 	
 
-	public Knight()
-    {
+	public Knight(Player Owner) : base(Owner)
+	{
 		//Charge Cost;
 		Name = "Knight";
 		//string Rules;
@@ -25,6 +25,8 @@ public class Knight : Unit
 		Actions = 2;
 		Strength = 2;
 		moveableHexTypes = new Map.HexType[]{ Map.HexType.Flat, Map.HexType.Forest };
+
+		
 	}
 
 
@@ -40,6 +42,12 @@ public class Knight : Unit
         {
 			return false;
         }
+
+		if (hex.DistanceFrom(Owner.Avatar.Location) > SummonRange)
+		{
+
+			return false;
+		}
 		return true;
 	}
 }

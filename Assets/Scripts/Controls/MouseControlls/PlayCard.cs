@@ -82,9 +82,16 @@ public class PlayCard : MonoBehaviour, IMouseController
             return;
         }
         MasterMouse.Selecteditems.Add(clickObject);
-    
+
         ////////////////////////////////////////////// NEED TO UPDATE ////////////////////////////////////////////
+
+        
+
         GameObject unitGO = Instantiate(cardPreFab, clickObject.transform.position, Quaternion.identity, clickObject.transform);
+
+        Game.GetCurrentPlayer().Avatar.Pieces[0].transform.LookAt(unitGO.transform.position);
+        Game.GetCurrentPlayer().Avatar.Pieces[0].GetComponent<UnitComponent>().HandleAttack();
+
         hex.cards.Add(cardGO.card);
         UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
         if (unitGO)
@@ -92,7 +99,19 @@ public class PlayCard : MonoBehaviour, IMouseController
             unitGOComp.unit = (Unit)cardGO.card;
             unitGOComp.unit.Location = hexComp.hex;
         }
-        
+        if (cardGO.card.type == Card.Type.CHARGE)
+        {
+            
+            this.transform.localRotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
+        }
+
+        Game.players[0].Hand.Cards.Remove(cardGO.card);
+
+        Destroy(this.gameObject);
+
+        cardGO.card.Pieces.Add(unitGO);
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         close();
     }

@@ -6,7 +6,7 @@ public static class Game
 {
     private static int _currentPlayer = 0;
     public static int turnCount = 1;
-    public static Player[] players = new Player[]{new Player(), new Player()};
+    public static Player[] players;
 
     public static Map map;
     // public Stack stack;
@@ -17,9 +17,17 @@ public static class Game
     private static GameObject HexMapGO;
     private static GameObject _filter;
 
+    static Game()
+    {
+        players = new Player[] { new Player(), new AI() };
+
+        players[0].Name = "Player 1";
+        players[1].Name = "Player 2";
+    }
+
     public static Player GetCurrentPlayer() 
     {
-        return players[_currentPlayer];
+        return players[_currentPlayer % players.Length];
     }
 
 
@@ -44,6 +52,15 @@ public static class Game
 
         }
         return _filter;
+    }
+
+
+    public static void NextTurn()
+    {
+        GetCurrentPlayer().OnTurnEnd();
+        _currentPlayer++;
+        GetCurrentPlayer().OnTurnStart();
+
     }
 
 }

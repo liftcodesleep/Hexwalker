@@ -81,7 +81,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
             //selectedUnit.Location.DistanceFrom(hexGO.hex) < selectedUnit.ActionPoints &&
 
-            if (selectedUnit.Location.DistanceFrom(hexGO.hex) <= selectedUnit.ActionPoints && selectedUnit.IsPlayableHex(hexGO.hex))
+            if (selectedUnit.Location.DistanceFrom(hexGO.hex) <= selectedUnit.ActionPoints && selectedUnit.ValidMove(hexGO.hex))
             {
 
                 hexGO.gameObject.layer = 6;

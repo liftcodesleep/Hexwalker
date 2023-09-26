@@ -8,15 +8,17 @@ public class CardZone
     static Random _random = new Random();
     public int Capacity{ get; set; }
     public List<Card> Cards;
+    public Player Owner;
 
     public CardZone()
     {
+        
         this.Cards = new List<Card>();
     }
 
-    public void Shuffle(Card[] cards)
+    public void Shuffle(List<Card> cards)
     {
-        int n = cards.Length;
+        int n = cards.Count;
         for (int i = 0; i < (n - 1); i++)
         {
             int r = i + _random.Next(n - i);

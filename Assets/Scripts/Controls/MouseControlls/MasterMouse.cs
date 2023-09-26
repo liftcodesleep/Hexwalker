@@ -6,7 +6,7 @@ public class MasterMouse : MonoBehaviour
 {
 
     public static List<GameObject> Selecteditems;
-    private static GameObject selectedItem;
+    public static GameObject selectedItem;
 
     public enum Task { StandBy, PlayCard, MoveUnit }
     public static Task currentTask;
@@ -60,7 +60,7 @@ public class MasterMouse : MonoBehaviour
 
         if (selectedItem ==null )
         {
-            Debug.Log("MM, Clicked nothing");
+            //Debug.Log("MM, Clicked nothing");
             taskOwner.close();
             return;
         }
@@ -85,7 +85,7 @@ public class MasterMouse : MonoBehaviour
                 SetTask(Task.StandBy, null);
                 break;
             case Task.MoveUnit:
-                Debug.Log("Closing move");
+                //Debug.Log("Closing move");
                 taskOwner.close();
                 SetTask(Task.StandBy, null);
                 break;
@@ -104,7 +104,7 @@ public class MasterMouse : MonoBehaviour
         //GameObject selectedItem = getClickedObject();
         if (selectedItem == null)
         {
-            Debug.Log("MM, Clicked nothing");
+            //Debug.Log("MM, Clicked nothing");
             taskOwner.close();
             return;
         }
@@ -127,7 +127,7 @@ public class MasterMouse : MonoBehaviour
                 break;
             case Task.MoveUnit:
                 taskOwner.RightClicked(selectedItem);
-                Debug.Log("MM moving");
+                //Debug.Log("MM moving");
                 //SetTask(Task.StandBy, null);
                 break;
             default:
@@ -142,13 +142,13 @@ public class MasterMouse : MonoBehaviour
     {
         if(taskOwner != null)
         {
-            Debug.Log("MM, Switching task " + currentTask);
+            //Debug.Log("MM, Switching task " + currentTask);
             //taskOwner.close();
         }
         
         MasterMouse.taskOwner = owner;
         MasterMouse.currentTask = task;
-        Debug.Log("MM, Switching to " + task);
+        //Debug.Log("MM, Switching to " + task);
 
         if (owner != null)
         {
