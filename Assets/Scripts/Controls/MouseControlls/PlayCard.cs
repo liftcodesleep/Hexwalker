@@ -17,12 +17,18 @@ public class PlayCard : MonoBehaviour, IMouseController
         cardGO = this.gameObject.GetComponent<CardComponent>();
         if (cardGO == null)
         {
-            Debug.Log("PlayCard, Card has no card component");
+            throw new System.Exception("PlayCard, Card has no card component");
         }
     
         _filter = Game.GetFilter();
-        //Debug.Log("PlayCard, f " + _filter.name);
+        
+
+        // New
         _playableHexs = new List<HexComponent>();
+        UnitDatabase data = cardGO.PreFabs.GetComponent<UnitDatabase>();
+        
+
+        cardPreFab = data.GetPrefab(cardGO.card.Name);
     }
     
     // Update is called once per frame
@@ -33,7 +39,7 @@ public class PlayCard : MonoBehaviour, IMouseController
     
     public void clickedFromGUI()
     {
-        Debug.Log("Clicked");
+        Debug.Log("Play card Clicked");
         MasterMouse.leftClickObj(this.gameObject);
     }
     
@@ -41,30 +47,50 @@ public class PlayCard : MonoBehaviour, IMouseController
     {
         //MasterMouse.Selecteditems.Add(this.gameObject);
         //HighLightHexs();
+
+        HighLightHexs();
+
     }
     public void open()
     {
-        UnitDatabase data = cardGO.PreFabs.GetComponent<UnitDatabase>();
-        SetPlayableHexs();
-        
-    
-        //Debug.Log("PlayCard " + data.name);
-        //Debug.Log("PlayCard " + cardGO.card.Name);
-        cardPreFab = data.GetPrefab(cardGO.card.Name);
+        //UnitDatabase data = cardGO.PreFabs.GetComponent<UnitDatabase>();
+        //SetPlayableHexs();
+        //
+        //
+        //cardPreFab = data.GetPrefab(cardGO.card.Name);
+        //
+        //
+        //
+        //HighLightHexs();
 
-       
+        Debug.Log("In play card 1");
+        switch (MasterMouse.currentTask)
+        {
 
-        HighLightHexs();
+            case MasterMouse.Task.MoveUnit:
+            case MasterMouse.Task.StandBy:
+            case MasterMouse.Task.Transition:
+                MasterMouse.taskOwner.close();
+                MasterMouse.currentTask = GetTask();
+                MasterMouse.taskOwner = this;
+                break;
+
+            default:
+                //MasterMouse.currentTask = MasterMouse.Task.Transition;
+                break;
+
+        }
 
     }
     public void close()
     {
     
-    
-        
         
         UnHighLightHexs();
         
+        MasterMouse.taskOwner = null;
+        MasterMouse.currentTask = MasterMouse.Task.StandBy;
+
     }
     
     public void RightClicked(GameObject clickObject)
@@ -116,10 +142,6 @@ public class PlayCard : MonoBehaviour, IMouseController
         close();
     }
     
-    private void SetPlayableHexs()
-    {
-        _playableHexs = new List<HexComponent>();
-    }
     
     private void HighLightHexs()
     {

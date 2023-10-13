@@ -7,6 +7,9 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
     private Animator _animator;
     UnitComponent unitGO;
 
+    [SerializeField]
+    private AudioSource runSound;
+
     public void AttackAnimation()
     {
         
@@ -47,7 +50,7 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
         }
         Debug.Log("Starting run animation");
         _animator.SetBool("Moving", true);
-        
+        runSound.Play();
     }
 
     public void TakeDamageAnimation()

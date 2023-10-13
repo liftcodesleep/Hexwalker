@@ -11,7 +11,7 @@ public class CameraMovment : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Camera test ");
+        //Debug.Log("Camera test ");
         StartCoroutine(PanToTarget());
 
     }
@@ -26,7 +26,7 @@ public class CameraMovment : MonoBehaviour
 
     IEnumerator PanToTarget()
     {
-        Debug.Log("Camera start ");
+        //Debug.Log("Camera start ");
         yield return new WaitForSeconds(.5f);
 
         target = Game.map.GetHexGO(Game.players[0].Avatar.Location).transform;
@@ -34,7 +34,7 @@ public class CameraMovment : MonoBehaviour
         Vector3 targetPosition = new Vector3(target.position.x, target.position.y, target.position.z - 5);
 
        
-        Debug.Log("Camera " + target.name);
+        //Debug.Log("Camera " + target.name);
 
 
         if (target != null)

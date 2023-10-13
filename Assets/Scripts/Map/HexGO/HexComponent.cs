@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-public class HexComponent : MonoBehaviour, IMouseController
+public class HexComponent : MonoBehaviour
 {
     public Hex hex;
 
@@ -93,28 +93,5 @@ public class HexComponent : MonoBehaviour, IMouseController
         return PositionFromCamera(cameraPosition);
     }
 
-    public void open()
-    {
-        return;
-    }
-
-    public void LeftClicked(GameObject clickObject)
-    {
-        Debug.Log(hex.type);
-    }
-
-    public void close()
-    {
-        return;
-    }
-
-    public void RightClicked(GameObject clickObject)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public MasterMouse.Task GetTask()
-    {
-        return MasterMouse.Task.StandBy;
-    }
+ 
 }

@@ -15,6 +15,26 @@ public class KnightsDeck : CardZone
         this.Owner = Owner;
 
         Cards.Add(new Knight(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Church(this.Owner));
+
+        Cards.Add(new Knight(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Church(this.Owner));
+
+
+        Cards.Add(new Knight(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Church(this.Owner));
+
+        Cards.Add(new Knight(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Church(this.Owner));
+
+        Cards.Add(new Knight(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Church(this.Owner));
+
         Cards.Add(new Knight(this.Owner));
         Cards.Add(new Knight(this.Owner));
         Cards.Add(new Knight(this.Owner));
@@ -24,7 +44,16 @@ public class KnightsDeck : CardZone
         Cards.Add(new Knight(this.Owner));
         Cards.Add(new Knight(this.Owner));
 
-        Cards.Add(new Church(this.Owner));
+        
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+
+        
         Cards.Add(new Church(this.Owner));
         Cards.Add(new Church(this.Owner));
         Cards.Add(new Church(this.Owner));
@@ -34,6 +63,6 @@ public class KnightsDeck : CardZone
         Cards.Add(new Church(this.Owner));
         Cards.Add(new Church(this.Owner));
 
-        Shuffle(Cards);
+        //Shuffle(Cards);
     }
 }

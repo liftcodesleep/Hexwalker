@@ -23,6 +23,8 @@ public struct TileDictionary
 //////////////////////////////////////////////////////
 
 
+
+
 public class Map : MonoBehaviour
 {
     private Hex[,] _hexes;
@@ -37,10 +39,17 @@ public class Map : MonoBehaviour
     [SerializeField]
     UnitDatabase data;
 
+    [SerializeField]
+    private GameObject _filter;
+
+    
+
     public int seed;
     public enum HexType {Water, Flat, Forest, High }
     public static readonly int WaterStartElevation = 20;
 
+    private List<HexComponent> _playableHexs;
+    private List<GameObject> hilightedHexs;
     //private GameObject oceanHex;
 
     private void Start()
@@ -53,26 +62,20 @@ public class Map : MonoBehaviour
         GenerateMap();
         seed = Random.Range(0, 1000);
 
-        //GameObject heoceaGo = Instantiate(
-        //             ocean,
-        //             new Vector3(0, 0, 0),
-        //             Quaternion.identity,
-        //             oceanHex.transform
-        //             );
-        //
-        //oceanHex.name += " Ocean";
 
         foreach(Player player in Game.players)
         {
             player.placeAvatar();
         }
-        
+
+        _filter = Game.GetFilter();
+        _playableHexs = new List<HexComponent>();
+
     }
 
     public void PlaceItem(Construct item, Hex location)
     {
 
-        //UnitDatabase data = cardGO.PreFabs.GetComponent<UnitDatabase>();
         
         GameObject itemPreFab = data.GetPrefab(item.Name);
         GameObject unitGO = Instantiate(itemPreFab, GetHexGO(location).transform.position, Quaternion.identity, GetHexGO(location).transform);
@@ -129,10 +132,60 @@ public class Map : MonoBehaviour
     }
 
 
+    public void HighLightHexs(List<Hex> hexsToHighlight)
+    {
+        
+        _filter.SetActive(true);
+        hilightedHexs = new List<GameObject>();
 
 
+        foreach (Hex highlightedHex in hexsToHighlight)
+        {
+            foreach(Hex currentMapHex in _hexes)
+            {
+                if(highlightedHex == currentMapHex)
+                {
+                    foreach (Transform subItem in _hexToGameObject[highlightedHex].transform)
+                    {
+                        subItem.gameObject.layer = 6;
+                    }
+                    hilightedHexs.Add(_hexToGameObject[highlightedHex]);
+                    break;
+                }
+                
+            }
+        }
 
-///////////////////////////// Helper Functions ///////////////////////////////
+        
+    }
+
+    public void UnHighLightHexs()
+    {
+        _filter.SetActive(false);
+        foreach (GameObject hex in hilightedHexs)
+        {
+            foreach (Transform subItem in hex.transform)
+            {
+                subItem.gameObject.layer = 0;
+            }
+        }
+
+    }
+
+    public List<Hex> GetHexList()
+    {
+        List<Hex> hexList = new List<Hex>();
+
+        foreach(Hex hex in _hexes)
+        {
+            hexList.Add(hex);
+        }
+
+        return hexList;
+    }
+
+
+    ///////////////////////////// Helper Functions ///////////////////////////////
 
 
     private GameObject MakeTile(Hex hex)

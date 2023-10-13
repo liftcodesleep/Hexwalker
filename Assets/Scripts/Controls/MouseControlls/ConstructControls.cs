@@ -20,6 +20,8 @@ public class ConstructControls : MonoBehaviour, IMouseController
     {
         selectedToMoveGO = null;
         UnHighLightHexs();
+        MasterMouse.taskOwner = null;
+        MasterMouse.currentTask = MasterMouse.Task.StandBy;
     }
 
     public MasterMouse.Task GetTask()
@@ -30,7 +32,14 @@ public class ConstructControls : MonoBehaviour, IMouseController
     public void LeftClicked(GameObject clickObject)
     {
         Debug.Log("CC LC");
+        
         selectedToMoveGO = clickObject.GetComponent<UnitComponent>();
+
+        if(!selectedToMoveGO)
+        {
+            Debug.Log("Construct Controlls: Not unit clicked");
+            return;
+        }
         
         selectedUnit = selectedToMoveGO.unit;
         
@@ -46,7 +55,25 @@ public class ConstructControls : MonoBehaviour, IMouseController
     public void open()
     {
         Debug.Log("CC open");
-        return;
+
+
+        switch (MasterMouse.currentTask)
+        {
+
+            case MasterMouse.Task.PlayCard:
+            case MasterMouse.Task.StandBy:
+            case MasterMouse.Task.Transition:
+                MasterMouse.taskOwner.close();
+                MasterMouse.currentTask = GetTask();
+                MasterMouse.taskOwner = this;
+                break;
+
+            default:
+                //MasterMouse.currentTask = MasterMouse.Task.Transition;
+                break;
+
+        }
+
     }
 
     public void RightClicked(GameObject clickObject)
@@ -62,6 +89,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
         int hexesMoved  = this.selectedUnit.Move(targetHexGO.hex);
         Debug.Log("CC Moving to " + selectedUnit.Location.Name);
 
+        close();
 
     }
 
@@ -70,6 +98,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
     private void HighLightHexs()
     {
+        UnHighLightHexs();
         GameObject hexMap = Game.GetHexMapGo();
 
         _filter.SetActive(true);
@@ -118,6 +147,8 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
     private void UnHighLightHexs()
     {
+
+        Debug.Log(" CC Turning off highlight");
         _filter.SetActive(false);
         GameObject hexMap = Game.GetHexMapGo();
         HexComponent hexGO;

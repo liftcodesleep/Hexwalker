@@ -13,6 +13,7 @@ public abstract class Card
     public int IsCard;
     public Hex Location;
     public Player Owner;
+    public bool Tapped;
 
     public List<GameObject> Pieces;
 
@@ -20,6 +21,7 @@ public abstract class Card
     {
         this.Owner = Owner;
         Pieces = new List<GameObject>();
+        Tapped = false;
     }
 
     public enum Type { CHARGE, UNIT, ARTIFACT, SPELL  }

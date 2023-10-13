@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Church : Unit
 {
+
+
 	public Church(Player Owner) : base(Owner)
 	{
 		//Charge Cost;
@@ -24,6 +26,8 @@ public class Church : Unit
 		moveableHexTypes = new Map.HexType[] {  };
 
 		type = Card.Type.CHARGE;
+
+		this.Abilities.Add(new ManaTap(this, new Charge(0,0,1,0,false)) );
 	}
 
 

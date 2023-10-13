@@ -68,7 +68,7 @@ public class CardPanelComponent : MonoBehaviour
 
     public void updateCards()
     {
-        Debug.Log("Updating Card Panel Cards in hand " + playerHand.Cards.Count);
+        //Debug.Log("Updating Card Panel Cards in hand " + playerHand.Cards.Count);
         List<Card> addedCards = AddedCards();
         if (addedCards.Count > 0)
         {
@@ -109,18 +109,9 @@ public class CardPanelComponent : MonoBehaviour
         }
 
 
-        
-
         //transform.SetParent(Game.map.gameObject.transform.GetChild(0).transform);
 
-        
-
-
-
     }
-
-
-
 
 
 }

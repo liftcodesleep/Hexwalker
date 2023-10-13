@@ -49,3 +49,9 @@ MonoBehaviour:
     prefab: {fileID: 2518381961790850285, guid: 97ee1f0d7ffe9b94d90b009a8d7bad53, type: 3}
   - name: Church
     prefab: {fileID: 108400231153663939, guid: 6960fcbf2c0e6ed4b92f95e580fd0b26, type: 3}
+  - name: Avatar
+    prefab: {fileID: 6518293428844311935, guid: e672d3b14718a1543bbe86143de4eceb, type: 3}
+  - name: PlayerAura
+    prefab: {fileID: 3280519133390621005, guid: a71be3e7990efb040a07565c43cbb198, type: 3}
+  - name: Bear
+    prefab: {fileID: 14033615944430590, guid: 3b19b9ee7a43507469ab5103b479bab9, type: 3}

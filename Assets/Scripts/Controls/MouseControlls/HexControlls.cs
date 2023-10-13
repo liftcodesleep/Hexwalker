@@ -6,18 +6,67 @@ public class HexControlls : MonoBehaviour, IMouseController
 {
     public void LeftClicked(GameObject clickObject)
     {
-        Debug.Log("Weee");
+        
     }
 
     public void close()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void open()
     {
-        throw new System.NotImplementedException();
+       
+        switch (MasterMouse.currentTask)
+        {
+
+            case MasterMouse.Task.StandBy:
+                Debug.Log("In hex control 1");
+                MasterMouse.taskOwner = this;
+                break;
+
+
+
+            case MasterMouse.Task.MoveUnit:
+                MasterMouse.currentTask = MasterMouse.Task.UnitMenuClicked;
+                StartCoroutine(UpdateFromUnit());
+                break;
+            
+
+            
+
+            case MasterMouse.Task.Transition:
+                MasterMouse.taskOwner.close();
+                MasterMouse.currentTask = GetTask();
+                MasterMouse.taskOwner = this;
+                Debug.Log("In hex control 2");
+                break;
+
+            default:
+                MasterMouse.currentTask = MasterMouse.Task.Transition;
+                Debug.Log("In hex control 3");
+                break;
+
+        }
+
+
+
     }
+
+    private IEnumerator UpdateFromUnit()
+    {
+
+        yield return new WaitForSeconds(.1f);
+
+        if(MasterMouse.currentTask != MasterMouse.Task.UnitMenuClicked)
+        {
+            MasterMouse.taskOwner.close();
+            MasterMouse.currentTask = GetTask();
+            MasterMouse.taskOwner = this;
+        }
+        
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,11 +82,13 @@ public class HexControlls : MonoBehaviour, IMouseController
 
     public void RightClicked(GameObject clickObject)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public MasterMouse.Task GetTask()
     {
         return MasterMouse.Task.StandBy;
     }
+
+
 }

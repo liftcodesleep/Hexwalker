@@ -27,6 +27,8 @@ public class Hex
 
     public List<Card> cards;
 
+    public List<Effect> ActiveEffects;
+
     public Hex(int q, int r)
     {
         this.column = q;
@@ -36,7 +38,7 @@ public class Hex
         this.type = CalcuateType();
 
         cards = new List<Card>();
-
+        ActiveEffects = new List<Effect>();
         //TODO:
         // this.Units = new HashSet<Unit>();
     }

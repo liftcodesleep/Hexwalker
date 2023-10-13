@@ -15,6 +15,7 @@ public class Player
     public int SourcesPlayed;
 
     public Unit Avatar;
+    public List<Effect> ActiveEffects;
 
     public Player()
     {
@@ -22,8 +23,11 @@ public class Player
         this.Graveyard = new CardZone();
         this.Hand = new CardZone();
         this.Sources = new List<Charge>();
+        this.Pool = new Charge();
         Hand.Capacity = 6;
 
+
+        ActiveEffects = new List<Effect>();
         Avatar = new Avatar(this);
         //placeAvatar();
         Draw(5);

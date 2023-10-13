@@ -7,11 +7,12 @@ public class MasterMouse : MonoBehaviour
 
     public static List<GameObject> Selecteditems;
     public static GameObject selectedItem;
+    public static Unit lastSelectedUnit;
 
-    public enum Task { StandBy, PlayCard, MoveUnit }
+    public enum Task { StandBy, PlayCard, MoveUnit, UnitMenuClicked, Transition }
     public static Task currentTask;
 
-    private static IMouseController taskOwner;
+    public static IMouseController taskOwner;
 
     private static RaycastHit HitRay;
     private static Ray MouseRay;
@@ -52,109 +53,67 @@ public class MasterMouse : MonoBehaviour
     {
         selectedItem = obj;
         leftClick();
-
     }
 
     private static void leftClick()
     {
 
+        // If nothing is clicked
         if (selectedItem ==null )
         {
-            //Debug.Log("MM, Clicked nothing");
+            Debug.Log("Master Mouse, Clicked nothing");
             taskOwner.close();
             return;
         }
-        
 
-        IMouseController mouseController;
-        switch (currentTask)
+        IMouseController clickedMouseController = selectedItem.GetComponent<IMouseController>();
+        if (clickedMouseController == null) 
         {
-            case Task.StandBy:
-                mouseController = selectedItem.GetComponent<IMouseController>();
-                mouseController.LeftClicked(selectedItem);
-                if (mouseController != null && mouseController.GetTask() != MasterMouse.Task.StandBy )
-                {
-
-                    SetTask(mouseController.GetTask(), mouseController);
-                    taskOwner.open();
-                   
-                }
-                break;
-            case Task.PlayCard:
-                taskOwner.close();
-                SetTask(Task.StandBy, null);
-                break;
-            case Task.MoveUnit:
-                //Debug.Log("Closing move");
-                taskOwner.close();
-                SetTask(Task.StandBy, null);
-                break;
-            default:
-                SetTask(Task.StandBy, null);
-                break;
+            return;
+        }
+        else if (taskOwner == null)
+        {
+            //Debug.Log("task was null " + selectedItem.name);
+            taskOwner = clickedMouseController;
+            currentTask = clickedMouseController.GetTask();
+            clickedMouseController.open();
 
         }
+        else if (taskOwner != clickedMouseController)
+        {
+            //Debug.Log("clicked task  " + clickedMouseController.GetTask());
+
+            clickedMouseController.open();
+
+        }
+        
+        taskOwner.LeftClicked(selectedItem);
+
 
     }
 
     private void rightClick()
     {
 
-
-        //GameObject selectedItem = getClickedObject();
-        if (selectedItem == null)
+        // Do nothing if nothing is selected and close if selected nothing
+        if (taskOwner == null)
         {
-            //Debug.Log("MM, Clicked nothing");
+            return;
+        }else if (selectedItem == null)
+        {
             taskOwner.close();
             return;
         }
 
-        //Debug.Log("MM " + MasterMouse.currentTask);
-        IMouseController mouseController;
-        switch (currentTask)
-        {
-            case Task.StandBy:
-                
-                mouseController = selectedItem.GetComponent<IMouseController>();
-                mouseController.RightClicked(selectedItem);
-                
-                SetTask(mouseController.GetTask(), mouseController);
-                break;
-            case Task.PlayCard:
-                //SetTask(Task.StandBy, null);
-                Debug.Log(taskOwner.GetTask());
-                taskOwner.RightClicked(selectedItem);
-                break;
-            case Task.MoveUnit:
-                taskOwner.RightClicked(selectedItem);
-                //Debug.Log("MM moving");
-                //SetTask(Task.StandBy, null);
-                break;
-            default:
-                SetTask(Task.StandBy, null);
-                break;
-
-        }
+        taskOwner.RightClicked(selectedItem);
 
     }
 
     public static void SetTask(Task task, IMouseController owner)
     {
-        if(taskOwner != null)
-        {
-            //Debug.Log("MM, Switching task " + currentTask);
-            //taskOwner.close();
-        }
         
         MasterMouse.taskOwner = owner;
         MasterMouse.currentTask = task;
-        //Debug.Log("MM, Switching to " + task);
-
-        if (owner != null)
-        {
-            //owner.open();
-        }
-        
     }
 
 
@@ -162,10 +121,20 @@ public class MasterMouse : MonoBehaviour
     {
         MouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+        GameObject selected;
+        UnitComponent selectedUnit;
+
         if (Physics.Raycast(MouseRay, out HitRay, 100f))
         {
             //selectedItem = HitRay.transform.gameObject.transform.parent.transform.parent.gameObject;
-            return HitRay.transform.gameObject;
+            selected =  HitRay.transform.gameObject;
+            selectedUnit = selected.GetComponent<UnitComponent>();
+            if (selectedUnit)
+            {
+                lastSelectedUnit = selectedUnit.unit;
+            }
+
+            return selected;
 
         }
 

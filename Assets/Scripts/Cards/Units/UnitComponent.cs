@@ -7,6 +7,7 @@ public class UnitComponent : MonoBehaviour
 {
 
     public Unit unit;
+    public Camera CardCamera;
 
     private Vector3 oldPostion;
     private Vector3 newPosition;

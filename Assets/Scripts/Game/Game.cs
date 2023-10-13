@@ -9,7 +9,7 @@ public static class Game
     public static Player[] players;
 
     public static Map map;
-    // public Stack stack;
+    public static Stack<Effect> stack;
 
     public static readonly int rows = 26;
     public static readonly int columns = 38;
