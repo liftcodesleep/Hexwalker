@@ -10,6 +10,24 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
     [SerializeField]
     private AudioSource runSound;
 
+    [SerializeField]
+    private AudioSource attackSound;
+
+    [SerializeField]
+    private AudioSource summonSound;
+
+
+    [SerializeField]
+    private AudioSource[] runSoundArray;
+
+    [SerializeField]
+    private AudioSource[] attackSoundArray;
+
+    [SerializeField]
+    private AudioSource[] summonSoundArray;
+
+
+
     public void AttackAnimation()
     {
         
