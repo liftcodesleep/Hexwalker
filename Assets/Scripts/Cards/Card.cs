@@ -16,12 +16,18 @@ public abstract class Card
     public bool Tapped;
 
     public List<GameObject> Pieces;
+    public List<Effect> ETBs;
+
+    public CardZone.Types currentZone;
 
     public Card(Player Owner)
     {
         this.Owner = Owner;
         Pieces = new List<GameObject>();
         Tapped = false;
+        ETBs = new List<Effect>();
+
+        currentZone = CardZone.Types.Deck;
     }
 
     public enum Type { CHARGE, UNIT, ARTIFACT, SPELL  }

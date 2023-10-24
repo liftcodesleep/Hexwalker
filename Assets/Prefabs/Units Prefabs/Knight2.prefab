@@ -261,6 +261,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2661386366585949383, guid: 73908818e176b0f4a8345d3e29a11052, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 830658527ff967644bba598ea0788c0c, type: 2}
+    - target: {fileID: 7026597675541639747, guid: 73908818e176b0f4a8345d3e29a11052, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 830658527ff967644bba598ea0788c0c, type: 2}
     - target: {fileID: 7853273442481868498, guid: 73908818e176b0f4a8345d3e29a11052, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -288,6 +296,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8302452872300469917}
   m_SourcePrefab: {fileID: 100100000, guid: 73908818e176b0f4a8345d3e29a11052, type: 3}
+--- !u!137 &1616922317306068886 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2661386366585949383, guid: 73908818e176b0f4a8345d3e29a11052, type: 3}
+  m_PrefabInstance: {fileID: 3647724981724492625}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2891667481600693680 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1927002754503026401, guid: 73908818e176b0f4a8345d3e29a11052, type: 3}
@@ -464,9 +477,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3394499622779336864, guid: 4e103521894997a45a4b1f764521d74d, type: 3}
+      propertyPath: enemyMat
+      value: 
+      objectReference: {fileID: 2100000, guid: cc40f1b9a8fbd6642ad5b1f7b08366e7, type: 2}
+    - target: {fileID: 3394499622779336864, guid: 4e103521894997a45a4b1f764521d74d, type: 3}
+      propertyPath: friendMat
+      value: 
+      objectReference: {fileID: 2100000, guid: fcc6646626364a04a86c046fc67b2e47, type: 2}
+    - target: {fileID: 3394499622779336864, guid: 4e103521894997a45a4b1f764521d74d, type: 3}
+      propertyPath: objectToChange2
+      value: 
+      objectReference: {fileID: 1616922317306068886}
     - target: {fileID: 3900710945383019656, guid: 4e103521894997a45a4b1f764521d74d, type: 3}
       propertyPath: m_Name
       value: Identifier
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184484626789431278, guid: 4e103521894997a45a4b1f764521d74d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

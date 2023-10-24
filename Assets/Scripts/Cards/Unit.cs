@@ -24,7 +24,7 @@ public abstract class Unit : Construct
 
 	public void OnDeath()
     {
-
+        currentZone = CardZone.Types.GraveYard;
     }
 
     public int Move(Hex hexTarget)
@@ -88,8 +88,6 @@ public abstract class Unit : Construct
         {
             return false;
         }
-
-        
 
         return true;
     }

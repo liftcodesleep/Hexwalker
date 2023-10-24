@@ -18,7 +18,8 @@ public class KnightsDeck : CardZone
         Cards.Add(new Bear(this.Owner));
         Cards.Add(new Church(this.Owner));
 
-        Cards.Add(new Knight(this.Owner));
+        Cards.Add(new FireBall(this.Owner));
+
         Cards.Add(new Bear(this.Owner));
         Cards.Add(new Church(this.Owner));
 

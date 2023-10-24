@@ -36,7 +36,7 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
     }
     IEnumerator attack()
     {
-        Debug.Log("Aniimation Attack");
+        //Debug.Log("Aniimation Attack");
         _animator.SetBool("attacked", true);
         yield return new WaitForSeconds(.1f);
         _animator.SetBool("attacked", false);

@@ -83,7 +83,7 @@ public class Map : MonoBehaviour
         item.Location = location;
         location.cards.Add(item);
 
-        unitGO.transform.rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
+        //unitGO.transform.rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
 
         if (item.Owner == Game.players[0])
         {

@@ -31,7 +31,7 @@ public abstract class Effect
     {
         Effect copyedEffect = (Effect)effect.MemberwiseClone();
 
-
+        
         Game.stack.Push(copyedEffect );
     }
 

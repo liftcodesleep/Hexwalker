@@ -31,6 +31,8 @@ public class UnitDatabase : MonoBehaviour
                 
                 return unit.prefab;
             }
+
+            //Debug.Log(unit.name);
         }
 
         return null;

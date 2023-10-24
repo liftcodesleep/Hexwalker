@@ -10,6 +10,8 @@ public class CardZone
     public List<Card> Cards;
     public Player Owner;
 
+    public enum Types { Deck, Hand, GraveYard, InPlay };
+
     public CardZone()
     {
         

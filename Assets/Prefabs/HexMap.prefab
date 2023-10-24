@@ -128,4 +128,6 @@ MonoBehaviour:
       maxElevation: 999
       chanceOfSpawning: 1
       style: {fileID: 7330309247982341254, guid: d90c3fed32090684298f0e72e887241a, type: 3}
+  data: {fileID: 0}
+  _filter: {fileID: 0}
   seed: 0

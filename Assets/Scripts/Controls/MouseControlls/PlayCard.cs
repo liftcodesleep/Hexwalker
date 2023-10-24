@@ -29,6 +29,11 @@ public class PlayCard : MonoBehaviour, IMouseController
         
 
         cardPreFab = data.GetPrefab(cardGO.card.Name);
+
+        if(cardPreFab == null)
+        {
+            throw new System.Exception("PlayCard " + cardGO.card.Name + " Did not have a prefab");
+        }
     }
     
     // Update is called once per frame
@@ -111,17 +116,24 @@ public class PlayCard : MonoBehaviour, IMouseController
 
         ////////////////////////////////////////////// NEED TO UPDATE ////////////////////////////////////////////
 
+
+        Debug.Log("PlayCard playing " + cardGO.card.Name);
+        cardGO.card.Location = hex;
+        
+        GameObject unitGO = Instantiate(cardPreFab, clickObject.transform.position, Quaternion.identity, clickObject.transform);
         
 
-        GameObject unitGO = Instantiate(cardPreFab, clickObject.transform.position, Quaternion.identity, clickObject.transform);
-
+        
         Game.GetCurrentPlayer().Avatar.Pieces[0].transform.LookAt(unitGO.transform.position);
         Game.GetCurrentPlayer().Avatar.Pieces[0].GetComponent<UnitComponent>().HandleAttack();
 
+        
         hex.cards.Add(cardGO.card);
-        UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
-        if (unitGO)
+        
+
+        if (unitGO.GetComponent<UnitComponent>())
         {
+            UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
             unitGOComp.unit = (Unit)cardGO.card;
             unitGOComp.unit.Location = hexComp.hex;
         }
@@ -131,6 +143,13 @@ public class PlayCard : MonoBehaviour, IMouseController
             this.transform.localRotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
         }
 
+        
+        foreach (Effect currentEffect in cardGO.card.ETBs )
+        {
+            currentEffect.ImmediateEffect();
+        }
+
+        Debug.Log("PlayCard finished playing !!!!!!!!!!!! " + cardGO.card.Name);
         Game.players[0].Hand.Cards.Remove(cardGO.card);
 
         Destroy(this.gameObject);
@@ -140,6 +159,7 @@ public class PlayCard : MonoBehaviour, IMouseController
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         close();
+        
     }
     
     

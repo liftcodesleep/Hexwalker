@@ -55,3 +55,5 @@ MonoBehaviour:
     prefab: {fileID: 3280519133390621005, guid: a71be3e7990efb040a07565c43cbb198, type: 3}
   - name: Bear
     prefab: {fileID: 14033615944430590, guid: 3b19b9ee7a43507469ab5103b479bab9, type: 3}
+  - name: FireBall
+    prefab: {fileID: 4210539450263942779, guid: 5dc8a1181f4db7c499376f2697e00c13, type: 3}

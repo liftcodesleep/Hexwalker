@@ -23,6 +23,8 @@ public static class Game
 
         players[0].Name = "Player 1";
         players[1].Name = "Player 2";
+
+        stack = new Stack<Effect>();
     }
 
     public static Player GetCurrentPlayer() 

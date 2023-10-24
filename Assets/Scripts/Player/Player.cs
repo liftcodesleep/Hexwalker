@@ -109,10 +109,28 @@ public class Player
 
         while(avatarLocation.type == Map.HexType.Water || avatarLocation.type == Map.HexType.High)
         {
+            
             avatarLocation = Game.map.GetRandomHex();
         }
 
         Game.map.PlaceItem(Avatar, avatarLocation);
+
+        //foreach(Player currentPlayer in Game.players)
+        //{
+        //
+        //    if(currentPlayer != null && currentPlayer.Avatar != null && currentPlayer != this)
+        //    {
+        //        
+        //        if(Avatar.Location.DistanceFrom(currentPlayer.Avatar.Location) > 7 || Avatar.Location.DistanceFrom(currentPlayer.Avatar.Location) < 3)
+        //        {
+        //            placeAvatar();
+        //        }
+        //
+        //    }
+        //
+        //}
+
+
     }
 
 }
