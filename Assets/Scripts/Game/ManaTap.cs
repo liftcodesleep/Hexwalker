@@ -14,6 +14,7 @@ public class ManaTap : Effect
 
         this.Name = "Tap Mana";
         this.Desctiption = "Addes mana to players mana pool";
+        this.NumberOfTargets = 0;
     }
 
     public override void EndTurnEffect()
@@ -36,5 +37,10 @@ public class ManaTap : Effect
     public override void TargetedEffect(Type typeTargeted)
     {
         
+    }
+
+    public override void Target(GameObject target)
+    {
+        throw new System.NotImplementedException();
     }
 }

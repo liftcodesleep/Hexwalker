@@ -10,7 +10,14 @@ public class ConstructPopUp : MonoBehaviour
     GameObject effectSelectorGO;
 
     [SerializeField]
-    GameObject popUp;
+    GameObject popUpPanel;
+
+    [SerializeField]
+    GameObject abilityButtonPrefab;
+
+    Construct currentUnit;
+
+
 
     private static UnitComponent UnitGO;
 
@@ -18,12 +25,14 @@ public class ConstructPopUp : MonoBehaviour
     void Start()
     {
         //UnitComponent UnitGO = MasterMouse.selectedItem.GetComponent<UnitComponent>();
+        currentUnit = null;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         //if(UnitGO == null && MasterMouse.selectedItem != null)
         //{
         //    UnitGO = MasterMouse.selectedItem.GetComponent<UnitComponent>();
@@ -49,8 +58,52 @@ public class ConstructPopUp : MonoBehaviour
         //    UnitGO = null;
         //}
 
+
+        UpdateAbilities();
+
     }
 
+    private void removeOldAbilities()
+    {
+
+        if(popUpPanel.transform.childCount == 0)
+        {
+            return;
+        }
+
+        GameObject currentChild = popUpPanel.transform.GetChild(0).gameObject;
+
+        while ( currentChild != null)
+        {
+            GameObject.Destroy(currentChild);
+            currentChild = popUpPanel.transform.GetChild(0).gameObject;
+            break;
+        }
+        
+    }
+    private void addAbilityButtons()
+    {
+        GameObject currentAbilityButton;
+        int ability_index = 0;
+        foreach(Effect currentAbility in currentUnit.Abilities)
+        {
+            currentAbilityButton = Instantiate(abilityButtonPrefab, popUpPanel.transform);
+            currentAbilityButton.GetComponent<AbilityButtonControlls>().SetUp(currentAbility, ability_index);
+            ability_index++;
+        }
+    }
+    private void UpdateAbilities()
+    {
+        if( MasterMouse.lastSelectedUnit == currentUnit && MasterMouse.lastSelectedUnit != null )
+        {
+            return;
+        }
+
+        removeOldAbilities();
+        currentUnit = MasterMouse.lastSelectedUnit;
+        addAbilityButtons();
+
+    }
 
     public static void UseAbility()
     {

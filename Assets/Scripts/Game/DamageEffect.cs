@@ -19,6 +19,11 @@ public class DamageEffect : Effect
 
     }
 
+    public override void Target(GameObject target)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void ImmediateEffect()
     {
         Debug.Log("Damage Effect");
@@ -48,7 +53,7 @@ public class DamageEffect : Effect
             {
                 Debug.Log("AAAAAAAAAAAAAAAA");
             }
-            currentUnit.Health -= damageAmount;
+            currentUnit.TakeDamage( damageAmount );
         }
         
 

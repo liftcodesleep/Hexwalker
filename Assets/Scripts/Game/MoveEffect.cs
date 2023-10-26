@@ -36,4 +36,9 @@ public class MoveEffect : Effect
     {
         
     }
+
+    public override void Target(GameObject target)
+    {
+        throw new System.NotImplementedException();
+    }
 }

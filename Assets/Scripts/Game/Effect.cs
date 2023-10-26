@@ -4,13 +4,11 @@ using UnityEngine;
 
 public abstract class Effect 
 {
-
-    
-
     public string Name;
     public string Desctiption;
 
     public int NumberOfTargets;
+    public List<GameObject> targets;
 
     public Card Card;
     public bool Resolved;
@@ -22,9 +20,10 @@ public abstract class Effect
     {
         this.Card = card;
         Resolved = false;
+        targets = new List<GameObject>();
     }
 
-    //public void Target();
+    public abstract void Target(GameObject target);
 
 
     public static void PutOnStack(Effect effect)

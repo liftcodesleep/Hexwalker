@@ -66,6 +66,9 @@ public class MasterMouse : MonoBehaviour
             return;
         }
 
+        /*
+         * Makes sure that the item selected has a controller 
+         */
         IMouseController clickedMouseController = selectedItem.GetComponent<IMouseController>();
         if (clickedMouseController == null) 
         {
@@ -77,14 +80,11 @@ public class MasterMouse : MonoBehaviour
             taskOwner = clickedMouseController;
             currentTask = clickedMouseController.GetTask();
             clickedMouseController.open();
-
         }
         else if (taskOwner != clickedMouseController)
         {
             //Debug.Log("clicked task  " + clickedMouseController.GetTask());
-
             clickedMouseController.open();
-
         }
         
         taskOwner.LeftClicked(selectedItem);

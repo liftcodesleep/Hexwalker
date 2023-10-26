@@ -162,6 +162,8 @@ public class Map : MonoBehaviour
     public void UnHighLightHexs()
     {
         _filter.SetActive(false);
+        if (hilightedHexs == null) return;
+
         foreach (GameObject hex in hilightedHexs)
         {
             foreach (Transform subItem in hex.transform)
@@ -236,6 +238,7 @@ public class Map : MonoBehaviour
 
     public GameObject GetHexGO(Hex hex)
     {
+        if (hex == null) return null;
         return _hexToGameObject[hex];
     }
 }

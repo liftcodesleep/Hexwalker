@@ -26,7 +26,9 @@ public class HexControlls : MonoBehaviour, IMouseController
                 break;
 
 
-
+            /*
+             * Checks to see if you are clicking the menu weird delay for some reson
+             */
             case MasterMouse.Task.MoveUnit:
                 MasterMouse.currentTask = MasterMouse.Task.UnitMenuClicked;
                 StartCoroutine(UpdateFromUnit());
@@ -58,9 +60,9 @@ public class HexControlls : MonoBehaviour, IMouseController
 
         yield return new WaitForSeconds(.1f);
 
-        if(MasterMouse.currentTask != MasterMouse.Task.UnitMenuClicked)
+        if(MasterMouse.currentTask != MasterMouse.Task.UnitMenuClicked )
         {
-            MasterMouse.taskOwner.close();
+            if(MasterMouse.taskOwner != null) MasterMouse.taskOwner.close();
             MasterMouse.currentTask = GetTask();
             MasterMouse.taskOwner = this;
         }

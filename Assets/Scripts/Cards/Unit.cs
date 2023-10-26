@@ -24,6 +24,7 @@ public abstract class Unit : Construct
 
 	public void OnDeath()
     {
+        Location = null;
         currentZone = CardZone.Types.GraveYard;
     }
 
@@ -38,14 +39,28 @@ public abstract class Unit : Construct
         int hexesTraveled = (int)Location.DistanceFrom(hexTarget);
         Location.cards.Remove(this);
 
-
         Location = hexTarget;
-
         hexTarget.cards.Add(this);
-
         return hexesTraveled;
 
 
+    }
+
+    public void Attack(Unit target)
+    {
+        target.TakeDamage( this.Strength );
+    }
+
+    public void TakeDamage(int damage_amount)
+    {
+        this.Health -= damage_amount;
+
+        if(Health <= 0)
+        {
+            this.currentZone = CardZone.Types.GraveYard;
+            Location = null;
+            Debug.Log("Unit was put into the graveyard");
+        }
     }
 
 

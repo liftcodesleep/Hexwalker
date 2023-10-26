@@ -39,6 +39,9 @@ public class UnitComponent : MonoBehaviour
         
         //this.oldHealth = unit.HealthPoints;
     }
+
+    
+
     //
     private void Update()
     {
@@ -59,10 +62,27 @@ public class UnitComponent : MonoBehaviour
         UpdatePosition();
         UpdateHexPosition();
 
+        HandleDeath();
+
     }
+
+    private void HandleDeath()
+    {
+        if(unit.currentZone == CardZone.Types.GraveYard)
+        {
+            this.transform.localScale *= .9f;
+        }
+
+        if(this.transform.localScale.magnitude < .1f)
+        {
+            GameObject.Destroy(this.gameObject);
+        }
+    }
+
     //
     private void UpdateHexPosition()
     {
+        if(this.unit.Location == null) { return; }
         HexComponent parentComponent = this.transform.parent.GetComponent<HexComponent>();
         if (parentComponent == null)
         {

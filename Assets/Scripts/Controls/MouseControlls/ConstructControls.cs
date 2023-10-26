@@ -81,18 +81,44 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
         HexComponent targetHexGO = clickObject.GetComponent<HexComponent>();
 
-        if(!targetHexGO)
+        if(targetHexGO)
         {
+            move_to(targetHexGO);
             return;
         }
-        Debug.Log("CC Moving From " + selectedUnit.Location.Name);
-        int hexesMoved  = this.selectedUnit.Move(targetHexGO.hex);
-        Debug.Log("CC Moving to " + selectedUnit.Location.Name);
+
+        UnitComponent targetUnitGO = clickObject.GetComponent<UnitComponent>();
+        if (targetUnitGO)
+        {
+
+            targetUnitGO.GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
+            selectedToMoveGO.GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
+
+            targetUnitGO.transform.LookAt(selectedToMoveGO.transform.position);
+            selectedToMoveGO.transform.LookAt(targetUnitGO.transform.position);
+
+            selectedUnit.Attack(targetUnitGO.unit);
+            close();
+        }
+
+
+
+    }
+
+    private void attack()
+    {
+
+    }
+
+    private void move_to(HexComponent targetHexGO)
+    {
+        //Debug.Log("CC Moving From " + selectedUnit.Location.Name);
+        int hexesMoved = this.selectedUnit.Move(targetHexGO.hex);
+        //Debug.Log("CC Moving to " + selectedUnit.Location.Name);
 
         close();
 
     }
-
 
 
 

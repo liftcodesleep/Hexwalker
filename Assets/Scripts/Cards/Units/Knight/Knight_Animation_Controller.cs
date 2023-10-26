@@ -44,7 +44,17 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
     }
     public void DeathAnimation()
     {
-        throw new System.NotImplementedException();
+        StartCoroutine(deathAnimationplay());
+
+    }
+
+    IEnumerator deathAnimationplay()
+    {
+        //Debug.Log("Aniimation Attack");
+        _animator.SetBool("attacked", true);
+        yield return new WaitForSeconds(.1f);
+        _animator.SetBool("attacked", false);
+
     }
 
     public void IdleAnimation()
@@ -68,12 +78,25 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
         }
         Debug.Log("Starting run animation");
         _animator.SetBool("Moving", true);
+        if(runSound == null)
+        {
+            return;
+        }
         runSound.Play();
     }
 
     public void TakeDamageAnimation()
     {
-        throw new System.NotImplementedException();
+        StartCoroutine(damageAnimationplay());
+    }
+
+    IEnumerator damageAnimationplay()
+    {
+        Debug.Log("Aniimation Damage!!!!!!!!!!!!!");
+        _animator.SetBool("damaged", true);
+        yield return new WaitForSeconds(1f);
+        _animator.SetBool("damaged", false);
+
     }
 
     public void UseSpellAnimation()
