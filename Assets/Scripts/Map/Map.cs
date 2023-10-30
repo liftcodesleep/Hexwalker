@@ -52,6 +52,9 @@ public class Map : MonoBehaviour
     private List<GameObject> hilightedHexs;
     //private GameObject oceanHex;
 
+
+    public enum Direction { Left, Right, UpLeft, UpRight, DownLeft, DownRight }
+
     private void Start()
     {
         Game.map = this;
@@ -182,8 +185,37 @@ public class Map : MonoBehaviour
         {
             hexList.Add(hex);
         }
-
         return hexList;
+    }
+
+    public Hex GetHex(int row, int col)
+    {
+
+        return _hexes[row,col];
+    }
+
+    public Hex GetAdjacentHex(Hex hex, Direction direction)
+    {
+
+        switch (direction)
+        {
+            case Direction.Left:
+                return GetHex(hex.row, (hex.column + 1) % this._hexes.GetLength(1));
+            case Direction.Right:
+                return GetHex(hex.row, (hex.column - 1) % this._hexes.GetLength(1));
+            case Direction.UpLeft:
+                return GetHex((hex.row + 1) % this._hexes.GetLength(0), hex.column );
+            case Direction.UpRight:
+                return GetHex((hex.row + 1) % this._hexes.GetLength(0), (hex.column - 1) % this._hexes.GetLength(1));
+            case Direction.DownLeft:
+                return GetHex((hex.row - 1) % this._hexes.GetLength(0), (hex.column + 1) % this._hexes.GetLength(1));
+            case Direction.DownRight:
+                return GetHex((hex.row - 1) % this._hexes.GetLength(0), hex.column);
+            default:
+                return null;
+        }
+
+        return null;
     }
 
 

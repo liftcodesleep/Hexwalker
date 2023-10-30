@@ -116,53 +116,107 @@ public class PlayCard : MonoBehaviour, IMouseController
 
         ////////////////////////////////////////////// NEED TO UPDATE ////////////////////////////////////////////
 
-
-        Debug.Log("PlayCard playing " + cardGO.card.Name);
-        cardGO.card.Location = hex;
-        
-        GameObject unitGO = Instantiate(cardPreFab, clickObject.transform.position, Quaternion.identity, clickObject.transform);
-        
-
-        
-        Game.GetCurrentPlayer().Avatar.Pieces[0].transform.LookAt(unitGO.transform.position);
-        Game.GetCurrentPlayer().Avatar.Pieces[0].GetComponent<UnitComponent>().HandleAttack();
-
-        
-        hex.cards.Add(cardGO.card);
-        
-
-        if (unitGO.GetComponent<UnitComponent>())
-        {
-            UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
-            unitGOComp.unit = (Unit)cardGO.card;
-            unitGOComp.unit.Location = hexComp.hex;
-        }
-        if (cardGO.card.type == Card.Type.CHARGE)
-        {
-            
-            this.transform.localRotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
-        }
-
-        
-        foreach (Effect currentEffect in cardGO.card.ETBs )
-        {
-            currentEffect.ImmediateEffect();
-        }
-
-        Debug.Log("PlayCard finished playing !!!!!!!!!!!! " + cardGO.card.Name);
-        Game.players[0].Hand.Cards.Remove(cardGO.card);
+        Play(cardGO.card,hex);
 
         Destroy(this.gameObject);
-
-        cardGO.card.Pieces.Add(unitGO);
+        //Debug.Log("PlayCard playing " + cardGO.card.Name);
+        //cardGO.card.Location = hex;
+        //
+        //GameObject unitGO = Instantiate(cardPreFab, clickObject.transform.position, Quaternion.identity, clickObject.transform);
+        //
+        //
+        //
+        //Game.GetCurrentPlayer().Avatar.Pieces[0].transform.LookAt(unitGO.transform.position);
+        //Game.GetCurrentPlayer().Avatar.Pieces[0].GetComponent<UnitComponent>().HandleAttack();
+        //
+        //
+        //hex.cards.Add(cardGO.card);
+        //
+        //
+        //if (unitGO.GetComponent<UnitComponent>())
+        //{
+        //    UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
+        //    unitGOComp.unit = (Unit)cardGO.card;
+        //    unitGOComp.unit.Location = hexComp.hex;
+        //}
+        //if (cardGO.card.type == Card.Type.CHARGE)
+        //{
+        //    
+        //    this.transform.localRotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
+        //}
+        //
+        //
+        //foreach (Effect currentEffect in cardGO.card.ETBs )
+        //{
+        //    currentEffect.ImmediateEffect();
+        //}
+        //
+        //Debug.Log("PlayCard finished playing !!!!!!!!!!!! " + cardGO.card.Name);
+        //Game.players[0].Hand.Cards.Remove(cardGO.card);
+        //
+        //Destroy(this.gameObject);
+        //
+        //cardGO.card.Pieces.Add(unitGO);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         close();
         
     }
+
+
+    public static void Play(Card card, Hex hex)
+    {
+        
+        card.Location = hex;
+
+        UnitDatabase data = GameObject.Find("UnitSpellsDataBase").GetComponent<UnitDatabase>();
+
+        if(data == null)
+        {
+            throw new System.Exception("Could not find DataBase in play card");
+        }
+
+        GameObject cardPreFab = data.GetPrefab(card.Name);
+
+        GameObject unitGO = Instantiate(cardPreFab, Game.map.GetHexGO(hex).transform.position, Quaternion.identity, Game.map.GetHexGO(hex).transform);
+
+
+
+        Game.GetCurrentPlayer().Avatar.Pieces[0].transform.LookAt(unitGO.transform.position);
+        Game.GetCurrentPlayer().Avatar.Pieces[0].GetComponent<UnitComponent>().HandleAttack();
+
+
+        hex.cards.Add(card);
+
+
+        if (unitGO.GetComponent<UnitComponent>())
+        {
+            UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
+            unitGOComp.unit = (Unit)card;
+            unitGOComp.unit.Location = hex;
+        }
+        if (card.type == Card.Type.CHARGE)
+        {
+
+            //this.transform.localRotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
+        }
+
+
+        foreach (Effect currentEffect in card.ETBs)
+        {
+            currentEffect.ImmediateEffect();
+        }
+
+        Debug.Log("PlayCard finished playing !!!!!!!!!!!! " + card.Name);
+        card.Owner.Hand.Cards.Remove(card);
+
+        card.Pieces.Add(unitGO);
+    }
     
-    
+ 
+
+
     private void HighLightHexs()
     {
         GameObject hexMap = Game.GetHexMapGo();

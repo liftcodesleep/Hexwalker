@@ -13,6 +13,8 @@ public abstract class Effect
     public Card Card;
     public bool Resolved;
 
+    public float ResolveTime;
+
     public enum Type { ATTACK, DAMAGE, MOVE };
     public Type EffectType; 
 
@@ -21,6 +23,8 @@ public abstract class Effect
         this.Card = card;
         Resolved = false;
         targets = new List<GameObject>();
+
+        ResolveTime = 100f;
     }
 
     public abstract void Target(GameObject target);

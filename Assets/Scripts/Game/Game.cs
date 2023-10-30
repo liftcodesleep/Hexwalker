@@ -25,6 +25,7 @@ public static class Game
         players[1].Name = "Player 2";
 
         stack = new Stack<Effect>();
+        
     }
 
     public static Player GetCurrentPlayer() 
