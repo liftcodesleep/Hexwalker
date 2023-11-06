@@ -16,13 +16,14 @@ public class HexControlls : MonoBehaviour, IMouseController
 
     public void open()
     {
-       
+        
         switch (MasterMouse.currentTask)
         {
 
             case MasterMouse.Task.StandBy:
-                Debug.Log("In hex control 1");
+                //Debug.Log("In hex control 1");
                 MasterMouse.taskOwner = this;
+                
                 break;
 
 
@@ -41,12 +42,12 @@ public class HexControlls : MonoBehaviour, IMouseController
                 MasterMouse.taskOwner.close();
                 MasterMouse.currentTask = GetTask();
                 MasterMouse.taskOwner = this;
-                Debug.Log("In hex control 2");
+                //Debug.Log("In hex control 2");
                 break;
 
             default:
                 MasterMouse.currentTask = MasterMouse.Task.Transition;
-                Debug.Log("In hex control 3");
+                //Debug.Log("In hex control 3");
                 break;
 
         }
@@ -92,5 +93,5 @@ public class HexControlls : MonoBehaviour, IMouseController
         return MasterMouse.Task.StandBy;
     }
 
-
+    
 }

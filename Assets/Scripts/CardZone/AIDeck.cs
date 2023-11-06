@@ -17,6 +17,10 @@ public class AIDeck : CardZone
         Cards.Add(new Knight(this.Owner));
         Cards.Add(new Knight(this.Owner));
         Cards.Add(new Knight(this.Owner));
+        Cards.Add(new Knight(this.Owner));
+        Cards.Add(new Knight(this.Owner));
+        Cards.Add(new Knight(this.Owner));
+        Cards.Add(new Knight(this.Owner));
     }
 
 }

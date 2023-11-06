@@ -31,13 +31,13 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
     public void LeftClicked(GameObject clickObject)
     {
-        Debug.Log("CC LC");
+        //Debug.Log("CC LC");
         
         selectedToMoveGO = clickObject.GetComponent<UnitComponent>();
 
         if(!selectedToMoveGO)
         {
-            Debug.Log("Construct Controlls: Not unit clicked");
+            //Debug.Log("Construct Controlls: Not unit clicked");
             return;
         }
         
@@ -54,7 +54,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
     public void open()
     {
-        Debug.Log("CC open");
+        //Debug.Log("CC open");
 
 
         switch (MasterMouse.currentTask)
@@ -124,67 +124,41 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
     private void HighLightHexs()
     {
-        UnHighLightHexs();
-        GameObject hexMap = Game.GetHexMapGo();
-
-        _filter.SetActive(true);
-        HexComponent hexGO;
-        foreach (Transform currentHex in hexMap.transform)
-        {
-
-            hexGO = currentHex.gameObject.GetComponent<HexComponent>();
-
-            //selectedUnit.Location.DistanceFrom(hexGO.hex) < selectedUnit.ActionPoints &&
-
-            if (selectedUnit.Location.DistanceFrom(hexGO.hex) <= selectedUnit.ActionPoints && selectedUnit.ValidMove(hexGO.hex))
-            {
-
-                hexGO.gameObject.layer = 6;
-                
-
-                foreach (Transform subItem in hexGO.transform)
-                {
-                    subItem.gameObject.layer = 6;
-                }
-
-
-            }
-            else
-            {
-                foreach (Transform subItem in hexGO.transform)
-                {
-                    subItem.gameObject.layer = 0;
-                }
-
-            }
-
-            
-
-        }
-
         
-        foreach (Transform subItem in  Game.map.GetHexGO( selectedUnit.Location).transform )
-        {
-            subItem.gameObject.layer = 6;
-        }
+        Game.map.UnHighLightHexs();
 
+        List<Hex> hexs = Game.map.GetHexList();
+        List<Hex> hexsToHighlight = new List<Hex>();
+
+        foreach(Hex hex in hexs)
+        {
+            if(selectedUnit.Location.DistanceFrom(hex) <= selectedUnit.ActionPoints && selectedUnit.ValidMove(hex))
+            {
+                hexsToHighlight.Add(hex);
+            }
+        }
+        hexsToHighlight.Add(selectedUnit.Location); 
+        Game.map.HighLightHexs(hexsToHighlight);
+        
 
     }
 
     private void UnHighLightHexs()
     {
 
-        Debug.Log(" CC Turning off highlight");
-        _filter.SetActive(false);
-        GameObject hexMap = Game.GetHexMapGo();
-        HexComponent hexGO;
-        foreach (Transform currentHex in hexMap.transform)
-        {
-            hexGO = currentHex.gameObject.GetComponent<HexComponent>();
-            foreach (Transform subItem in hexGO.transform)
-            {
-                subItem.gameObject.layer = 0;
-            }
-        }
+        //Debug.Log(" CC Turning off highlight");
+        //_filter.SetActive(false);
+        //GameObject hexMap = Game.GetHexMapGo();
+        //HexComponent hexGO;
+        //foreach (Transform currentHex in hexMap.transform)
+        //{
+        //    hexGO = currentHex.gameObject.GetComponent<HexComponent>();
+        //    foreach (Transform subItem in hexGO.transform)
+        //    {
+        //        subItem.gameObject.layer = 0;
+        //    }
+        //}
+
+        Game.map.UpdateVisable();
     }
 }

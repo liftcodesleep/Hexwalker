@@ -66,13 +66,19 @@ public class Map : MonoBehaviour
         seed = Random.Range(0, 1000);
 
 
-        foreach(Player player in Game.players)
-        {
-            player.placeAvatar();
-        }
+        //foreach(Player player in Game.players)
+        //{
+        //    player.placeAvatar();
+        //}
+
+        Level currentLevel = new LevelOne();
+
+        currentLevel.StartLevel();
 
         _filter = Game.GetFilter();
         _playableHexs = new List<HexComponent>();
+
+        UpdateVisable();
 
     }
 
@@ -87,6 +93,7 @@ public class Map : MonoBehaviour
         location.cards.Add(item);
 
         //unitGO.transform.rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
+        unitGO.transform.rotation = Quaternion.Euler(0, 180, 0);
 
         if (item.Owner == Game.players[0])
         {
@@ -95,6 +102,7 @@ public class Map : MonoBehaviour
         }
 
         item.Pieces.Add(unitGO);
+        //item.Owner.AllUnits.Add(item);
     }
 
     public Hex GetRandomHex()
@@ -148,7 +156,8 @@ public class Map : MonoBehaviour
             {
                 if(highlightedHex == currentMapHex)
                 {
-                    foreach (Transform subItem in _hexToGameObject[highlightedHex].transform)
+                    var children = _hexToGameObject[highlightedHex].GetComponentsInChildren<Transform>(includeInactive: true);
+                    foreach (Transform subItem in children)
                     {
                         subItem.gameObject.layer = 6;
                     }
@@ -171,9 +180,20 @@ public class Map : MonoBehaviour
         {
             foreach (Transform subItem in hex.transform)
             {
+                
                 subItem.gameObject.layer = 0;
+
+                if (subItem.GetComponent<UnitComponent>())
+                {
+                    var children = subItem.GetComponentsInChildren<Transform>(includeInactive: true);
+                    foreach (Transform unitPart in children)
+                    {
+                        unitPart.gameObject.layer = 7;
+                    }
+                }
             }
         }
+        
 
     }
 
@@ -272,5 +292,32 @@ public class Map : MonoBehaviour
     {
         if (hex == null) return null;
         return _hexToGameObject[hex];
+    }
+
+
+    public void UpdateVisable()
+    {
+
+        UnHighLightHexs();
+        Debug.Log("Updating visable rage");
+        List<Hex> visableHexs = new List<Hex>();
+
+
+        foreach (Construct unit in Game.players[0].AllUnits)
+        {
+            foreach (Hex hex in Game.map.GetHexList())
+            {
+
+                if (hex.DistanceFrom(unit.Location) < 4)
+                {
+                    //Debug.Log("dafd");
+                    visableHexs.Add(hex);
+                }
+            }
+        }
+
+
+        Game.map.HighLightHexs(visableHexs);
+        //_filter.GetComponent<Renderer>().material.color = Color.black;
     }
 }

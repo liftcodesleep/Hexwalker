@@ -44,7 +44,7 @@ public class PlayCard : MonoBehaviour, IMouseController
     
     public void clickedFromGUI()
     {
-        Debug.Log("Play card Clicked");
+        //Debug.Log("Play card Clicked");
         MasterMouse.leftClickObj(this.gameObject);
     }
     
@@ -68,7 +68,7 @@ public class PlayCard : MonoBehaviour, IMouseController
         //
         //HighLightHexs();
 
-        Debug.Log("In play card 1");
+        //Debug.Log("In play card 1");
         switch (MasterMouse.currentTask)
         {
 
@@ -114,51 +114,12 @@ public class PlayCard : MonoBehaviour, IMouseController
         }
         MasterMouse.Selecteditems.Add(clickObject);
 
-        ////////////////////////////////////////////// NEED TO UPDATE ////////////////////////////////////////////
+        
 
         Play(cardGO.card,hex);
 
         Destroy(this.gameObject);
-        //Debug.Log("PlayCard playing " + cardGO.card.Name);
-        //cardGO.card.Location = hex;
-        //
-        //GameObject unitGO = Instantiate(cardPreFab, clickObject.transform.position, Quaternion.identity, clickObject.transform);
-        //
-        //
-        //
-        //Game.GetCurrentPlayer().Avatar.Pieces[0].transform.LookAt(unitGO.transform.position);
-        //Game.GetCurrentPlayer().Avatar.Pieces[0].GetComponent<UnitComponent>().HandleAttack();
-        //
-        //
-        //hex.cards.Add(cardGO.card);
-        //
-        //
-        //if (unitGO.GetComponent<UnitComponent>())
-        //{
-        //    UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
-        //    unitGOComp.unit = (Unit)cardGO.card;
-        //    unitGOComp.unit.Location = hexComp.hex;
-        //}
-        //if (cardGO.card.type == Card.Type.CHARGE)
-        //{
-        //    
-        //    this.transform.localRotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
-        //}
-        //
-        //
-        //foreach (Effect currentEffect in cardGO.card.ETBs )
-        //{
-        //    currentEffect.ImmediateEffect();
-        //}
-        //
-        //Debug.Log("PlayCard finished playing !!!!!!!!!!!! " + cardGO.card.Name);
-        //Game.players[0].Hand.Cards.Remove(cardGO.card);
-        //
-        //Destroy(this.gameObject);
-        //
-        //cardGO.card.Pieces.Add(unitGO);
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         close();
         
@@ -195,6 +156,7 @@ public class PlayCard : MonoBehaviour, IMouseController
             UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
             unitGOComp.unit = (Unit)card;
             unitGOComp.unit.Location = hex;
+            card.Owner.AllUnits.Add((Construct)card);
         }
         if (card.type == Card.Type.CHARGE)
         {
@@ -256,14 +218,16 @@ public class PlayCard : MonoBehaviour, IMouseController
     
     private void UnHighLightHexs()
     {
-        _filter.SetActive(false);
-        foreach (HexComponent hex in _playableHexs)
-        {
-            foreach (Transform subItem in hex.transform)
-            {
-                subItem.gameObject.layer = 0;
-            }
-        }
+        //_filter.SetActive(false);
+        //foreach (HexComponent hex in _playableHexs)
+        //{
+        //    foreach (Transform subItem in hex.transform)
+        //    {
+        //        subItem.gameObject.layer = 0;
+        //    }
+        //}
+
+        Game.map.UpdateVisable();
         
     }
     

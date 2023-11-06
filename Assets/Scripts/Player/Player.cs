@@ -14,23 +14,26 @@ public class Player
     public int SourcePlays;
     public int SourcesPlayed;
 
+    public List<Construct> AllUnits;
+
     public Unit Avatar;
     public List<Effect> ActiveEffects;
 
     public Player()
     {
-        this.Deck = new KnightsDeck(this);
+        this.Deck = new TutorialDeck(this);
         this.Graveyard = new CardZone();
         this.Hand = new CardZone();
         this.Sources = new List<Charge>();
         this.Pool = new Charge();
         Hand.Capacity = 6;
 
-
+        AllUnits = new List<Construct>();
         ActiveEffects = new List<Effect>();
         Avatar = new Avatar(this);
+        AllUnits.Add(Avatar); 
         //placeAvatar();
-        Draw(5);
+        //Draw(5);
     }
 
     public int GainCharge(Charge charge)
@@ -94,7 +97,14 @@ public class Player
 
     public virtual void OnTurnStart()
     {
+
         Draw(1);
+
+        foreach(Unit construct in AllUnits)
+        {
+            construct.ActionPoints = 2;
+        }
+        Debug.Log("Drew Another card");
     }
 
     public virtual void OnTurnEnd()
@@ -114,22 +124,6 @@ public class Player
         }
 
         Game.map.PlaceItem(Avatar, avatarLocation);
-
-        //foreach(Player currentPlayer in Game.players)
-        //{
-        //
-        //    if(currentPlayer != null && currentPlayer.Avatar != null && currentPlayer != this)
-        //    {
-        //        
-        //        if(Avatar.Location.DistanceFrom(currentPlayer.Avatar.Location) > 7 || Avatar.Location.DistanceFrom(currentPlayer.Avatar.Location) < 3)
-        //        {
-        //            placeAvatar();
-        //        }
-        //
-        //    }
-        //
-        //}
-
 
     }
 

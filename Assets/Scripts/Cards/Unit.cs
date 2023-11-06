@@ -26,6 +26,7 @@ public abstract class Unit : Construct
     {
         Location = null;
         currentZone = CardZone.Types.GraveYard;
+        Owner.AllUnits.Remove(this);
     }
 
     public int Move(Hex hexTarget)
@@ -41,6 +42,9 @@ public abstract class Unit : Construct
 
         Location = hexTarget;
         hexTarget.cards.Add(this);
+
+        ActionPoints -= hexesTraveled;
+
         return hexesTraveled;
 
 
@@ -99,7 +103,12 @@ public abstract class Unit : Construct
             return false;
         }
 
-        if (hex.cards.Count > 0)
+        //if (hex.cards.Count > 0 && hex.cards[0].Owner != this.Owner)
+        //{
+        //    return false;
+        //}
+
+        if (this.Location.DistanceFrom(hex) > this.ActionPoints)
         {
             return false;
         }

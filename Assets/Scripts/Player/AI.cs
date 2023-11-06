@@ -18,25 +18,12 @@ public class AI : Player
         Draw(1);
 
 
-        //Hex startingLocation = this.Avatar.Location;
-        ////this.Avatar.Move(  Game.map.GetAdjacentHex( this.Avatar.Location, Map.Direction.DownRight  )  );
-        //
-        //while  (startingLocation == this.Avatar.Location)
-        //{
-        //    this.Avatar.Move(Game.map.GetAdjacentHex(this.Avatar.Location, (Map.Direction)Random.Range(0, 5) )); 
-        //}
+        //Debug.Log("AI is at " + this.Avatar.Location.row + ", " + this.Avatar.Location.column);
 
-        //MoveUnitToLocation(this.Avatar, Game.players[0].Avatar.Location);
-
-        Debug.Log("AI is at " + this.Avatar.Location.row + ", " + this.Avatar.Location.column);
-
-        
-
-        Game.map.StartCoroutine(HandleTurn());
-
-        //this.Hand.Cards[0];
-        
-        //Game.NextTurn();
+        //Game.map.StartCoroutine(HandleTurn());
+        MoveUnitToLocation((Unit)Game.players[1].AllUnits[2], Game.players[0].Avatar.Location);
+        Debug.Log("Moving " + Game.players[1].AllUnits[2].Location.column + " " + Game.players[1].AllUnits[2].Location.row);
+        Game.NextTurn();
     }
 
     public override void OnTurnEnd()
@@ -48,22 +35,40 @@ public class AI : Player
     IEnumerator HandleTurn()
     {
         MoveUnitToLocation(this.Avatar, Game.players[0].Avatar.Location);
-        yield return new WaitForSeconds(1f);
-        PlayCard.Play(this.Hand.Cards[0], Game.map.GetAdjacentHex(this.Avatar.Location, Map.Direction.UpRight));
-        yield return new WaitForSeconds(1f);
+
+        //Game.map.StartCoroutine(Move ());
+        //Move();
+        Debug.Log("Finished Move AI");
+        //yield return new WaitForSeconds(2f);
+        ////PlayCard.Play(this.Hand.Cards[0], Game.map.GetAdjacentHex(this.Avatar.Location, Map.Direction.UpRight));
+        //Debug.Log("Finished Plaing  AI");
+        yield return new WaitForSeconds(2f);
+        Debug.Log("AI ended turn");
         Game.NextTurn();
+        
     }
 
     IEnumerator Move()
     {
-        
-        yield return new WaitForSeconds(.005f);
-           
 
+        List<Hex> path = FindPath(this.Avatar, Game.players[0].Avatar.Location, new List<Hex>());
+
+        Debug.Log("The found path size was " + path.Count);
+
+        foreach (Hex hex in path)
+        {
+            yield return new WaitForSeconds(1f);
+            this.Avatar.Move(hex);
+        }
+        
+           
+    
     }
 
 
-
+    /*
+     * Just moves closer to the target. Does not find true path
+     */
     public void MoveUnitToLocation(Unit unit, Hex target_location)
     {
         Hex startingLocation = unit.Location;
@@ -95,30 +100,53 @@ public class AI : Player
 
     public List<Hex> FindPath(Unit unit, Hex destantion, List<Hex> currentPath)
     {
-        List<Hex> newPath = new List<Hex>(currentPath);
 
-        if(currentPath.Last() == destantion)
+        //Debug.Log("AAAAAA0" + currentPath.Count);
+        //List<Hex> newPath = new List<Hex>(currentPath);
+        //
+        Debug.Log("AAAAAA " + currentPath.Count );
+
+
+        if(currentPath.Count > 0 && currentPath.Last() == destantion)
         {
+            Debug.Log("Got the path!! its size is " + currentPath.Count);
             return currentPath;
         }
 
+        /*
+         * Tests the path for every hex next to the current hex
+         * Do another recursive call if the hex that it was nex to was not already in the list
+         */
+        Hex newLocation;
+        List<Hex> newPath;
+        List<Hex>[] allPaths = new List<Hex>[6];
         for (int direction_index = 0; direction_index < 6; direction_index++)
         {
-            Hex newLocation = Game.map.GetAdjacentHex(unit.Location, (Map.Direction)direction_index);
+            newLocation = Game.map.GetAdjacentHex(unit.Location, (Map.Direction)direction_index);
 
-            //if (newLocation.DistanceFrom(target_location) < startingLocation.DistanceFrom(target_location))
-            //{
-            //    unit.Move(newLocation);
-            //    if (unit.ValidMove(newLocation))
-            //    {
-            //        return;
-            //    }
-            //}
+            if(currentPath.Contains(newLocation))
+            {
+                continue;
+            }
+
+
+            newPath = new List<Hex>(currentPath);
+            newPath.Add(newLocation);
+
+            allPaths[direction_index] =  FindPath(unit, destantion, newPath);
 
 
         }
 
-        return null;
+        newPath = allPaths[0];
+        foreach (List<Hex> path in allPaths)
+        {
+            if(path != null && path.Count < newPath.Count) 
+            {
+                newPath = path;
+            }
+        }
+        return newPath;
 
     }
 }
