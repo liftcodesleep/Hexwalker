@@ -18,7 +18,7 @@ public abstract class Unit : Construct
 
     public Unit(Player Owner) : base(Owner)
     {
-        
+           
         type = Card.Type.UNIT;
     }
 
@@ -102,6 +102,11 @@ public abstract class Unit : Construct
         {
             return false;
         }
+
+        //if(hex.cards.Count  > 0)
+        //{
+        //    return false;
+        //}
 
         //if (hex.cards.Count > 0 && hex.cards[0].Owner != this.Owner)
         //{

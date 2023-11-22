@@ -81,4 +81,23 @@ public class Charge {
     public int TotalCharge(Charge bank) {
         return bank.Essence + bank.Slip + bank.Holy + bank.Unholy;
     }
+
+
+    public static bool operator >=(Charge charge1, Charge charge2)
+    {
+        return (charge1.Unholy >= charge2.Unholy) && (charge1.Holy >= charge2.Holy)
+    && (charge1.Slip >= charge2.Slip) && (charge1.Essence >= charge2.Essence);
+
+    }
+    public static bool operator <=(Charge charge1, Charge charge2)
+    {
+        Debug.Log(charge1.Essence + " " + charge2.Essence);
+        Debug.Log("The value for <= " + ((charge1.Unholy <= charge2.Unholy) && (charge1.Holy <= charge2.Holy)
+    && (charge1.Slip <= charge2.Slip) && (charge1.Essence <= charge2.Essence)));
+        return (charge1.Unholy <= charge2.Unholy) && (charge1.Holy <= charge2.Holy)
+    && (charge1.Slip <= charge2.Slip) && (charge1.Essence <= charge2.Essence);
+
+    }
+
+    
 }

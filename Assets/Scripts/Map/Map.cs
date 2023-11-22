@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.FilePathAttribute;
 
 
 ////////////////For Organazation //////////////////////////////////////
@@ -42,7 +43,11 @@ public class Map : MonoBehaviour
     [SerializeField]
     private GameObject _filter;
 
-    
+    [SerializeField]
+    private UnitDatabase AllPreFabs;
+
+    [SerializeField]
+    public TalkingText TalkingDialog;
 
     public int seed;
     public enum HexType {Water, Flat, Forest, High }
@@ -52,6 +57,7 @@ public class Map : MonoBehaviour
     private List<GameObject> hilightedHexs;
     //private GameObject oceanHex;
 
+    public Level CurrentLevel;
 
     public enum Direction { Left, Right, UpLeft, UpRight, DownLeft, DownRight }
 
@@ -71,15 +77,20 @@ public class Map : MonoBehaviour
         //    player.placeAvatar();
         //}
 
-        Level currentLevel = new LevelOne();
+        CurrentLevel = new LevelOne();
 
-        currentLevel.StartLevel();
+        CurrentLevel.StartLevel();
 
         _filter = Game.GetFilter();
         _playableHexs = new List<HexComponent>();
 
         UpdateVisable();
 
+    }
+
+    private void Update()
+    {
+        CurrentLevel.UpdateLevel();
     }
 
     public void PlaceItem(Construct item, Hex location)
@@ -91,6 +102,7 @@ public class Map : MonoBehaviour
         unitGO.GetComponent<UnitComponent>().unit = (Unit)item;
         item.Location = location;
         location.cards.Add(item);
+        item.Owner.AllUnits.Add(item);
 
         //unitGO.transform.rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
         unitGO.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -102,7 +114,18 @@ public class Map : MonoBehaviour
         }
 
         item.Pieces.Add(unitGO);
+        UpdateVisable();
         //item.Owner.AllUnits.Add(item);
+    }
+
+    public GameObject PlaceEffect(string effectName, Vector3 Location)
+    {
+        return Instantiate(AllPreFabs.GetPrefab(effectName), Location, Quaternion.identity);
+    }
+
+    public static void RemoveGameObject(GameObject objectToDelete) 
+    { 
+        Destroy(objectToDelete);
     }
 
     public Hex GetRandomHex()
@@ -216,7 +239,7 @@ public class Map : MonoBehaviour
 
     public Hex GetAdjacentHex(Hex hex, Direction direction)
     {
-
+        if (hex == null) return null;
         switch (direction)
         {
             case Direction.Left:

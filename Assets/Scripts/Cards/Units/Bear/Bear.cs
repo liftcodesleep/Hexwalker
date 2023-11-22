@@ -6,7 +6,7 @@ public class Bear : Unit
 {
 	public Bear(Player Owner) : base(Owner)
 	{
-		//Charge Cost;
+		this.Cost = new Charge(0,1,0,0, false);
 		Name = "Bear";
 		//string Rules;
 		//string Flavor;

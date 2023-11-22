@@ -15,10 +15,12 @@ public abstract class Construct : Card
     public List<Effect> ActiveEffects;
     public List<Effect> Abilities;
 
+
     public Construct(Player owner) : base(owner)
     {
         ActiveEffects = new List<Effect>();
         Abilities = new List<Effect>();
+        //owner.AllUnits.Add(this);
     }
 
 

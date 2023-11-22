@@ -23,7 +23,7 @@ public class Knight : Unit
 		MoveCost = 2;
 		ActionPoints = 2;
 		Actions = 2;
-		Strength = 2;
+		Strength = 1;
 		moveableHexTypes = new Map.HexType[]{ Map.HexType.Flat, Map.HexType.Forest };
 
 		

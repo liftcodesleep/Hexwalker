@@ -5,7 +5,7 @@ using UnityEditor;
 public static class Game
 {
     private static int _currentPlayer = 0;
-    public static int turnCount = 1;
+    public static int turnCount = 0;
     public static Player[] players;
 
     public static Map map;
@@ -25,7 +25,9 @@ public static class Game
         players[1].Name = "Player 2";
 
         stack = new Stack<Effect>();
-        
+
+        //map.CurrentLevel.OnStartTurn(0);
+
     }
 
     public static Player GetCurrentPlayer() 
@@ -60,10 +62,30 @@ public static class Game
 
     public static void NextTurn()
     {
+
+        
+        foreach (Player player in players)
+        {
+            foreach(Effect currentEffect in player.ActiveEffects) 
+            {
+                currentEffect.EndTurnEffect();
+            }
+
+            foreach( Construct currentConstruct in player.AllUnits)
+            {
+                foreach(Effect currentEffect in currentConstruct.ActiveEffects)
+                {
+                    currentEffect.EndTurnEffect();
+                }
+            }
+        }
         GetCurrentPlayer().OnTurnEnd();
         _currentPlayer++;
         GetCurrentPlayer().OnTurnStart();
 
+        if(GetCurrentPlayer() == players[0]) turnCount++;
+
+        map.CurrentLevel.OnStartTurn(turnCount);
     }
 
 }

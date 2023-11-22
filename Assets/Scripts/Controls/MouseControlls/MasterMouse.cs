@@ -104,7 +104,7 @@ public class MasterMouse : MonoBehaviour
             taskOwner.close();
             return;
         }
-
+        //Debug.Log("AAAAAA" + selectedItem.name);
         taskOwner.RightClicked(selectedItem);
 
     }

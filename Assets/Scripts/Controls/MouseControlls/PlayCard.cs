@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayCard : MonoBehaviour, IMouseController
@@ -116,9 +117,12 @@ public class PlayCard : MonoBehaviour, IMouseController
 
         
 
-        Play(cardGO.card,hex);
+        if( Play(cardGO.card,hex))
+        {
+            Destroy(this.gameObject);
+        }
 
-        Destroy(this.gameObject);
+        
 
 
         close();
@@ -126,10 +130,20 @@ public class PlayCard : MonoBehaviour, IMouseController
     }
 
 
-    public static void Play(Card card, Hex hex)
+    public static bool Play(Card card, Hex hex)
     {
+
+        if (!( card.Cost <= card.Owner.Pool) )
+        {
+            
+            return false;
+        }
+        else
+        {
+            card.Owner.Pool -= card.Cost;
+        }
         
-        card.Location = hex;
+        
 
         UnitDatabase data = GameObject.Find("UnitSpellsDataBase").GetComponent<UnitDatabase>();
 
@@ -164,16 +178,19 @@ public class PlayCard : MonoBehaviour, IMouseController
             //this.transform.localRotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
         }
 
-
+        card.Location = hex;
         foreach (Effect currentEffect in card.ETBs)
         {
             currentEffect.ImmediateEffect();
+
         }
 
         Debug.Log("PlayCard finished playing !!!!!!!!!!!! " + card.Name);
         card.Owner.Hand.Cards.Remove(card);
 
         card.Pieces.Add(unitGO);
+
+        return true;
     }
     
  

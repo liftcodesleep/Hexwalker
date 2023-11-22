@@ -101,8 +101,16 @@ public class ConstructControls : MonoBehaviour, IMouseController
             close();
         }
 
+    }
 
+    public static void PlayAttackAnimations(Unit attacker, Unit defender)
+    {
 
+        defender.Pieces[0].GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
+        attacker.Pieces[0].GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
+
+        attacker.Pieces[0].transform.LookAt(defender.Pieces[0].transform.position);
+        defender.Pieces[0].transform.LookAt(attacker.Pieces[0].transform.position);
     }
 
     private void attack()

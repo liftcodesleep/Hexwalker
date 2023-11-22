@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NextTurnButton : MonoBehaviour
 {
@@ -17,12 +18,16 @@ public class NextTurnButton : MonoBehaviour
     float angle = 1;
     int count;
 
+    Button thisButton;
+
     // Start is called before the first frame update
     void Start()
     {
         startingRotation = light.transform.rotation;
         _nextTurnPlaying = false;
         count = 0;
+
+        thisButton = GetComponent<Button>();
     }
 
     
@@ -48,12 +53,24 @@ public class NextTurnButton : MonoBehaviour
             
         }
 
+        if (Game.GetCurrentPlayer() != Game.players[0])
+        {
+            thisButton.interactable = false;
+        }
+        else
+        {
+            thisButton.interactable = true;
+            
+        }
+
         
     }
 
 
     public void NextTurnButtonPress()
     {
+
+        Game.map.UpdateVisable();
         count = 0;
         //_nextTurnPlaying = true;
 

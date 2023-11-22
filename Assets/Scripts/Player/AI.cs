@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class AI : Player
 {
@@ -15,15 +16,7 @@ public class AI : Player
 
     public override void OnTurnStart()
     {
-        Draw(1);
-
-
-        //Debug.Log("AI is at " + this.Avatar.Location.row + ", " + this.Avatar.Location.column);
-
-        //Game.map.StartCoroutine(HandleTurn());
-        MoveUnitToLocation((Unit)Game.players[1].AllUnits[2], Game.players[0].Avatar.Location);
-        Debug.Log("Moving " + Game.players[1].AllUnits[2].Location.column + " " + Game.players[1].AllUnits[2].Location.row);
-        Game.NextTurn();
+        Game.map.StartCoroutine(HandleTurn());
     }
 
     public override void OnTurnEnd()
@@ -34,17 +27,30 @@ public class AI : Player
 
     IEnumerator HandleTurn()
     {
-        MoveUnitToLocation(this.Avatar, Game.players[0].Avatar.Location);
+        Draw(1);
 
-        //Game.map.StartCoroutine(Move ());
-        //Move();
-        Debug.Log("Finished Move AI");
-        //yield return new WaitForSeconds(2f);
-        ////PlayCard.Play(this.Hand.Cards[0], Game.map.GetAdjacentHex(this.Avatar.Location, Map.Direction.UpRight));
-        //Debug.Log("Finished Plaing  AI");
-        yield return new WaitForSeconds(2f);
-        Debug.Log("AI ended turn");
+        foreach (Unit construct in AllUnits)
+        {
+            construct.ActionPoints = 2;
+        }
+
+
+
+
+        foreach (Unit construct in AllUnits)
+        {
+            
+            if (AIAttack(construct) ) yield return new WaitForSeconds(1f);
+            MoveUnitToLocation(construct, Game.players[0].Avatar.Location);
+            yield return new WaitForSeconds(2f);
+            if (AIAttack(construct)) yield return new WaitForSeconds(1f);
+        }
+
+
+        Debug.Log("Ending AI TURN");
         Game.NextTurn();
+        
+        
         
     }
 
@@ -77,11 +83,33 @@ public class AI : Player
         {
             Hex newLocation = Game.map.GetAdjacentHex(unit.Location, (Map.Direction)direction_index);
 
+            if (newLocation == null) continue;
+            
             if (newLocation.DistanceFrom(target_location) < startingLocation.DistanceFrom(target_location))
             {
-                
-                if(unit.ValidMove(newLocation))
+                //Debug.Log(newLocation.row + " " + newLocation.column + " " + unit.ValidMove(newLocation));
+                if (unit.ValidMove(newLocation) && newLocation.cards.Count == 0)
                 {
+                    
+                    unit.Move(newLocation);
+                    return;
+                }
+            }
+
+        }
+
+
+        /// This is bad just here for checking movement when distanc is equal
+        for (int direction_index = 0; direction_index < 6; direction_index++)
+        {
+            Hex newLocation = Game.map.GetAdjacentHex(unit.Location, (Map.Direction)direction_index);
+            if (newLocation == null) continue;
+            if (newLocation.DistanceFrom(target_location) <= startingLocation.DistanceFrom(target_location))
+            {
+                Debug.Log(newLocation.row + " " + newLocation.column + " " + unit.ValidMove(newLocation));
+                if (unit.ValidMove(newLocation) && newLocation.cards.Count == 0)
+                {
+
                     unit.Move(newLocation);
                     return;
                 }
@@ -90,22 +118,17 @@ public class AI : Player
         }
 
         Debug.Log("!!!!!!!!!! AI Cound not find a good path");
-        while (startingLocation == this.Avatar.Location)
-        {
-            this.Avatar.Move(Game.map.GetAdjacentHex(this.Avatar.Location, (Map.Direction)Random.Range(0, 5)));
-        }
+        //while (startingLocation != this.Avatar.Location)
+        //{
+        //    this.Avatar.Move(Game.map.GetAdjacentHex(this.Avatar.Location, (Map.Direction)Random.Range(0, 5)));
+        //}
+        this.Avatar.Move(Game.map.GetAdjacentHex(this.Avatar.Location, (Map.Direction)Random.Range(0, 5)));
 
     }
 
 
     public List<Hex> FindPath(Unit unit, Hex destantion, List<Hex> currentPath)
     {
-
-        //Debug.Log("AAAAAA0" + currentPath.Count);
-        //List<Hex> newPath = new List<Hex>(currentPath);
-        //
-        Debug.Log("AAAAAA " + currentPath.Count );
-
 
         if(currentPath.Count > 0 && currentPath.Last() == destantion)
         {
@@ -137,7 +160,7 @@ public class AI : Player
 
 
         }
-
+        // If weighted paths change this section
         newPath = allPaths[0];
         foreach (List<Hex> path in allPaths)
         {
@@ -148,5 +171,31 @@ public class AI : Player
         }
         return newPath;
 
+    }
+
+    public bool AIAttack(Unit testUnit)
+    {
+
+        //Unit testUnit = (Unit)Game.players[1].AllUnits[2];
+
+        for (int direction_index = 0; direction_index < 6; direction_index++)
+        {
+            Hex newLocation = Game.map.GetAdjacentHex(testUnit.Location, (Map.Direction)direction_index);
+
+            if (newLocation == null) continue;
+
+            if (newLocation.cards.Count != 0 && newLocation.cards[0].Owner != this)
+            {
+
+                Debug.Log("Attacking!!!!!!!!!!");
+                ConstructControls.PlayAttackAnimations(testUnit, (Unit)newLocation.cards[0]);
+                testUnit.Attack((Unit)newLocation.cards[0]);
+                return true;
+                
+            }
+
+        }
+
+        return false;
     }
 }

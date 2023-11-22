@@ -13,6 +13,9 @@ public class UnitComponent : MonoBehaviour
     private Vector3 newPosition;
     public Vector3 currentVelocity;
     private IUnitAnomator anomator;
+
+    [SerializeField]
+    private UnitDatabase unitDatabase;
     //
     float smoothTime = .5f;
     //
@@ -23,6 +26,7 @@ public class UnitComponent : MonoBehaviour
     private Vector3 originalScale;
     private void Start()
     {
+        
         originalScale = this.transform.GetChild(0).transform.localScale;
         this.transform.GetChild(0).transform.localScale = new Vector3(.01f, .01f, .01f);
 
@@ -68,6 +72,7 @@ public class UnitComponent : MonoBehaviour
 
     private void HandleDeath()
     {
+        
         if(unit.currentZone == CardZone.Types.GraveYard)
         {
             this.transform.localScale *= .9f;
@@ -75,6 +80,9 @@ public class UnitComponent : MonoBehaviour
 
         if(this.transform.localScale.magnitude < .1f)
         {
+            GameObject DeathEffect = Instantiate(unitDatabase.GetPrefab("Death"), this.transform.position, Quaternion.identity);
+            DeathEffect.transform.position += Vector3.up;
+            
             GameObject.Destroy(this.gameObject);
         }
     }

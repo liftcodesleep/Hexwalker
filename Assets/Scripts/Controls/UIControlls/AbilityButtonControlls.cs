@@ -74,7 +74,7 @@ public class AbilityButtonControlls : MonoBehaviour, IMouseController
     {
         Debug.Log("Closing button control");
 
-        Game.map.UnHighLightHexs();
+        Game.map.UpdateVisable();
         MasterMouse.taskOwner = null;
         MasterMouse.currentTask = MasterMouse.Task.StandBy;
     }

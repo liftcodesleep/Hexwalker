@@ -104,7 +104,7 @@ public class Player
         {
             construct.ActionPoints = 2;
         }
-        Debug.Log("Drew Another card");
+        //Debug.Log("Drew Another card");
     }
 
     public virtual void OnTurnEnd()

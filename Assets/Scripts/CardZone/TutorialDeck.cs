@@ -14,24 +14,22 @@ public class TutorialDeck : CardZone
     {
         this.Owner = Owner;
 
-        Cards.Add(new Church(this.Owner));
+        Cards.Add(new ConnectToNature(this.Owner));
+        //Cards.Add(new Knight(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new GiantGrowth(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
+        Cards.Add(new Bear(this.Owner));
 
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
-        Cards.Add(new Knight(this.Owner));
+
 
         //Cards.Add(new Bear(this.Owner));
 

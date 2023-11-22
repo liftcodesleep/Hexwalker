@@ -7,12 +7,13 @@ public class CameraMovment : MonoBehaviour
 
     public Transform target; // The target location to pan to
     public float panSpeed = 5f; // The speed of the panning
-
+    public static CameraMovment mainCamera;
 
     void Start()
     {
         
         //StartCoroutine(IntroPan());
+        mainCamera = GetComponent<CameraMovment>();
 
     }
 
@@ -23,6 +24,11 @@ public class CameraMovment : MonoBehaviour
 
     }
 
+
+    public void MoveCamera(Transform target)
+    {
+        StartCoroutine(mainCamera.PanToTarget( target));
+    }
 
     IEnumerator PanToTarget(Transform target)
     {
@@ -38,7 +44,7 @@ public class CameraMovment : MonoBehaviour
 
         //target = Game.map.GetHexGO(Game.players[0].Avatar.Location).transform;
 
-        Vector3 targetPosition = new Vector3(target.position.x, target.position.y, target.position.z - 5);
+        Vector3 targetPosition = new Vector3(target.position.x, target.position.y, target.position.z - 8);
 
        
         //Debug.Log("Camera " + target.name);
@@ -49,8 +55,9 @@ public class CameraMovment : MonoBehaviour
         Vector3 direction = new Vector3(targetPosition.x - transform.position.x, 0, targetPosition.z - transform.position.z ).normalized;
 
         // Move the camera towards the target
-        while (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z-3), new Vector3(targetPosition.x, 0, targetPosition.z)) > 3f)
+        while (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z-0), new Vector3(targetPosition.x, 0, targetPosition.z)) > .1f)
         {
+            direction = new Vector3(targetPosition.x - transform.position.x, 0, targetPosition.z - transform.position.z).normalized;
             transform.Translate(direction * panSpeed * Time.deltaTime, Space.World);
             yield return null;
         }

@@ -30,7 +30,7 @@ public abstract class Level
     public void AddStartingUnit(Construct unit, Hex Location)
     {
         starting_constructs.Add(new Construct_and_Location() { construct = unit, location = Location });
-        unit.Owner.AllUnits.Add(unit);
+        
     }
 
     public void PlaceStartingUnits()
@@ -43,5 +43,7 @@ public abstract class Level
     }
 
     public abstract void StartLevel();
+    public abstract void OnStartTurn(int turn);
+    public abstract void UpdateLevel();
 
 }

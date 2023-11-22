@@ -23,6 +23,7 @@ public abstract class Card
     public Card(Player Owner)
     {
         this.Owner = Owner;
+        Cost = new Charge();
         Pieces = new List<GameObject>();
         Tapped = false;
         ETBs = new List<Effect>();
