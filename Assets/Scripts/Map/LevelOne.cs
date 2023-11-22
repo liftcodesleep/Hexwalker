@@ -10,7 +10,8 @@ public class LevelOne : Level
     private Dictionary<string, Construct> _levelUnits;
     private Dictionary<string, GameObject> _levelEffects;
 
-    private enum Stage { Starting, WalkedToFirst, PlayedMana, Tappedmana, PlayedUnit, AttackedUnit, TryPlayingASpell}
+    private enum Stage { Starting, WalkedToFirst, PlayedMana, Tappedmana, 
+        PlayedUnit, AttackedUnit, TryPlayingASpell }
     private Stage _stage;
     public LevelOne() : base(1, "Tutorial", "Learn To play Hexwalker")
     {
@@ -26,9 +27,6 @@ public class LevelOne : Level
         _levelUnits.Add("Knight3", new Knight(Game.players[1]));
         _levelUnits.Add("Knight4", new Knight(Game.players[1]));
 
-
-
-
         //Instantiate(unitDatabase.GetPrefab("Death"), this.transform.position, Quaternion.identity);
 
     }
@@ -41,39 +39,43 @@ public class LevelOne : Level
         Game.map.PlaceItem(_levelUnits["Player"], Game.map.GetHex(14, 10));
         //owner.AllUnits.Add(this);
         Game.map.PlaceItem(_levelUnits["AI"], Game.map.GetHex(15, 35));
-        
 
-        GameObject moveMarker = Game.map.PlaceEffect("Marker", Game.map.GetHexGO(Game.map.GetHex(16, 8)).transform.position + Vector3.up * .2f);
+        GameObject moveMarker = Game.map.PlaceEffect("Marker", 
+            Game.map.GetHexGO(Game.map.GetHex(16, 8)).transform.position + Vector3.up * .2f);
 
         _levelEffects.Add("MoveMarker", moveMarker);
 
+        Game.map.TalkingDialog.SetText(new string[]
+        {
+            "In a realm untethered by our understanding of reality, your journey " +
+            "begins. A traumatic event from your past has awakened a latent power " +
+            "within you. I have highlighted an area try moving there we need to " +
+            "make sure we are alone...",
 
-        Game.map.TalkingDialog.SetText( new string[]
-            { 
-                "In a realm untethered by our understanding of reality, your journey begins. " +
-            "A traumatic event from your past has awakened a latent power within you. " +
-            "I have highlighted an area try moving there we need to make sure we are alone... ",
+            "OH NO! Enemy forces! There is nothing we can do now! Press the end " +
+            "turn button in the bottom right hand corner",
 
+            "Quick you need to harness the power of this world, play the Connect " +
+            "to Nature Card. To play a card left click it then click the hex you " +
+            "want to play it on ",
 
-                "O NO! Enemy forces! There is nothing we can do now! Press the end turn button in the bottom right hand coner",
+            "Good Job! To get a charge to play card you must first click the " +
+            "unit and then click the 'Tap Mana' button",
 
-                "Quick you need to harnse the power of this world, play the Connect to Nature Card. To play a card right click it than click the hex you want to play it on ",
+            "Now that you have some mana try playing your Bear card next to the " +
+            "Knight",
 
-                "Good Job! To get a charge to play card you must first click the unit and than press the 'Tap Mana' button",
+            "To attack, left click on the Bear and then right click on to the " +
+            "Knight. You Bear should be stronger than just one Knight!",
 
-                "Now that you have some mana try playing your Bear card next to the Knight",
+            "OH NO! It looks like they have called in some more units! But this " +
+            "is all we can do now try ending the turn...",
 
-                "To attack trying clicking on the bear and then right click on to the Knight. You Bear should be stonger than just one Knight!",
-
-                "O No! It looks like they have called in some more units! But this is all we can do now try ending the turn...",
-
-                "Look at this new card that you just drew... Its a spell card, your Avatar can cast these spells to buff your own units try playing it on your bear"
-            }
-            );
-         
-            
-            
-            }
+            "Look at this new card that you just drew... It's a spell card, your " +
+            "Avatar can cast these spells to buff your own units try playing it " +
+            "on your Bear"
+        });
+    }
 
     public override void OnStartTurn(int turn)
     {
@@ -97,7 +99,8 @@ public class LevelOne : Level
                 //PlaceStartingUnits();
                 if (_stage == Stage.WalkedToFirst)
                 {
-                    _levelEffects["MoveMarker"].transform.position = Game.map.GetHexGO(Game.map.GetHex(15, 7)).transform.position + Vector3.up * .2f;
+                    _levelEffects["MoveMarker"].transform.position 
+                    = Game.map.GetHexGO(Game.map.GetHex(15, 7)).transform.position + Vector3.up * .2f;
                     _levelEffects["MoveMarker"].SetActive(true);
                     CameraMovment.mainCamera.MoveCamera(Game.map.GetHexGO(Game.map.GetHex(15, 7)).transform);
                     Game.map.TalkingDialog.NextLine();
@@ -112,7 +115,8 @@ public class LevelOne : Level
     public override void UpdateLevel()
     {
         
-        if (_stage == Stage.Starting && Game.players[0].Avatar.Location == Game.map.GetHex(16, 8))
+        if (_stage == Stage.Starting 
+        && Game.players[0].Avatar.Location == Game.map.GetHex(16, 8))
         {
             //Map.DestroyObject();
             _levelEffects["MoveMarker"].SetActive(false);
@@ -121,23 +125,21 @@ public class LevelOne : Level
             CameraMovment.mainCamera.MoveCamera( Game.map.GetHexGO(Game.map.GetHex(18, 8)).transform );
             _stage = Stage.WalkedToFirst;
             Game.map.TalkingDialog.NextLine();
-
         }
 
-        if (Game.map.GetHex(15, 7).cards.Count > 0 && _stage == Stage.WalkedToFirst)
+        if (Game.map.GetHex(15, 7).cards.Count > 0 
+        && _stage == Stage.WalkedToFirst)
         {
             //Map.DestroyObject();
             _levelEffects["MoveMarker"].SetActive(false);
             //Game.map.PlaceItem(_levelUnits["Knight2"], Game.map.GetHex(17, 5));
             _stage = Stage.PlayedMana;
             Game.map.TalkingDialog.NextLine();
-
         }
 
         if (_stage == Stage.PlayedMana && Game.players[0].Pool.Essence > 0)
         {
             _levelEffects["MoveMarker"].SetActive(false);
-            
             _stage = Stage.Tappedmana;
             Game.map.TalkingDialog.NextLine();
         }
@@ -145,12 +147,13 @@ public class LevelOne : Level
         if (_stage == Stage.Tappedmana && Game.players[0].AllUnits.Count > 3)
         {
             _levelEffects["MoveMarker"].SetActive(false);
-
             _stage = Stage.PlayedUnit;
             Game.map.TalkingDialog.NextLine();
         }
 
-        if (_stage == Stage.PlayedUnit && ((Unit)_levelUnits["Knight1"]).currentZone == CardZone.Types.GraveYard)
+        if (_stage == Stage.PlayedUnit && 
+            ((Unit)_levelUnits["Knight1"]).currentZone 
+            == CardZone.Types.GraveYard)
         {
             _levelEffects["MoveMarker"].SetActive(false);
             Game.map.PlaceItem(_levelUnits["Knight2"], Game.map.GetHex(18, 6));
