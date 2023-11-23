@@ -45,32 +45,33 @@ public class LevelOne : Level
 
         Game.map.TalkingDialog.SetText(new string[]
         {
-            "In a realm untethered by our understanding of reality, your journey " +
-            "begins. A traumatic event from your past has awakened a latent power " +
-            "within you. Move to the highlighted area by left clicking the " +
-            "wizard and then right clicking the highlighted area.",
+            "In a realm untethered by our understanding of reality, your "+
+            "journey begins. A traumatic event from your past has awakened a "+
+            "latent power within you. Move to the highlighted area by left "+
+            "clicking the wizard then right clicking the highlighted area.",
 
-            "OH NO! Enemy forces! There is nothing we can do now! Press the end " +
-            "turn button in the bottom right hand corner",
+            "OH NO! Enemy forces! There is nothing we can do now! Press the "+
+            "pass turn button in the bottom right hand corner",
 
-            "Quick you need to harness the power of this world, play the Connect " +
-            "to Nature Card. To play a card left click it then click the hex you " +
-            "want to play it on ",
+            "Quick! You need to harness the power of this world, play the "+
+            "Connect to Nature Card. To play a card left click it then right "+
+            "click the hex you want to play it on ",
 
-            "Good Job! To get a charge to play card you must first click the " +
-            "unit and then click the 'Tap Mana' button",
+            "Good Job! To get a charge to play a card you must first click "+
+            "the unit and then click the 'Tap Mana' button",
 
-            "Now that you have some mana try playing your Bear card next to the " +
-            "Knight",
+            "Now that you have some mana play your Bear card next to the "+
+            "Knight. To play a card, left click it, and then right click where "+
+            "you want it to take effect.",
 
-            "To attack, left click on the Bear and then right click the " +
-            "Knight. You Bear should be stronger than just one Knight!",
+            "To attack, left click on the Bear and then right click the "+
+            "Knight. Your Bear should be stronger than just one Knight!",
 
-            "OH NO! It looks like they have called in some more units! But this " +
-            "is all we can do now try ending the turn...",
+            "OH NO! It looks like they have called in some more units! But "+
+            "our mana is spent this turn, so pass ...",
 
-            "Look at this new card that you just drew... It's a spell card, your " +
-            "Avatar can cast these spells to buff your own units try playing it " +
+            "Look at this new card that you just drew... It's a spell card, your "+
+            "Avatar can cast these spells to buff your own units try playing it "+
             "on your Bear"
         });
     }
@@ -84,7 +85,7 @@ public class LevelOne : Level
             Game.map.TalkingDialog.NextLine();
         }
 
-        Debug.Log("sTARTING Turn " + turn);
+        Debug.Log("sTARTING Turn "+ turn);
         switch(turn)
         {
             case 0:
