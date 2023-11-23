@@ -1,33 +1,33 @@
-package Server.src.networking.request;
+package networking.request;
 
 // Java Imports
 import java.io.IOException;
 
 // Other Imports
 import model.Player;
-import Server.src.networking.response.ResponseReady;
-import Server.src.core.NetworkManager;
+import networking.response.ResponseReady;
+import core.NetworkManager;
 
 public class RequestReady extends GameRequest {
 
-  // Responses
-  private ResponseReady responseReady;
+    // Responses
+    private ResponseReady responseReady;
 
-  public RequestReady() {
-    responses.add(responseReady = new ResponseReady());
-  }
+    public RequestReady() {
+        responses.add(responseReady = new ResponseReady());
+    }
 
-  @Override
-  public void parse() throws IOException {
+    @Override
+    public void parse() throws IOException {
+    
+    }
 
-  }
+    @Override
+    public void doBusiness() throws Exception {
+        Player player = client.getPlayer();
 
-  @Override
-  public void doBusiness() throws Exception {
-    Player player = client.getPlayer();
+        responseReady.setPlayer(player);
 
-    responseReady.setPlayer(player);
-
-    NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseReady);
-  }
+        NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseReady);
+    }
 }

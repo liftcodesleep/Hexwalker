@@ -1,4 +1,4 @@
-package Server.src.networking.response;
+package networking.response;
 
 import metadata.Constants;
 import model.Player;

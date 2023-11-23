@@ -1,10 +1,10 @@
-package Server.src.networking.request;
+package networking.request;
 
 import java.io.IOException;
 
-import Server.src.core.NetworkManager;
+import core.NetworkManager;
 import model.Player;
-import Server.src.networking.response.ResponseSpawn;
+import networking.response.ResponseSpawn;
 import utility.DataReader;
 
 public class RequestSpawn extends GameRequest {

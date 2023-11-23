@@ -1,4 +1,4 @@
-package Server.src.networking.response;
+package networking.response;
 
 // Java Imports
 import java.lang.reflect.Field;
@@ -9,34 +9,34 @@ import java.lang.reflect.Field;
  */
 public abstract class GameResponse {
 
-  protected byte[] responseInBytes; // Response information stored as bytes
-  protected short responseCode;
+    protected byte[] responseInBytes; // Response information stored as bytes
+    protected short responseCode;
 
-  /**
-   * Convert the response into bytes format.
-   * 
-   * @return the response as bytes
-   */
-  public abstract byte[] constructResponseInBytes();
+    /**
+     * Convert the response into bytes format.
+     * 
+     * @return the response as bytes
+     */
+    public abstract byte[] constructResponseInBytes();
 
-  @Override
-  public String toString() {
-    String str = "";
+    @Override
+    public String toString() {
+        String str = "";
 
-    str += "-----" + "\n";
-    str += getClass().getName() + "\n";
-    str += "\n";
+        str += "-----" + "\n";
+        str += getClass().getName() + "\n";
+        str += "\n";
 
-    for (Field field : getClass().getDeclaredFields()) {
-      try {
-        str += field.getName() + " - " + field.get(this) + "\n";
-      } catch (Exception ex) {
-        System.out.println(ex.getMessage());
-      }
+        for (Field field : getClass().getDeclaredFields()) {
+            try {
+                str += field.getName() + " - " + field.get(this) + "\n";
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+
+        str += "-----";
+
+        return str;
     }
-
-    str += "-----";
-
-    return str;
-  }
 }

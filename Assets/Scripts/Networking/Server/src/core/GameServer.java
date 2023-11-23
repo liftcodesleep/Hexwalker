@@ -1,6 +1,4 @@
-package Server.src.core;
-
-// Import statements and the rest of your code...
+package core;
 
 // Java Imports
 import java.io.IOException;
@@ -15,12 +13,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 // Other Imports
-import Server.src.configuration.GameServerConf;
-import Server.src.metadata.Constants;
-import Server.src.metadata.GameRequestTable;
-import Server.src.model.Player;
-import Server.src.utility.ConfFileParser;
-import Server.src.utility.Log;
+import configuration.GameServerConf;
+import metadata.Constants;
+import metadata.GameRequestTable;
+import model.Player;
+import utility.ConfFileParser;
+import utility.Log;
 
 /**
  * The GameServer class serves as the main module that runs the server.
@@ -76,7 +74,7 @@ public class GameServer {
    */
   public final void configure() {
     configuration = new GameServerConf();
-    ConfFileParser confFileParser = new ConfFileParser("Assets/Networking/src/configuration/gameServer.conf");
+    ConfFileParser confFileParser = new ConfFileParser("conf/gameServer.conf");
     configuration.setConfRecords(confFileParser.parse());
   }
 
@@ -205,7 +203,7 @@ public class GameServer {
    */
   public static void main(String[] args) {
     try {
-      Log.printf("Hexwalker Server v%s is starting...\n", Constants.CLIENT_VERSION);
+      Log.printf("Homework 4 Server v%s is starting...\n", Constants.CLIENT_VERSION);
 
       gameServer = new GameServer();
       gameServer.run();

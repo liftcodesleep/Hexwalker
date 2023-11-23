@@ -1,4 +1,4 @@
-package Server.src.metadata;
+package metadata;
 
 /**
  * The Constants class stores important variables as constants for later use.

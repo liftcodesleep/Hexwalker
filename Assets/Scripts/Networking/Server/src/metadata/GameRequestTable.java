@@ -1,12 +1,12 @@
-package Server.src.metadata;
+package metadata;
 
 // Java Imports
 import java.util.HashMap;
 import java.util.Map;
 
 // Other Imports
-import Server.src.networking.request.GameRequest;
-import Server.src.utility.Log;
+import networking.request.GameRequest;
+import utility.Log;
 
 /**
  * The GameRequestTable class stores a mapping of unique request code numbers
@@ -48,8 +48,6 @@ public class GameRequestTable {
       if (GameRequest.class.isAssignableFrom(rawRequestClass)) {
         @SuppressWarnings("unchecked")
         Class<? extends GameRequest> requestClass = (Class<? extends GameRequest>) rawRequestClass;
-
-        // Now you can use requestClass safely
         requestTable.put(code, requestClass);
       }
     } catch (ClassNotFoundException e) {
