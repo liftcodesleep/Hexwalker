@@ -142,8 +142,7 @@ public class AI : Player
         // If weighted paths change this section
         newPath = allPaths[0];
         foreach (List<Hex> path in allPaths) {
-            if(path != null && path.Count < newPath.Count) 
-            {
+            if(path != null && path.Count < newPath.Count) {
                 newPath = path;
             }
         }

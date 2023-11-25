@@ -37,8 +37,7 @@ public abstract class Card
     public abstract bool IsPlayableHex(Hex hex);
 
 
-    public override string ToString() 
-    {
+    public override string ToString() {
         
         return "Name: " + Name + "\n" +
             "Range: " + Range + "\n";

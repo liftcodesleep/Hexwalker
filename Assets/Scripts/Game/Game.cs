@@ -28,8 +28,7 @@ public class Game : MonoBehaviour
         //map.CurrentLevel.OnStartTurn(0);
     }
 
-    public static Player GetCurrentPlayer() 
-    {
+    public static Player GetCurrentPlayer() {
         return players[_currentPlayer % players.Length];
     }
 
@@ -58,8 +57,7 @@ public class Game : MonoBehaviour
 
         
         foreach (Player player in players) {
-            foreach(Effect currentEffect in player.ActiveEffects) 
-            {
+            foreach(Effect currentEffect in player.ActiveEffects) {
                 currentEffect.EndTurnEffect();
             }
 

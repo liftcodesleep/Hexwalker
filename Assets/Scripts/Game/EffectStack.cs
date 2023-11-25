@@ -8,8 +8,7 @@ public class EffectStack
     private readonly List<Effect> effects;
 
 
-    public EffectStack() 
-    { 
+    public EffectStack() { 
     
         effects = new List<Effect>();
     
