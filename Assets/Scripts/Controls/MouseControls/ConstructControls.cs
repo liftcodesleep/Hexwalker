@@ -5,11 +5,8 @@ using UnityEngine;
 
 public class ConstructControls : MonoBehaviour, IMouseController
 {
-
     private UnitComponent selectedToMoveGO;
-
     private Unit selectedUnit;
-
     private GameObject _filter;
     private void Start() {
         _filter = Game.GetFilter();
@@ -28,30 +25,22 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
     public void LeftClicked(GameObject clickObject) {
         //Debug.Log("CC LC");
-        
         selectedToMoveGO = clickObject.GetComponent<UnitComponent>();
-
         if(!selectedToMoveGO) {
             //Debug.Log("Construct Controls: Not unit clicked");
             return;
         }
-        
         selectedUnit = selectedToMoveGO.unit;
-        
         if (!selectedToMoveGO) {
             Debug.Log("Unit was Construct was null In left click");
             throw new NullReferenceException("Unit was Construct was null In left click");
         }
-
         HighlightHexes();
     }
 
     public void open() {
         //Debug.Log("CC open");
-
-
         switch (MasterMouse.currentTask) {
-
             case MasterMouse.Task.PlayCard:
             case MasterMouse.Task.StandBy:
             case MasterMouse.Task.Transition:
@@ -59,44 +48,32 @@ public class ConstructControls : MonoBehaviour, IMouseController
                 MasterMouse.currentTask = GetTask();
                 MasterMouse.taskOwner = this;
                 break;
-
             default:
                 //MasterMouse.currentTask = MasterMouse.Task.Transition;
                 break;
-
         }
-
     }
 
     public void RightClicked(GameObject clickObject) {
-
         HexComponent targetHexGO = clickObject.GetComponent<HexComponent>();
-
         if(targetHexGO) {
             move_to(targetHexGO);
             return;
         }
-
         UnitComponent targetUnitGO = clickObject.GetComponent<UnitComponent>();
         if (targetUnitGO) {
-
             targetUnitGO.GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
             selectedToMoveGO.GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
-
             targetUnitGO.transform.LookAt(selectedToMoveGO.transform.position);
             selectedToMoveGO.transform.LookAt(targetUnitGO.transform.position);
-
             selectedUnit.Attack(targetUnitGO.unit);
             close();
         }
-
     }
 
     public static void PlayAttackAnimations(Unit attacker, Unit defender) {
-
         defender.Pieces[0].GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
         attacker.Pieces[0].GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
-
         attacker.Pieces[0].transform.LookAt(defender.Pieces[0].transform.position);
         defender.Pieces[0].transform.LookAt(attacker.Pieces[0].transform.position);
     }
@@ -107,20 +84,15 @@ public class ConstructControls : MonoBehaviour, IMouseController
         //Debug.Log("CC Moving From " + selectedUnit.Location.Name);
         int hexesMoved = this.selectedUnit.Move(targetHexGO.hex);
         //Debug.Log("CC Moving to " + selectedUnit.Location.Name);
-
         close();
-
     }
 
 
 
     private void HighlightHexes() {
-        
         Game.map.UnhighlightHexes();
-
         List<Hex> hexs = Game.map.GetHexList();
         List<Hex> hexsToHighlight = new List<Hex>();
-
         foreach(Hex hex in hexs) {
             if(selectedUnit.Location.DistanceFrom(hex) <= selectedUnit.ActionPoints && selectedUnit.ValidMove(hex)) {
                 hexsToHighlight.Add(hex);
@@ -128,8 +100,6 @@ public class ConstructControls : MonoBehaviour, IMouseController
         }
         hexsToHighlight.Add(selectedUnit.Location); 
         Game.map.HighlightHexes(hexsToHighlight);
-        
-
     }
 
     private void UnhighlightHexes() {

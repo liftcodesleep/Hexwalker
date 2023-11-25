@@ -38,6 +38,8 @@ public class Map : MonoBehaviour {
 
     private void Start() {
         Game.map = this;
+        this.rows = 26;
+        this.columns = 38;
         while (transform.childCount > 0) {
             DestroyImmediate(transform.GetChild(0).gameObject);
         }

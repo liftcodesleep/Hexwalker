@@ -37,10 +37,8 @@ public class MainMenu : MonoBehaviour
 		rootMenuPanel = GameObject.Find("Root Menu");
 		hotseatMenuPanel = GameObject.Find("Hotseat Menu");
 		networkMenuPanel = GameObject.Find("Network Menu");
-
 		messageBox = GameObject.Find("Message Box");
 		messageBoxMsg = messageBox.transform.Find("Message").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
-
 		player1Name = GameObject.Find("Player1Name").GetComponent<TMPro.TextMeshProUGUI>();
 		player2Name = GameObject.Find("Player2Name").GetComponent<TMPro.TextMeshProUGUI>();
 		player1Input = GameObject.Find("NetPlayer1Input");
@@ -51,7 +49,6 @@ public class MainMenu : MonoBehaviour
 		msgQueue.AddCallback(Constants.SMSG_LEAVE, OnResponseLeave);
 		msgQueue.AddCallback(Constants.SMSG_SETNAME, OnResponseSetName);
 		msgQueue.AddCallback(Constants.SMSG_READY, OnResponseReady);
-
 		rootMenuPanel.SetActive(true);
 		hotseatMenuPanel.SetActive(false);
 		networkMenuPanel.SetActive(false);
@@ -111,8 +108,7 @@ public class MainMenu : MonoBehaviour
 				playerInput = player2Input;
 				opponentInput = player1Input;
 			}
-			else
-			{
+			else {
 				Debug.Log("ERROR: Invalid user_id in ResponseJoin: " + args.user_id);
 				messageBoxMsg.text = "Error joining game. Network returned invalid response.";
 				messageBox.SetActive(true);
@@ -126,16 +122,14 @@ public class MainMenu : MonoBehaviour
 					opponentName.text = args.op_name;
 					opReady = args.op_ready;
 				}
-				else
-				{
+				else {
 					Debug.Log("ERROR: Invalid op_id in ResponseJoin: " + args.op_id);
 					messageBoxMsg.text = "Error joining game. Network returned invalid response.";
 					messageBox.SetActive(true);
 					return;
 				}
 			}
-			else
-			{
+			else {
 				opponentName.text = "Waiting for opponent";
 			}
 
@@ -176,8 +170,7 @@ public class MainMenu : MonoBehaviour
 		if (Constants.USER_ID == 1) {
 			p1Name = name;
 		}
-		else
-		{
+		else {
 			p2Name = name;
 		}
 	}
@@ -207,16 +200,14 @@ public class MainMenu : MonoBehaviour
 		{
 			opReady = true;
 		}
-		else
-		{
+		else {
 			if (args.user_id == Constants.OP_ID) {
 				opReady = true;
 			}
 			else if (args.user_id == Constants.USER_ID) {
 				ready = true;
 			}
-			else
-			{
+			else {
 				Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
 				messageBoxMsg.text = "Error starting game. Network returned invalid response.";
 				messageBox.SetActive(true);

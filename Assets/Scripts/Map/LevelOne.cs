@@ -9,7 +9,6 @@ public class LevelOne : Level
 
     private Dictionary<string, Construct> _levelUnits;
     private Dictionary<string, GameObject> _levelEffects;
-
     private enum Stage { Starting, WalkedToFirst, PlayedMana, Tappedmana, 
         PlayedUnit, AttackedUnit, TryPlayingASpell }
     private Stage _stage;
@@ -23,24 +22,18 @@ public class LevelOne : Level
         _levelUnits.Add("Knight2", new Knight(Game.players[1]));
         _levelUnits.Add("Knight3", new Knight(Game.players[1]));
         _levelUnits.Add("Knight4", new Knight(Game.players[1]));
-
         //Instantiate(unitDatabase.GetPrefab("Death"), this.transform.position, Quaternion.identity);
-
     }
 
     public override void StartLevel() {
         //PlaceStartingUnits();
         Game.players[0].Draw(2);
-
         Game.map.PlaceItem(_levelUnits["Player"], Game.map.GetHex(14, 10));
         //owner.AllUnits.Add(this);
         Game.map.PlaceItem(_levelUnits["AI"], Game.map.GetHex(15, 35));
-
         GameObject moveMarker = Game.map.PlaceEffect("Marker", 
             Game.map.GetHexGO(Game.map.GetHex(16, 8)).transform.position + Vector3.up * .2f);
-
         _levelEffects.Add("MoveMarker", moveMarker);
-
         Game.map.TalkingDialog.SetText(new string[]
         {
             "In a realm untethered by our understanding of reality, your "+
@@ -75,13 +68,11 @@ public class LevelOne : Level
     }
 
     public override void OnStartTurn(int turn) {
-
         if(_stage == Stage.AttackedUnit) {
             _stage = Stage.TryPlayingASpell;
             Game.map.TalkingDialog.NextLine();
         }
-
-        Debug.Log("sTARTING Turn "+ turn);
+        Debug.Log("STARTING Turn "+ turn);
         switch(turn) {
             case 0:
                 //PlaceStartingUnits();
@@ -97,7 +88,6 @@ public class LevelOne : Level
                     _levelEffects["MoveMarker"].SetActive(true);
                     CameraMovment.mainCamera.MoveCamera(Game.map.GetHexGO(Game.map.GetHex(15, 7)).transform);
                     Game.map.TalkingDialog.NextLine();
-                    
                 }
                 break;
             default:
@@ -106,9 +96,7 @@ public class LevelOne : Level
     }
 
     public override void UpdateLevel() {
-        
-        if (_stage == Stage.Starting 
-        && Game.players[0].Avatar.Location == Game.map.GetHex(16, 8)) {
+        if (_stage == Stage.Starting && Game.players[0].Avatar.Location == Game.map.GetHex(16, 8)) {
             //Map.DestroyObject();
             _levelEffects["MoveMarker"].SetActive(false);
             Game.map.PlaceItem(_levelUnits["Knight1"], Game.map.GetHex(18, 8));
@@ -117,31 +105,24 @@ public class LevelOne : Level
             _stage = Stage.WalkedToFirst;
             Game.map.TalkingDialog.NextLine();
         }
-
-        if (Game.map.GetHex(15, 7).cards.Count > 0 
-        && _stage == Stage.WalkedToFirst) {
+        if (Game.map.GetHex(15, 7).cards.Count > 0 && _stage == Stage.WalkedToFirst) {
             //Map.DestroyObject();
             _levelEffects["MoveMarker"].SetActive(false);
             //Game.map.PlaceItem(_levelUnits["Knight2"], Game.map.GetHex(17, 5));
             _stage = Stage.PlayedMana;
             Game.map.TalkingDialog.NextLine();
         }
-
         if (_stage == Stage.PlayedMana && Game.players[0].Pool.Essence > 0) {
             _levelEffects["MoveMarker"].SetActive(false);
             _stage = Stage.Tappedmana;
             Game.map.TalkingDialog.NextLine();
         }
-
         if (_stage == Stage.Tappedmana && Game.players[0].AllUnits.Count > 3) {
             _levelEffects["MoveMarker"].SetActive(false);
             _stage = Stage.PlayedUnit;
             Game.map.TalkingDialog.NextLine();
         }
-
-        if (_stage == Stage.PlayedUnit && 
-            ((Unit)_levelUnits["Knight1"]).currentZone 
-            == CardZone.Types.GraveYard) {
+        if (_stage == Stage.PlayedUnit && ((Unit)_levelUnits["Knight1"]).currentZone == CardZone.Types.GraveYard) {
             _levelEffects["MoveMarker"].SetActive(false);
             Game.map.PlaceItem(_levelUnits["Knight2"], Game.map.GetHex(18, 6));
             Game.map.PlaceItem(_levelUnits["Knight3"], Game.map.GetHex(18, 8));
