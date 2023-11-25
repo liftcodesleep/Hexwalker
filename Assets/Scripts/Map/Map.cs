@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.FilePathAttribute;
 
-
 ////////////////For Organazation //////////////////////////////////////
 
 [System.Serializable]
@@ -50,11 +49,13 @@ public class Map : MonoBehaviour
     public TalkingText TalkingDialog;
 
     public int seed;
+    public int rows;
+    public int columns;
     public enum HexType {Water, Flat, Forest, High }
     public static readonly int WaterStartElevation = 20;
 
     private List<HexComponent> _playableHexs;
-    private List<GameObject> hilightedHexs;
+    private List<GameObject> highlightedHexes;
     //private GameObject oceanHex;
 
     public Level CurrentLevel;
@@ -70,22 +71,11 @@ public class Map : MonoBehaviour
         }
         GenerateMap();
         seed = Random.Range(0, 1000);
-
-
-        //foreach(Player player in Game.players)
-        //{
-        //    player.placeAvatar();
-        //}
-
         CurrentLevel = new LevelOne();
-
         CurrentLevel.StartLevel();
-
         _filter = Game.GetFilter();
         _playableHexs = new List<HexComponent>();
-
-        UpdateVisable();
-
+        UpdateVisible();
     }
 
     private void Update()
@@ -95,18 +85,14 @@ public class Map : MonoBehaviour
 
     public void PlaceItem(Construct item, Hex location)
     {
-
-        
         GameObject itemPreFab = data.GetPrefab(item.Name);
         GameObject unitGO = Instantiate(itemPreFab, GetHexGO(location).transform.position, Quaternion.identity, GetHexGO(location).transform);
         unitGO.GetComponent<UnitComponent>().unit = (Unit)item;
         item.Location = location;
         location.cards.Add(item);
         item.Owner.AllUnits.Add(item);
-
         //unitGO.transform.rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
         unitGO.transform.rotation = Quaternion.Euler(0, 180, 0);
-
         if (item.Owner == Game.players[0])
         {
             //GameObject playereffect = data.GetPrefab("PlayerAura");
@@ -114,7 +100,7 @@ public class Map : MonoBehaviour
         }
 
         item.Pieces.Add(unitGO);
-        UpdateVisable();
+        UpdateVisible();
         //item.Owner.AllUnits.Add(item);
     }
 
@@ -130,49 +116,37 @@ public class Map : MonoBehaviour
 
     public Hex GetRandomHex()
     {
-        return _hexes[Random.Range(0, Game.rows-1), Random.Range(0, Game.columns-1)];
+        return _hexes[Random.Range(0, this.rows-1), Random.Range(0, this.columns-1)];
     }
 
 
     public void GenerateMap()
     {
-        _hexes = new Hex[Game.rows, Game.columns];
+        _hexes = new Hex[this.rows, this.columns];
         _hexToGameObject = new Dictionary<Hex, GameObject>();
-
         GameObject hexGo;
-        for (int column = 0; column < Game.columns; column++)
+        for (int column = 0; column < this.columns; column++)
         {
-            for (int row = 0; row < Game.rows; row++)
+            for (int row = 0; row < this.rows; row++)
             {
-
                 Hex h = new Hex(column, row);
                 hexGo = MakeTile(h);
-                
                 hexGo.name = h.column + ", " + h.row;
-
                 HexComponent component = hexGo.GetComponent<HexComponent>();
-
                 component.hex = h;
-
                 hexGo.transform.position = component.PositionFromCamera();
-
                 _hexes[row, column] = h;
                 _hexToGameObject[h] = hexGo;
-
-                
             }
 
         }
     }
 
 
-    public void HighLightHexs(List<Hex> hexsToHighlight)
+    public void HighlightHexes(List<Hex> hexsToHighlight)
     {
-        
         _filter.SetActive(true);
-        hilightedHexs = new List<GameObject>();
-
-
+        highlightedHexes = new List<GameObject>();
         foreach (Hex highlightedHex in hexsToHighlight)
         {
             foreach(Hex currentMapHex in _hexes)
@@ -184,26 +158,24 @@ public class Map : MonoBehaviour
                     {
                         subItem.gameObject.layer = 6;
                     }
-                    hilightedHexs.Add(_hexToGameObject[highlightedHex]);
+                    highlightedHexes.Add(_hexToGameObject[highlightedHex]);
                     break;
                 }
-                
             }
         }
-
-        
     }
 
-    public void UnHighLightHexs()
+    public void UnhighlightHexes()
     {
         _filter.SetActive(false);
-        if (hilightedHexs == null) return;
+        if (highlightedHexes == null) {
+            return;
+            }
 
-        foreach (GameObject hex in hilightedHexs)
+        foreach (GameObject hex in highlightedHexes)
         {
             foreach (Transform subItem in hex.transform)
             {
-                
                 subItem.gameObject.layer = 0;
 
                 if (subItem.GetComponent<UnitComponent>())
@@ -216,9 +188,48 @@ public class Map : MonoBehaviour
                 }
             }
         }
-        
-
     }
+
+public void ModifyHexesHighlight(List<Hex> hexsToModify, bool highlight)
+{
+    _filter.SetActive(highlight);
+    List<GameObject> modifiedHexes = new List<GameObject>();
+
+    foreach (Hex hexToModify in hexsToModify)
+    {
+        if (_hexToGameObject.TryGetValue(hexToModify, out GameObject hexGameObject))
+        {
+            foreach (Transform subItem in hexGameObject.GetComponentsInChildren<Transform>(includeInactive: true))
+            {
+                subItem.gameObject.layer = highlight ? 6 : 0;
+
+                if (subItem.GetComponent<UnitComponent>())
+                {
+                    foreach (Transform unitPart in subItem.GetComponentsInChildren<Transform>(includeInactive: true))
+                    {
+                        unitPart.gameObject.layer = highlight ? 7 : 0;
+                    }
+                }
+            }
+
+            if (highlight)
+            {
+                modifiedHexes.Add(hexGameObject);
+            }
+        }
+    }
+
+    if (!highlight)
+    {
+        highlightedHexes = null;
+    }
+    else
+    {
+        highlightedHexes = modifiedHexes;
+    }
+}
+
+
 
     public List<Hex> GetHexList()
     {
@@ -267,13 +278,13 @@ public class Map : MonoBehaviour
 
     private GameObject MakeTile(Hex hex)
     {
-        List<TileStyle> posibleStyles = GetStyles(hex);
+        List<TileStyle> styles = GetStyles(hex);
 
-        int index = Random.Range(0, posibleStyles.Count);
+        int index = Random.Range(0, styles.Count);
 
         Quaternion rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
         GameObject hexGo = Instantiate(
-                 posibleStyles[index].style,
+                 styles[index].style,
                  new Vector3(0, 0, 0),
                  rotation,
                  this.transform
@@ -284,27 +295,22 @@ public class Map : MonoBehaviour
 
     private List<TileStyle> GetStyles(Hex hex)
     {
-        List<TileStyle> posibleStyles = new List<TileStyle>();
-
+        List<TileStyle> styles = new List<TileStyle>();
         foreach(TileDictionary styleArray in tileDictionary)
         {
             if (hex.type == styleArray.type)
             {
                 foreach(TileStyle style in styleArray.styles)
                 {
-
                     if(style.minElevation < hex.elevation && style.maxElevation > hex.elevation)
                     {
                         for(int i = 0; i < style.chanceOfSpawning; i++)
                         {
-                            posibleStyles.Add(style);
+                            styles.Add(style);
                         }
                     }
                 }
-
-                return posibleStyles;
-
-
+                return styles;
             }
         }
         return null;
@@ -317,13 +323,11 @@ public class Map : MonoBehaviour
         return _hexToGameObject[hex];
     }
 
-
-    public void UpdateVisable()
+    public void UpdateVisible()
     {
-
-        UnHighLightHexs();
-        Debug.Log("Updating visable rage");
-        List<Hex> visableHexs = new List<Hex>();
+        UnhighlightHexes();
+        Debug.Log("Updating visible rage");
+        List<Hex> visibleHexes = new List<Hex>();
 
 
         foreach (Construct unit in Game.players[0].AllUnits)
@@ -334,13 +338,13 @@ public class Map : MonoBehaviour
                 if (hex.DistanceFrom(unit.Location) < 4)
                 {
                     //Debug.Log("dafd");
-                    visableHexs.Add(hex);
+                    visibleHexes.Add(hex);
                 }
             }
         }
 
 
-        Game.map.HighLightHexs(visableHexs);
+        Game.map.HighlightHexes(visibleHexes);
         //_filter.GetComponent<Renderer>().material.color = Color.black;
     }
 }

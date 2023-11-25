@@ -20,7 +20,6 @@ public class BuffEffect : Effect
         this.turns_left = turns;
     }
 
-
     public override void EndTurnEffect()
     {
         turns_left--;
@@ -49,8 +48,6 @@ public class BuffEffect : Effect
         Debug.Log("Damage End");
         foreach (Card currentCard in Card.Location.cards)
         {
-
-            
             try
             {
                 currentUnit = (Unit)currentCard;

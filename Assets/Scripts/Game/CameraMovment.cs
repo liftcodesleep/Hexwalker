@@ -11,19 +11,15 @@ public class CameraMovment : MonoBehaviour
 
     void Start()
     {
-        
         //StartCoroutine(IntroPan());
         mainCamera = GetComponent<CameraMovment>();
-
     }
-
-
+    
     void Update()
     {
        
 
     }
-
 
     public void MoveCamera(Transform target)
     {
@@ -32,8 +28,6 @@ public class CameraMovment : MonoBehaviour
 
     IEnumerator PanToTarget(Transform target)
     {
-
-
 
         Debug.Log("Camera Move Paning to target");
         if(target == null)
@@ -45,12 +39,7 @@ public class CameraMovment : MonoBehaviour
         //target = Game.map.GetHexGO(Game.players[0].Avatar.Location).transform;
 
         Vector3 targetPosition = new Vector3(target.position.x, target.position.y, target.position.z - 8);
-
-       
         //Debug.Log("Camera " + target.name);
-
-
-        
         // Calculate the direction to the target (only on X and Z axes)
         Vector3 direction = new Vector3(targetPosition.x - transform.position.x, 0, targetPosition.z - transform.position.z ).normalized;
 
@@ -72,11 +61,7 @@ public class CameraMovment : MonoBehaviour
         target = Game.map.GetHexGO(Game.players[1].Avatar.Location).transform;
 
         Vector3 targetPosition = new Vector3(target.position.x, target.position.y, target.position.z - 5);
-
-
         //Debug.Log("Camera " + target.name);
-
-
         if (target != null)
         {
             // Calculate the direction to the target (only on X and Z axes)
@@ -109,11 +94,7 @@ public class CameraMovment : MonoBehaviour
         target = Game.map.GetHexGO(Game.players[0].Avatar.Location).transform;
 
         targetPosition = new Vector3(target.position.x, target.position.y, target.position.z - 5);
-
-
         //Debug.Log("Camera " + target.name);
-
-
         if (target != null)
         {
             // Calculate the direction to the target (only on X and Z axes)
@@ -128,5 +109,3 @@ public class CameraMovment : MonoBehaviour
         }
     }
 }
-
-

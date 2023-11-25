@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class Construct : Card 
 {
     //public Card Card;
-    public Hex Location;
     //public List<Effect> ConstructEffects;
 
     //    public abstract int Spawn();

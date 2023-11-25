@@ -124,7 +124,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6472986520566508208}
-        m_TargetAssemblyTypeName: AbilityButtonControlls, Assembly-CSharp
+        m_TargetAssemblyTypeName: AbilityButtonControls, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:

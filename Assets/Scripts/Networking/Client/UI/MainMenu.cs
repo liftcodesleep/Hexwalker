@@ -46,10 +46,8 @@ public class MainMenu : MonoBehaviour
 		player2Name = GameObject.Find("Player2Name").GetComponent<TMPro.TextMeshProUGUI>();
 		player1Input = GameObject.Find("NetPlayer1Input");
 		player2Input = GameObject.Find("NetPlayer2Input");
-
 		networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
 		msgQueue = networkManager.GetComponent<MessageQueue>();
-
 		msgQueue.AddCallback(Constants.SMSG_JOIN, OnResponseJoin);
 		msgQueue.AddCallback(Constants.SMSG_LEAVE, OnResponseLeave);
 		msgQueue.AddCallback(Constants.SMSG_SETNAME, OnResponseSetName);
@@ -265,7 +263,7 @@ public class MainMenu : MonoBehaviour
 
 	private void StartHotseatGame()
 	{
-		GameManager gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+		Game gameManager = GameObject.Find("Game Manager").GetComponent<Game>();
 		string p1Name = GameObject.Find("HotPlayer1Name").GetComponent<TMPro.TextMeshProUGUI>().text;
 		if (p1Name.Length == 1)
 		{
@@ -276,15 +274,15 @@ public class MainMenu : MonoBehaviour
 		{
 			p2Name = "Player 2";
 		}
-		Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), true);
-		Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), true);
-		gameManager.Init(player1, player2);
+		// Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), true);
+		// Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), true);
+		// gameManager.Init(player1, player2);
 		SceneManager.LoadScene("Game");
 	}
 
 	private void StartNetworkGame()
 	{
-		GameManager gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+		Game gameManager = GameObject.Find("Game Manager").GetComponent<Game>();
 		if (p1Name.Length == 0)
 		{
 			p1Name = "Player 1";
@@ -293,9 +291,9 @@ public class MainMenu : MonoBehaviour
 		{
 			p2Name = "Player 2";
 		}
-		Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), Constants.USER_ID == 1);
-		Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), Constants.USER_ID == 2);
-		gameManager.Init(player1, player2);
+		// Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), Constants.USER_ID == 1);
+		// Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), Constants.USER_ID == 2);
+		// gameManager.Init(player1, player2);
 		SceneManager.LoadScene("Game");
 	}
 }

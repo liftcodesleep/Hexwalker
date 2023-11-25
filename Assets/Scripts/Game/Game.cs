@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-public static class Game
+
+public class Game : MonoBehaviour
 {
     private static int _currentPlayer = 0;
     public static int turnCount = 0;
     public static Player[] players;
-
     public static Map map;
     public static Stack<Effect> stack;
 
@@ -17,17 +17,16 @@ public static class Game
     private static GameObject HexMapGO;
     private static GameObject _filter;
 
+    private bool networking;
+    private NetworkManager networkManager;
+
     static Game()
     {
         players = new Player[] { new Player(), new AI() };
-
         players[0].Name = "Player 1";
         players[1].Name = "Player 2";
-
         stack = new Stack<Effect>();
-
         //map.CurrentLevel.OnStartTurn(0);
-
     }
 
     public static Player GetCurrentPlayer() 
