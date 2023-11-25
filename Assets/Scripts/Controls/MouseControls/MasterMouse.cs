@@ -14,12 +14,14 @@ public class MasterMouse : MonoBehaviour
   private static Ray MouseRay;
   // private static GameObject _filter;
   private static GameObject HexMapGO;
+  
   // Start is called before the first frame update
   void Start() {
       Selecteditems = new List<GameObject>();
       currentTask = Task.StandBy;
       // _filter = null;
   }
+  
   // Update is called once per frame
   void Update() {
       if( Input.GetMouseButtonDown(0) ) {
@@ -74,10 +76,12 @@ public class MasterMouse : MonoBehaviour
       //Debug.Log("AAAAAA" + selectedItem.name);
       taskOwner.RightClicked(selectedItem);
   }
+
   public static void SetTask(Task task, IMouseController owner) {
       MasterMouse.taskOwner = owner;
       MasterMouse.currentTask = task;
   }
+  
   private static GameObject getClickedObject() {
       MouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
       GameObject selected;

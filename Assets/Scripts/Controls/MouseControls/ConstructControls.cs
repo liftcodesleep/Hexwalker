@@ -87,8 +87,6 @@ public class ConstructControls : MonoBehaviour, IMouseController
         close();
     }
 
-
-
     private void HighlightHexes() {
         Game.map.UnhighlightHexes();
         List<Hex> hexs = Game.map.GetHexList();
