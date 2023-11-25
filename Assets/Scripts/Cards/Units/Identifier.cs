@@ -23,8 +23,7 @@ public class Identifier : MonoBehaviour
     
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         card = (Card)this.transform.parent.GetComponent<UnitComponent>().unit;
         mesh = this.gameObject.GetComponent<MeshRenderer>();
 
@@ -33,32 +32,25 @@ public class Identifier : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if( mesh.material != friendMat && card.Owner == Game.players[0])
-        {
+    void Update() {
+        if( mesh.material != friendMat && card.Owner == Game.players[0]) {
             mesh.material = friendMat;
 
-            if(objectToChange)
-            {
+            if(objectToChange) {
                 objectToChange.material = friendMat;
             }
-            if (objectToChange2)
-            {
+            if (objectToChange2) {
                 objectToChange2.material = friendMat;
             }
             
         }
-        else if(mesh.material != enemyMat && card.Owner != Game.players[0])
-        {
+        else if(mesh.material != enemyMat && card.Owner != Game.players[0]) {
             //Debug.Log("Player: " + card.Owner.Name);
             mesh.material = enemyMat;
-            if (objectToChange)
-            {
+            if (objectToChange) {
                 objectToChange.material = enemyMat;
             }
-            if (objectToChange2)
-            {
+            if (objectToChange2) {
                 objectToChange2.material = enemyMat;
             }
         }

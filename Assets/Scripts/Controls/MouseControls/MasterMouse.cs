@@ -18,29 +18,24 @@ public class MasterMouse : MonoBehaviour
     private static Ray MouseRay;
 
 
-    private static GameObject _filter;
+    // private static GameObject _filter;
     private static GameObject HexMapGO;
 
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         Selecteditems = new List<GameObject>();
         currentTask = Task.StandBy;
-
-        _filter = null;
+        // _filter = null;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
-        if( Input.GetMouseButtonDown(0) )
-        {
+        if( Input.GetMouseButtonDown(0) ) {
             selectedItem = getClickedObject();
             leftClick();
-        }else if (Input.GetMouseButtonDown(1))
-        {
+        }else if (Input.GetMouseButtonDown(1)) {
             selectedItem = getClickedObject();
             rightClick();
         }
@@ -49,18 +44,15 @@ public class MasterMouse : MonoBehaviour
     }
 
 
-    public static void leftClickObj(GameObject obj)
-    {
+    public static void leftClickObj(GameObject obj) {
         selectedItem = obj;
         leftClick();
     }
 
-    private static void leftClick()
-    {
+    private static void leftClick() {
 
         // If nothing is clicked
-        if (selectedItem ==null )
-        {
+        if (selectedItem ==null ) {
             Debug.Log("Master Mouse, Clicked nothing");
             taskOwner.close();
             return;
@@ -74,15 +66,13 @@ public class MasterMouse : MonoBehaviour
         {
             return;
         }
-        else if (taskOwner == null)
-        {
+        else if (taskOwner == null) {
             //Debug.Log("task was null " + selectedItem.name);
             taskOwner = clickedMouseController;
             currentTask = clickedMouseController.GetTask();
             clickedMouseController.open();
         }
-        else if (taskOwner != clickedMouseController)
-        {
+        else if (taskOwner != clickedMouseController) {
             //Debug.Log("clicked task  " + clickedMouseController.GetTask());
             clickedMouseController.open();
         }
@@ -92,15 +82,12 @@ public class MasterMouse : MonoBehaviour
 
     }
 
-    private void rightClick()
-    {
+    private void rightClick() {
 
         // Do nothing if nothing is selected and close if selected nothing
-        if (taskOwner == null)
-        {
+        if (taskOwner == null) {
             return;
-        }else if (selectedItem == null)
-        {
+        }else if (selectedItem == null) {
             taskOwner.close();
             return;
         }
@@ -109,28 +96,24 @@ public class MasterMouse : MonoBehaviour
 
     }
 
-    public static void SetTask(Task task, IMouseController owner)
-    {
+    public static void SetTask(Task task, IMouseController owner) {
         
         MasterMouse.taskOwner = owner;
         MasterMouse.currentTask = task;
     }
 
 
-    private static GameObject getClickedObject()
-    {
+    private static GameObject getClickedObject() {
         MouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         GameObject selected;
         UnitComponent selectedUnit;
 
-        if (Physics.Raycast(MouseRay, out HitRay, 100f))
-        {
+        if (Physics.Raycast(MouseRay, out HitRay, 100f)) {
             //selectedItem = HitRay.transform.gameObject.transform.parent.transform.parent.gameObject;
             selected =  HitRay.transform.gameObject;
             selectedUnit = selected.GetComponent<UnitComponent>();
-            if (selectedUnit)
-            {
+            if (selectedUnit) {
                 lastSelectedUnit = selectedUnit.unit;
             }
 

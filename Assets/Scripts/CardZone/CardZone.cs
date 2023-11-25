@@ -12,17 +12,14 @@ public class CardZone
 
     public enum Types { Deck, Hand, GraveYard, InPlay };
 
-    public CardZone()
-    {
+    public CardZone() {
         
         this.Cards = new List<Card>();
     }
 
-    public void Shuffle(List<Card> cards)
-    {
+    public void Shuffle(List<Card> cards) {
         int n = cards.Count;
-        for (int i = 0; i < (n - 1); i++)
-        {
+        for (int i = 0; i < (n - 1); i++) {
             int r = i + _random.Next(n - i);
             Card t = cards[r];
             cards[r] = cards[i];
@@ -30,25 +27,20 @@ public class CardZone
         }
     }
 
-    public Card PopCard()
-    {
+    public Card PopCard() {
         Card topCard = Cards[0];
         Cards.Remove(topCard);
 
         return topCard;
     }
 
-    public void GetNCardsFromZone(int n, CardZone TargetZone)
-    {
-        if (n > TargetZone.Cards.Count)
-        {
+    public void GetNCardsFromZone(int n, CardZone TargetZone) {
+        if (n > TargetZone.Cards.Count) {
             n = TargetZone.Cards.Count;
         }
 
-        for (int i = 0; i < n; i++)
-        {
-            if (Capacity > Cards.Count)
-            {
+        for (int i = 0; i < n; i++) {
+            if (Capacity > Cards.Count) {
                 Cards.Add(TargetZone.PopCard());
             }
         }

@@ -16,24 +16,20 @@ public abstract class Unit : Construct
 
 	public Map.HexType[] moveableHexTypes;
 
-    public Unit(Player Owner) : base(Owner)
-    {
+    public Unit(Player Owner) : base(Owner) {
            
         type = Card.Type.UNIT;
     }
 
-	public void OnDeath()
-    {
+	public void OnDeath() {
         Location = null;
         currentZone = CardZone.Types.GraveYard;
         Owner.AllUnits.Remove(this);
     }
 
-    public int Move(Hex hexTarget)
-    {
+    public int Move(Hex hexTarget) {
 
-        if (!ValidMove(hexTarget))
-        {
+        if (!ValidMove(hexTarget)) {
             return 0;
         }
 
@@ -50,17 +46,14 @@ public abstract class Unit : Construct
 
     }
 
-    public void Attack(Unit target)
-    {
+    public void Attack(Unit target) {
         target.TakeDamage( this.Strength );
     }
 
-    public void TakeDamage(int damage_amount)
-    {
+    public void TakeDamage(int damage_amount) {
         this.Health -= damage_amount;
 
-        if(Health <= 0)
-        {
+        if(Health <= 0) {
             this.currentZone = CardZone.Types.GraveYard;
             Location = null;
             Debug.Log("Unit was put into the graveyard");
@@ -68,8 +61,7 @@ public abstract class Unit : Construct
     }
 
 
-    public override string ToString()
-    {
+    public override string ToString() {
 
         return base.ToString() +
             "Health: " + Health + "\n" +
@@ -81,25 +73,20 @@ public abstract class Unit : Construct
     }
 
 
-    public bool ValidMove(Hex hex)
-    {
+    public bool ValidMove(Hex hex) {
         bool valid = false;
-        if (hex.type == Map.HexType.Water || hex.type == Map.HexType.High)
-        {
+        if (hex.type == Map.HexType.Water || hex.type == Map.HexType.High) {
             return false;
         }
 
-        foreach(Map.HexType currentType in moveableHexTypes)
-        {
-            if(currentType == hex.type)
-            {
+        foreach(Map.HexType currentType in moveableHexTypes) {
+            if(currentType == hex.type) {
                 valid = true;
                 break;
             }
         }
 
-        if(!valid)
-        {
+        if(!valid) {
             return false;
         }
 
@@ -113,8 +100,7 @@ public abstract class Unit : Construct
         //    return false;
         //}
 
-        if (this.Location.DistanceFrom(hex) > this.ActionPoints)
-        {
+        if (this.Location.DistanceFrom(hex) > this.ActionPoints) {
             return false;
         }
 

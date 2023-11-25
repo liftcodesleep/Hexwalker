@@ -12,8 +12,7 @@ public class GiantGrowthComponent : MonoBehaviour
     float growth_scale = 1.5f;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         unit = this.transform.parent.GetComponentInChildren<UnitComponent>();
 
         startTurn = Game.turnCount;
@@ -24,21 +23,17 @@ public class GiantGrowthComponent : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         
-        if(startTurn != Game.turnCount)
-        {
+        if(startTurn != Game.turnCount) {
             unit.transform.localScale = originalSize;
             Destroy(this);
         }
 
     }
 
-    IEnumerator Grow()
-    {
-        while(unit.transform.localScale.magnitude < (originalSize * growth_scale).magnitude)
-        {
+    IEnumerator Grow() {
+        while(unit.transform.localScale.magnitude < (originalSize * growth_scale).magnitude) {
             unit.transform.localScale *= 1.1f;
             yield return new WaitForSeconds(.1f);
         }

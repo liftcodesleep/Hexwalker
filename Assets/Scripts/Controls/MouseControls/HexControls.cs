@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class HexControls : MonoBehaviour, IMouseController
 {
-    public void LeftClicked(GameObject clickObject)
-    {
+    public void LeftClicked(GameObject clickObject) {
         
     }
 
-    public void close()
-    {
+    public void close() {
         
     }
 
-    public void open()
-    {
+    public void open() {
         
-        switch (MasterMouse.currentTask)
-        {
+        switch (MasterMouse.currentTask) {
 
             case MasterMouse.Task.StandBy:
                 //Debug.Log("In hex control 1");
@@ -56,13 +52,11 @@ public class HexControls : MonoBehaviour, IMouseController
 
     }
 
-    private IEnumerator UpdateFromUnit()
-    {
+    private IEnumerator UpdateFromUnit() {
 
         yield return new WaitForSeconds(.1f);
 
-        if(MasterMouse.currentTask != MasterMouse.Task.UnitMenuClicked )
-        {
+        if(MasterMouse.currentTask != MasterMouse.Task.UnitMenuClicked ) {
             if(MasterMouse.taskOwner != null) MasterMouse.taskOwner.close();
             MasterMouse.currentTask = GetTask();
             MasterMouse.taskOwner = this;
@@ -72,24 +66,20 @@ public class HexControls : MonoBehaviour, IMouseController
 
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         
     }
 
-    public void RightClicked(GameObject clickObject)
-    {
+    public void RightClicked(GameObject clickObject) {
         
     }
 
-    public MasterMouse.Task GetTask()
-    {
+    public MasterMouse.Task GetTask() {
         return MasterMouse.Task.StandBy;
     }
 

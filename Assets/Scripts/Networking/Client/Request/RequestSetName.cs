@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class RequestSetName : NetworkRequest
 {
-	public RequestSetName()
-	{
+	public RequestSetName() {
 		request_id = Constants.CMSG_SETNAME;
 	}
 
-	public void send(string name)
-	{
+	public void send(string name) {
 		packet = new GamePacket(request_id);
 		packet.addString(name);
 	}

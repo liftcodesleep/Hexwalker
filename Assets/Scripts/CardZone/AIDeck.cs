@@ -5,8 +5,7 @@ using UnityEngine;
 public class AIDeck : CardZone
 {
 
-    public AIDeck(Player Owner)
-    {
+    public AIDeck(Player Owner) {
         this.Owner = Owner;
 
         Cards.Add(new Knight(this.Owner));

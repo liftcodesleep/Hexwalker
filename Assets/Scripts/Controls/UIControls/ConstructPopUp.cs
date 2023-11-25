@@ -22,16 +22,14 @@ public class ConstructPopUp : MonoBehaviour
     private static UnitComponent UnitGO;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         //UnitComponent UnitGO = MasterMouse.selectedItem.GetComponent<UnitComponent>();
         currentUnit = null;
 
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
         //if(UnitGO == null && MasterMouse.selectedItem != null)
         //{
@@ -63,39 +61,32 @@ public class ConstructPopUp : MonoBehaviour
 
     }
 
-    private void removeOldAbilities()
-    {
+    private void removeOldAbilities() {
 
-        if(popUpPanel.transform.childCount == 0)
-        {
+        if(popUpPanel.transform.childCount == 0) {
             return;
         }
 
         GameObject currentChild = popUpPanel.transform.GetChild(0).gameObject;
 
-        while ( currentChild != null)
-        {
+        while ( currentChild != null) {
             GameObject.Destroy(currentChild);
             currentChild = popUpPanel.transform.GetChild(0).gameObject;
             break;
         }
         
     }
-    private void addAbilityButtons()
-    {
+    private void addAbilityButtons() {
         GameObject currentAbilityButton;
         int ability_index = 0;
-        foreach(Effect currentAbility in currentUnit.Abilities)
-        {
+        foreach(Effect currentAbility in currentUnit.Abilities) {
             currentAbilityButton = Instantiate(abilityButtonPrefab, popUpPanel.transform);
             currentAbilityButton.GetComponent<AbilityButtonControls>().SetUp(currentAbility, ability_index);
             ability_index++;
         }
     }
-    private void UpdateAbilities()
-    {
-        if( MasterMouse.lastSelectedUnit == currentUnit && MasterMouse.lastSelectedUnit != null )
-        {
+    private void UpdateAbilities() {
+        if( MasterMouse.lastSelectedUnit == currentUnit && MasterMouse.lastSelectedUnit != null ) {
             return;
         }
 
@@ -105,8 +96,7 @@ public class ConstructPopUp : MonoBehaviour
 
     }
 
-    public static void UseAbility()
-    {
+    public static void UseAbility() {
         MasterMouse.currentTask = MasterMouse.Task.UnitMenuClicked;
 
         Debug.Log("In pop up!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -115,8 +105,7 @@ public class ConstructPopUp : MonoBehaviour
 
         Construct unit = MasterMouse.lastSelectedUnit;
 
-        if (unit != null && unit.Abilities[0] != null)
-        {
+        if (unit != null && unit.Abilities[0] != null) {
             //Effect.PutOnStack()
             unit.Abilities[0].ImmediateEffect();
         }

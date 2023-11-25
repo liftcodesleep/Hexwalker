@@ -15,15 +15,13 @@ public class TalkingText : MonoBehaviour
 
     private int index;
     
-    void Start()
-    {
+    void Start() {
         textComponent.text = string.Empty;
         StartDialogue();
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         //if (Input.GetMouseButtonDown(0))
         //{
         //    if(textComponent.text == lines[index])
@@ -40,26 +38,21 @@ public class TalkingText : MonoBehaviour
 
     
 
-    void StartDialogue()
-    {
+    void StartDialogue() {
         this.index = 0;
         StartCoroutine(TypeLine());
     }
 
-    IEnumerator TypeLine()
-    {
-        foreach(char c in lines[index].ToCharArray())
-        {
+    IEnumerator TypeLine() {
+        foreach(char c in lines[index].ToCharArray()) {
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
         
     }
 
-    public void NextLine()
-    {
-        if(index < lines.Length - 1)
-        {
+    public void NextLine() {
+        if(index < lines.Length - 1) {
             index++;
             textComponent.text = string.Empty;
             StartCoroutine (TypeLine());
@@ -70,8 +63,7 @@ public class TalkingText : MonoBehaviour
         }
     }
 
-    public void SetText(string[] newText)
-    {
+    public void SetText(string[] newText) {
         lines = newText;
 
     }

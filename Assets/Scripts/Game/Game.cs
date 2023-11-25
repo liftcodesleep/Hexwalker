@@ -20,8 +20,7 @@ public class Game : MonoBehaviour
     private bool networking;
     private NetworkManager networkManager;
 
-    static Game()
-    {
+    static Game() {
         players = new Player[] { new Player(), new AI() };
         players[0].Name = "Player 1";
         players[1].Name = "Player 2";
@@ -35,22 +34,18 @@ public class Game : MonoBehaviour
     }
 
 
-    public static GameObject GetHexMapGo()
-    {
+    public static GameObject GetHexMapGo() {
 
-        if (!HexMapGO)
-        {
+        if (!HexMapGO) {
             HexMapGO = GameObject.Find("HexMap");
         }
         return HexMapGO;
     }
 
-    public static GameObject GetFilter()
-    {
+    public static GameObject GetFilter() {
         //return Camera.main.gameObject.transform.Find("Filter").gameObject; 
 
-        if (_filter == null)
-        {
+        if (_filter == null) {
             _filter = GameObject.Find("Main Camera");
             _filter = _filter.transform.GetChild(1).gameObject;
 
@@ -59,21 +54,17 @@ public class Game : MonoBehaviour
     }
 
 
-    public static void NextTurn()
-    {
+    public static void NextTurn() {
 
         
-        foreach (Player player in players)
-        {
+        foreach (Player player in players) {
             foreach(Effect currentEffect in player.ActiveEffects) 
             {
                 currentEffect.EndTurnEffect();
             }
 
-            foreach( Construct currentConstruct in player.AllUnits)
-            {
-                foreach(Effect currentEffect in currentConstruct.ActiveEffects)
-                {
+            foreach( Construct currentConstruct in player.AllUnits) {
+                foreach(Effect currentEffect in currentConstruct.ActiveEffects) {
                     currentEffect.EndTurnEffect();
                 }
             }

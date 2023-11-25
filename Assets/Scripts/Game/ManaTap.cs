@@ -8,8 +8,7 @@ public class ManaTap : Effect
     private Charge charge;
 
     
-    public ManaTap(Card card, Charge charge) : base(card)
-    {
+    public ManaTap(Card card, Charge charge) : base(card) {
         this.charge = charge;
 
         this.Name = "Tap Mana";
@@ -17,14 +16,12 @@ public class ManaTap : Effect
         this.NumberOfTargets = 0;
     }
 
-    public override void EndTurnEffect()
-    {
+    public override void EndTurnEffect() {
         //this.Card.Owner.c GainCharge(charge);
 
     }
 
-    public override void ImmediateEffect()
-    {
+    public override void ImmediateEffect() {
         //this.Card.Owner.GainCharge(charge);
 
         this.Card.Owner.Pool += charge;
@@ -34,13 +31,11 @@ public class ManaTap : Effect
         Debug.Log("Added mana, Player mana now: " + Game.players[0].Pool.Holy );
     }
 
-    public override void TargetedEffect(Type typeTargeted)
-    {
+    public override void TargetedEffect(Type typeTargeted) {
         
     }
 
-    public override void Target(GameObject target)
-    {
+    public override void Target(GameObject target) {
         throw new System.NotImplementedException();
     }
 }

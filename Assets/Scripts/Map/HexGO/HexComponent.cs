@@ -17,21 +17,17 @@ public class HexComponent : MonoBehaviour
     private static readonly float HexHorizontalSpacing = WIDTH;
 
 
-    private void Start()
-    {
+    private void Start() {
         this.transform.localScale = new Vector3(.01f, .01f, .01f);
     }
 
-    private void Update()
-    {
-        if (this.transform.localScale.x < 1)
-        {
+    private void Update() {
+        if (this.transform.localScale.x < 1) {
             this.transform.localScale += new Vector3(.02f, .02f, .02f);
         }
     }
 
-    public Vector3 Position()
-    {
+    public Vector3 Position() {
         float z;
 
         z = this.transform.parent.transform.position.z;
@@ -45,8 +41,7 @@ public class HexComponent : MonoBehaviour
 
     }
 
-    public void UpdatePosition()
-    {
+    public void UpdatePosition() {
         this.transform.position = new Vector3(
             this.PositionFromCamera().x,
             this.transform.position.y,
@@ -54,8 +49,7 @@ public class HexComponent : MonoBehaviour
     }
 
     
-    public Vector3 PositionFromCamera(Vector3 cameraPosition)
-    {
+    public Vector3 PositionFromCamera(Vector3 cameraPosition) {
 
         
         float mapWidth = Game.columns * HexHorizontalSpacing;
@@ -66,8 +60,7 @@ public class HexComponent : MonoBehaviour
 
 
         //We want howmanyWidthsFromCamera to be between -0.5 to 0.5
-        if (howManyWidthsFromCamera > 0)
-        {
+        if (howManyWidthsFromCamera > 0) {
             howManyWidthsFromCamera += 0.5f;
         }
         else
@@ -86,8 +79,7 @@ public class HexComponent : MonoBehaviour
     }
 
 
-    public Vector3 PositionFromCamera()
-    {
+    public Vector3 PositionFromCamera() {
         Vector3 cameraPosition = Camera.main.transform.position;
         
         return PositionFromCamera(cameraPosition);

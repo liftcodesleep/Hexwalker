@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class RequestJoin : NetworkRequest
 {
-	public RequestJoin()
-	{
+	public RequestJoin() {
 		request_id = Constants.CMSG_JOIN;
 	}
 
-	public void send()
-	{
+	public void send() {
 		packet = new GamePacket(request_id);
 	}
 }

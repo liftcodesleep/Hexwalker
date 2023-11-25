@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Bear : Unit
 {
-	public Bear(Player Owner) : base(Owner)
-	{
+	public Bear(Player Owner) : base(Owner) {
 		this.Cost = new Charge(0,1,0,0, false);
 		Name = "Bear";
 		//string Rules;
@@ -27,21 +26,17 @@ public class Bear : Unit
 	}
 
 
-	public override bool IsPlayableHex(Hex hex)
-	{
+	public override bool IsPlayableHex(Hex hex) {
 
-		if (hex.type == Map.HexType.Water || hex.type == Map.HexType.High)
-		{
+		if (hex.type == Map.HexType.Water || hex.type == Map.HexType.High) {
 			return false;
 		}
 
-		if (hex.cards.Count > 0)
-		{
+		if (hex.cards.Count > 0) {
 			return false;
 		}
 
-		if (hex.DistanceFrom(Owner.Avatar.Location) > SummonRange)
-		{
+		if (hex.DistanceFrom(Owner.Avatar.Location) > SummonRange) {
 
 			return false;
 		}

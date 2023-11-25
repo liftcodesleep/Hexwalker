@@ -18,8 +18,7 @@ public abstract class Level
     public List<Construct_and_Location> starting_constructs;
     
 
-    public Level(int level, string name, string description)
-    {
+    public Level(int level, string name, string description) {
         this.level = level;
         this.name = name;
         this.description = description;
@@ -27,16 +26,13 @@ public abstract class Level
         starting_constructs = new List<Construct_and_Location>();
     }
 
-    public void AddStartingUnit(Construct unit, Hex Location)
-    {
+    public void AddStartingUnit(Construct unit, Hex Location) {
         starting_constructs.Add(new Construct_and_Location() { construct = unit, location = Location });
         
     }
 
-    public void PlaceStartingUnits()
-    {
-        foreach( Construct_and_Location unit in starting_constructs )
-        {
+    public void PlaceStartingUnits() {
+        foreach( Construct_and_Location unit in starting_constructs ) {
             Game.map.PlaceItem(unit.construct, unit.location);
 
         }

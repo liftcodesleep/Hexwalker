@@ -7,8 +7,7 @@ public class Knight : Unit
 
 	
 
-	public Knight(Player Owner) : base(Owner)
-	{
+	public Knight(Player Owner) : base(Owner) {
 		//Charge Cost;
 		Name = "Knight";
 		//string Rules;
@@ -30,21 +29,17 @@ public class Knight : Unit
 	}
 
 
-	public override bool IsPlayableHex(Hex hex)
-	{
+	public override bool IsPlayableHex(Hex hex) {
 		
-		if(hex.type == Map.HexType.Water || hex.type == Map.HexType.High)
-        {
+		if(hex.type == Map.HexType.Water || hex.type == Map.HexType.High) {
 			return false;
         }
 
-		if(hex.cards.Count > 0)
-        {
+		if(hex.cards.Count > 0) {
 			return false;
         }
 
-		if (hex.DistanceFrom(Owner.Avatar.Location) > SummonRange)
-		{
+		if (hex.DistanceFrom(Owner.Avatar.Location) > SummonRange) {
 
 			return false;
 		}

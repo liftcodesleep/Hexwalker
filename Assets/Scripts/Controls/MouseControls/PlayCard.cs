@@ -13,11 +13,9 @@ public class PlayCard : MonoBehaviour, IMouseController
     
     private List<HexComponent> _playableHexs;
     
-    private void Start()
-    {
+    private void Start() {
         cardGO = this.gameObject.GetComponent<CardComponent>();
-        if (cardGO == null)
-        {
+        if (cardGO == null) {
             throw new System.Exception("PlayCard, Card has no card component");
         }
     
@@ -31,34 +29,29 @@ public class PlayCard : MonoBehaviour, IMouseController
 
         cardPreFab = data.GetPrefab(cardGO.card.Name);
 
-        if(cardPreFab == null)
-        {
+        if(cardPreFab == null) {
             throw new System.Exception("PlayCard " + cardGO.card.Name + " Did not have a prefab");
         }
     }
     
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         
     }
     
-    public void clickedFromGUI()
-    {
+    public void clickedFromGUI() {
         //Debug.Log("Play card Clicked");
         MasterMouse.leftClickObj(this.gameObject);
     }
     
-    public void LeftClicked(GameObject clickedObject)
-    {
+    public void LeftClicked(GameObject clickedObject) {
         //MasterMouse.Selecteditems.Add(this.gameObject);
         //HighlightHexes();
 
         HighlightHexes();
 
     }
-    public void open()
-    {
+    public void open() {
         //UnitDatabase data = cardGO.PreFabs.GetComponent<UnitDatabase>();
         //SetPlayableHexs();
         //
@@ -70,8 +63,7 @@ public class PlayCard : MonoBehaviour, IMouseController
         //HighlightHexes();
 
         //Debug.Log("In play card 1");
-        switch (MasterMouse.currentTask)
-        {
+        switch (MasterMouse.currentTask) {
 
             case MasterMouse.Task.MoveUnit:
             case MasterMouse.Task.StandBy:
@@ -88,8 +80,7 @@ public class PlayCard : MonoBehaviour, IMouseController
         }
 
     }
-    public void close()
-    {
+    public void close() {
     
         
         UnhighlightHexes();
@@ -99,17 +90,14 @@ public class PlayCard : MonoBehaviour, IMouseController
 
     }
     
-    public void RightClicked(GameObject clickObject)
-    {
+    public void RightClicked(GameObject clickObject) {
         HexComponent hexComp = clickObject.GetComponent<HexComponent>();
-        if (hexComp == null)
-        {
+        if (hexComp == null) {
             Debug.Log("PlayCard not a hex");
             return;
         }
         Hex hex = hexComp.hex;
-        if (hex == null)
-        {
+        if (hex == null) {
             Debug.Log("PlayCard not a hex?!?!");
             return;
         }
@@ -117,8 +105,7 @@ public class PlayCard : MonoBehaviour, IMouseController
 
         
 
-        if( Play(cardGO.card,hex))
-        {
+        if( Play(cardGO.card,hex)) {
             Destroy(this.gameObject);
         }
 
@@ -130,11 +117,9 @@ public class PlayCard : MonoBehaviour, IMouseController
     }
 
 
-    public static bool Play(Card card, Hex hex)
-    {
+    public static bool Play(Card card, Hex hex) {
 
-        if (!( card.Cost <= card.Owner.Pool) )
-        {
+        if (!( card.Cost <= card.Owner.Pool) ) {
             
             return false;
         }
@@ -147,8 +132,7 @@ public class PlayCard : MonoBehaviour, IMouseController
 
         UnitDatabase data = GameObject.Find("UnitSpellsDataBase").GetComponent<UnitDatabase>();
 
-        if(data == null)
-        {
+        if(data == null) {
             throw new System.Exception("Could not find DataBase in play card");
         }
 
@@ -165,22 +149,19 @@ public class PlayCard : MonoBehaviour, IMouseController
         hex.cards.Add(card);
 
 
-        if (unitGO.GetComponent<UnitComponent>())
-        {
+        if (unitGO.GetComponent<UnitComponent>()) {
             UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
             unitGOComp.unit = (Unit)card;
             unitGOComp.unit.Location = hex;
             card.Owner.AllUnits.Add((Construct)card);
         }
-        if (card.type == Card.Type.CHARGE)
-        {
+        if (card.type == Card.Type.CHARGE) {
 
             //this.transform.localRotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
         }
 
         card.Location = hex;
-        foreach (Effect currentEffect in card.ETBs)
-        {
+        foreach (Effect currentEffect in card.ETBs) {
             currentEffect.ImmediateEffect();
 
         }
@@ -196,26 +177,22 @@ public class PlayCard : MonoBehaviour, IMouseController
  
 
 
-    private void HighlightHexes()
-    {
+    private void HighlightHexes() {
         GameObject hexMap = Game.GetHexMapGo();
         _filter.SetActive(true);
 
         HexComponent hexGO;
-        foreach ( Transform currentHex in hexMap.transform)
-        {
+        foreach ( Transform currentHex in hexMap.transform) {
             
             hexGO = currentHex.gameObject.GetComponent<HexComponent>();
 
             
-            if (cardGO.card.IsPlayableHex(hexGO.hex))
-            {
+            if (cardGO.card.IsPlayableHex(hexGO.hex)) {
                 
                 hexGO.gameObject.layer = 6;
                 _playableHexs.Add(hexGO);
     
-                foreach (Transform subItem in hexGO.transform)
-                {
+                foreach (Transform subItem in hexGO.transform) {
                     subItem.gameObject.layer = 6;
                 }
     
@@ -223,8 +200,7 @@ public class PlayCard : MonoBehaviour, IMouseController
             }
             else
             {
-                foreach (Transform subItem in hexGO.transform)
-                {
+                foreach (Transform subItem in hexGO.transform) {
                     subItem.gameObject.layer = 0;
                 }
                 
@@ -233,8 +209,7 @@ public class PlayCard : MonoBehaviour, IMouseController
         }
     }
     
-    private void UnhighlightHexes()
-    {
+    private void UnhighlightHexes() {
         //_filter.SetActive(false);
         //foreach (HexComponent hex in _playableHexs)
         //{
@@ -249,8 +224,7 @@ public class PlayCard : MonoBehaviour, IMouseController
     }
     
     
-    public MasterMouse.Task GetTask()
-    {
+    public MasterMouse.Task GetTask() {
         return MasterMouse.Task.PlayCard;
     }
     

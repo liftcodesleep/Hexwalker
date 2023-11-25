@@ -13,8 +13,7 @@ public class LevelOne : Level
     private enum Stage { Starting, WalkedToFirst, PlayedMana, Tappedmana, 
         PlayedUnit, AttackedUnit, TryPlayingASpell }
     private Stage _stage;
-    public LevelOne() : base(1, "Tutorial", "Learn To play Hexwalker")
-    {
+    public LevelOne() : base(1, "Tutorial", "Learn To play Hexwalker") {
         _stage = Stage.Starting;
         _levelUnits = new Dictionary<string, Construct>();
         _levelEffects = new Dictionary<string, GameObject>();
@@ -29,8 +28,7 @@ public class LevelOne : Level
 
     }
 
-    public override void StartLevel()
-    {
+    public override void StartLevel() {
         //PlaceStartingUnits();
         Game.players[0].Draw(2);
 
@@ -76,18 +74,15 @@ public class LevelOne : Level
         });
     }
 
-    public override void OnStartTurn(int turn)
-    {
+    public override void OnStartTurn(int turn) {
 
-        if(_stage == Stage.AttackedUnit)
-        {
+        if(_stage == Stage.AttackedUnit) {
             _stage = Stage.TryPlayingASpell;
             Game.map.TalkingDialog.NextLine();
         }
 
         Debug.Log("sTARTING Turn "+ turn);
-        switch(turn)
-        {
+        switch(turn) {
             case 0:
                 //PlaceStartingUnits();
                 break;
@@ -96,8 +91,7 @@ public class LevelOne : Level
                 //break;
             case 2:
                 //PlaceStartingUnits();
-                if (_stage == Stage.WalkedToFirst)
-                {
+                if (_stage == Stage.WalkedToFirst) {
                     _levelEffects["MoveMarker"].transform.position 
                     = Game.map.GetHexGO(Game.map.GetHex(15, 7)).transform.position + Vector3.up * .2f;
                     _levelEffects["MoveMarker"].SetActive(true);
@@ -111,12 +105,10 @@ public class LevelOne : Level
         }
     }
 
-    public override void UpdateLevel()
-    {
+    public override void UpdateLevel() {
         
         if (_stage == Stage.Starting 
-        && Game.players[0].Avatar.Location == Game.map.GetHex(16, 8))
-        {
+        && Game.players[0].Avatar.Location == Game.map.GetHex(16, 8)) {
             //Map.DestroyObject();
             _levelEffects["MoveMarker"].SetActive(false);
             Game.map.PlaceItem(_levelUnits["Knight1"], Game.map.GetHex(18, 8));
@@ -127,8 +119,7 @@ public class LevelOne : Level
         }
 
         if (Game.map.GetHex(15, 7).cards.Count > 0 
-        && _stage == Stage.WalkedToFirst)
-        {
+        && _stage == Stage.WalkedToFirst) {
             //Map.DestroyObject();
             _levelEffects["MoveMarker"].SetActive(false);
             //Game.map.PlaceItem(_levelUnits["Knight2"], Game.map.GetHex(17, 5));
@@ -136,15 +127,13 @@ public class LevelOne : Level
             Game.map.TalkingDialog.NextLine();
         }
 
-        if (_stage == Stage.PlayedMana && Game.players[0].Pool.Essence > 0)
-        {
+        if (_stage == Stage.PlayedMana && Game.players[0].Pool.Essence > 0) {
             _levelEffects["MoveMarker"].SetActive(false);
             _stage = Stage.Tappedmana;
             Game.map.TalkingDialog.NextLine();
         }
 
-        if (_stage == Stage.Tappedmana && Game.players[0].AllUnits.Count > 3)
-        {
+        if (_stage == Stage.Tappedmana && Game.players[0].AllUnits.Count > 3) {
             _levelEffects["MoveMarker"].SetActive(false);
             _stage = Stage.PlayedUnit;
             Game.map.TalkingDialog.NextLine();
@@ -152,8 +141,7 @@ public class LevelOne : Level
 
         if (_stage == Stage.PlayedUnit && 
             ((Unit)_levelUnits["Knight1"]).currentZone 
-            == CardZone.Types.GraveYard)
-        {
+            == CardZone.Types.GraveYard) {
             _levelEffects["MoveMarker"].SetActive(false);
             Game.map.PlaceItem(_levelUnits["Knight2"], Game.map.GetHex(18, 6));
             Game.map.PlaceItem(_levelUnits["Knight3"], Game.map.GetHex(18, 8));

@@ -7,40 +7,33 @@ public class Abilty : MonoBehaviour, IMouseController
 
     private GameObject _filter;
 
-    void Start()
-    {
+    void Start() {
         _filter = Game.GetFilter();
     }
 
-    public static List<Hex> TargetHexes()
-    {
+    public static List<Hex> TargetHexes() {
 
 
         return null;
     }
 
-    public MasterMouse.Task GetTask()
-    {
+    public MasterMouse.Task GetTask() {
         throw new System.NotImplementedException();
     }
 
-    public void open()
-    {
+    public void open() {
         throw new System.NotImplementedException();
     }
 
-    public void LeftClicked(GameObject clickObject)
-    {
+    public void LeftClicked(GameObject clickObject) {
         throw new System.NotImplementedException();
     }
 
-    public void RightClicked(GameObject clickObject)
-    {
+    public void RightClicked(GameObject clickObject) {
         throw new System.NotImplementedException();
     }
 
-    public void close()
-    {
+    public void close() {
         throw new System.NotImplementedException();
     }
 }

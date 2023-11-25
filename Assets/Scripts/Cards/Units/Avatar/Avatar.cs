@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Avatar : Unit
 {
-	public Avatar(Player Owner) : base(Owner)
-	{
+	public Avatar(Player Owner) : base(Owner) {
 		//Charge Cost;
 		Name = "Avatar";
 		//string Rules;
@@ -26,16 +25,13 @@ public class Avatar : Unit
 	}
 
 
-	public override bool IsPlayableHex(Hex hex)
-	{
+	public override bool IsPlayableHex(Hex hex) {
 
-		if (hex.type == Map.HexType.Water || hex.type == Map.HexType.High)
-		{
+		if (hex.type == Map.HexType.Water || hex.type == Map.HexType.High) {
 			return false;
 		}
 
-		if (hex.cards.Count > 0)
-		{
+		if (hex.cards.Count > 0) {
 			return false;
 		}
 		return true;

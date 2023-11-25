@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class FireBall : Spell
 {
-	public FireBall(Player Owner) : base(Owner)
-	{
+	public FireBall(Player Owner) : base(Owner) {
 		//Charge Cost;
 		Name = "FireBall";
 		ETBs.Add(new DamageEffect(this, 9999));
@@ -13,13 +12,11 @@ public class FireBall : Spell
 	}
 
 
-	public override bool IsPlayableHex(Hex hex)
-	{
+	public override bool IsPlayableHex(Hex hex) {
 
 		
 
-		if (hex.cards.Count > 0)
-		{
+		if (hex.cards.Count > 0) {
 			return true;
         }
         

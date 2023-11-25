@@ -23,19 +23,16 @@ public class CardComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private bool Shrinking = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         
     }
 
-    public void SetCard(Card card)
-    {
+    public void SetCard(Card card) {
         this.card = card;
         Title.text = card.Name;
         Type.text = card.type.ToString();
@@ -43,24 +40,20 @@ public class CardComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 
     
-    public void OnPointerEnter(PointerEventData eventData)
-    {
+    public void OnPointerEnter(PointerEventData eventData) {
         StartCoroutine(GrowCard());
         
     }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
+    public void OnPointerExit(PointerEventData eventData) {
         StartCoroutine(ShrinkCard());
     }
 
 
-    IEnumerator GrowCard()
-    {
+    IEnumerator GrowCard() {
         Shrinking = false;
         //Debug.Log("Growing");
-        while(this.transform.localScale.magnitude < scaleStaring.magnitude*1.7f)
-        {
+        while(this.transform.localScale.magnitude < scaleStaring.magnitude*1.7f) {
             if (Shrinking) break;
             yield return new WaitForSeconds(.005f);
             this.transform.localScale *= 1.1f;
@@ -68,12 +61,10 @@ public class CardComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         
     }
 
-    IEnumerator ShrinkCard()
-    {
+    IEnumerator ShrinkCard() {
         Shrinking = true;
         //Debug.Log("Getting smaller");
-        while (this.transform.localScale.magnitude > scaleStaring.magnitude)
-        {
+        while (this.transform.localScale.magnitude > scaleStaring.magnitude) {
             yield return new WaitForSeconds(.005f);
             this.transform.localScale *= .9f;
         }

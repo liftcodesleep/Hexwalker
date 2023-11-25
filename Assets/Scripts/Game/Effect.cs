@@ -18,8 +18,7 @@ public abstract class Effect
     public enum Type { ATTACK, DAMAGE, MOVE };
     public Type EffectType; 
 
-    public Effect(Card card)
-    {
+    public Effect(Card card) {
         this.Card = card;
         Resolved = false;
         targets = new List<GameObject>();
@@ -30,8 +29,7 @@ public abstract class Effect
     public abstract void Target(GameObject target);
 
 
-    public static void PutOnStack(Effect effect)
-    {
+    public static void PutOnStack(Effect effect) {
         Effect copyedEffect = (Effect)effect.MemberwiseClone();
 
         

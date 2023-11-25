@@ -6,24 +6,20 @@ using UnityEngine;
 public class MoveEffect : Effect
 {
 
-    public MoveEffect(Card card): base(card)
-    {
+    public MoveEffect(Card card): base(card) {
         EffectType = Type.MOVE;
     }
 
 
-    public override void EndTurnEffect()
-    {
+    public override void EndTurnEffect() {
         
     }
 
-    public override void ImmediateEffect()
-    {
+    public override void ImmediateEffect() {
 
         Unit movedUnit = (Unit)Card;
 
-        if (movedUnit == null)
-        {
+        if (movedUnit == null) {
             throw new Exception(Card.Name  + "Has a MoveEffect that is not a unit");
         }
 
@@ -32,13 +28,11 @@ public class MoveEffect : Effect
 
     }
 
-    public override void TargetedEffect(Type typeTargeted)
-    {
+    public override void TargetedEffect(Type typeTargeted) {
         
     }
 
-    public override void Target(GameObject target)
-    {
+    public override void Target(GameObject target) {
         throw new System.NotImplementedException();
     }
 }

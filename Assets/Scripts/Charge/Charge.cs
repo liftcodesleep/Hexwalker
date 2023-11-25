@@ -18,8 +18,7 @@ public class Charge {
         this.Unholy = 0;
         this.Tapped = false;
     }
-    public Charge(int slip, int essence, int holy, int unholy, bool tapped)
-    {
+    public Charge(int slip, int essence, int holy, int unholy, bool tapped) {
         this.Slip = slip;
         this.Essence = essence;
         this.Holy = holy;
@@ -28,8 +27,7 @@ public class Charge {
     }
 
 
-    public static Charge operator +(Charge charge1, Charge charge2)
-    {
+    public static Charge operator +(Charge charge1, Charge charge2) {
         Charge charge = new Charge();
         charge.Slip = charge1.Slip + charge2.Slip;
         charge.Essence = charge1.Essence + charge2.Essence;
@@ -38,8 +36,7 @@ public class Charge {
         return charge;
     }
 
-    public static Charge operator -(Charge charge1, Charge charge2)
-    {
+    public static Charge operator -(Charge charge1, Charge charge2) {
         Charge charge = new Charge();
         charge.Slip = charge1.Slip - charge2.Slip;
         charge.Essence = charge1.Essence - charge2.Essence;
@@ -48,23 +45,19 @@ public class Charge {
         return charge;
     }
 
-    public static bool operator ==(Charge charge1, Charge charge2)
-    {
+    public static bool operator ==(Charge charge1, Charge charge2) {
         return (charge1.Unholy == charge2.Unholy) && (charge1.Holy == charge2.Holy)
     && (charge1.Slip == charge2.Slip) && (charge1.Essence == charge2.Essence);
     }
 
-    public static bool operator !=(Charge charge1, Charge charge2)
-    {
+    public static bool operator !=(Charge charge1, Charge charge2) {
         return (charge1.Unholy != charge2.Unholy) || (charge1.Holy != charge2.Holy)
     || (charge1.Slip != charge2.Slip) || (charge1.Essence != charge2.Essence);
 
     }
 
-    public override bool Equals(System.Object charge)
-    {
-        if ((charge == null) || !this.GetType().Equals(charge.GetType()))
-        {
+    public override bool Equals(System.Object charge) {
+        if ((charge == null) || !this.GetType().Equals(charge.GetType())) {
             return false;
         }
         Charge charge1 = (Charge) charge;
@@ -72,8 +65,7 @@ public class Charge {
             && charge1.Slip == this.Slip && charge1.Essence == this.Essence;
     }
 
-    public override int GetHashCode()
-    {
+    public override int GetHashCode() {
         //fake hashing but unneeded
         return (this.TotalCharge(this) << 2);
     }
@@ -83,14 +75,12 @@ public class Charge {
     }
 
 
-    public static bool operator >=(Charge charge1, Charge charge2)
-    {
+    public static bool operator >=(Charge charge1, Charge charge2) {
         return (charge1.Unholy >= charge2.Unholy) && (charge1.Holy >= charge2.Holy)
     && (charge1.Slip >= charge2.Slip) && (charge1.Essence >= charge2.Essence);
 
     }
-    public static bool operator <=(Charge charge1, Charge charge2)
-    {
+    public static bool operator <=(Charge charge1, Charge charge2) {
         Debug.Log(charge1.Essence + " " + charge2.Essence);
         Debug.Log("The value for <= " + ((charge1.Unholy <= charge2.Unholy) && (charge1.Holy <= charge2.Holy)
     && (charge1.Slip <= charge2.Slip) && (charge1.Essence <= charge2.Essence)));

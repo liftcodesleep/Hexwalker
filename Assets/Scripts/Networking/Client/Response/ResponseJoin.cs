@@ -10,8 +10,7 @@ public class ResponseJoinEventArgs : ExtendedEventArgs
 	public string op_name { get; set; } // opponent name, if known
 	public bool op_ready { get; set; } // has opponent clicked ready?
 
-	public ResponseJoinEventArgs()
-	{
+	public ResponseJoinEventArgs() {
 		event_id = Constants.SMSG_JOIN;
 	}
 }
@@ -24,15 +23,12 @@ public class ResponseJoin : NetworkResponse
 	private string op_name;
 	private bool op_ready;
 
-	public ResponseJoin()
-	{
+	public ResponseJoin() {
 	}
 
-	public override void parse()
-	{
+	public override void parse() {
 		status = DataReader.ReadShort(dataStream);
-		if (status == 0)
-		{
+		if (status == 0) {
 			user_id = DataReader.ReadInt(dataStream);
 			op_id = DataReader.ReadInt(dataStream);
 			op_name = DataReader.ReadString(dataStream);
@@ -40,14 +36,12 @@ public class ResponseJoin : NetworkResponse
 		}
 	}
 
-	public override ExtendedEventArgs process()
-	{
+	public override ExtendedEventArgs process() {
 		ResponseJoinEventArgs args = new ResponseJoinEventArgs
 		{
 			status = status
 		};
-		if (status == 0)
-		{
+		if (status == 0) {
 			args.user_id = user_id;
 			args.op_id = op_id;
 			args.op_name = op_name;

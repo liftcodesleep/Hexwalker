@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class RequestReady : NetworkRequest
 {
-	public RequestReady()
-	{
+	public RequestReady() {
 		request_id = Constants.CMSG_READY;
 	}
 
-	public void send()
-	{
+	public void send() {
 		packet = new GamePacket(request_id);
 	}
 }

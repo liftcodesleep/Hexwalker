@@ -33,8 +33,7 @@ public class MainMenu : MonoBehaviour
 	private bool opReady = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
 		rootMenuPanel = GameObject.Find("Root Menu");
 		hotseatMenuPanel = GameObject.Find("Hotseat Menu");
 		networkMenuPanel = GameObject.Find("Network Menu");
@@ -60,25 +59,21 @@ public class MainMenu : MonoBehaviour
 	}
 
 	#region RootMenu
-	public void OnHotseatClick()
-	{
+	public void OnHotseatClick() {
 		rootMenuPanel.SetActive(false);
 		hotseatMenuPanel.SetActive(true);
 	}
 
-	public void OnNetworkClick()
-	{
+	public void OnNetworkClick() {
 		Debug.Log("Send JoinReq");
 		bool connected = networkManager.SendJoinRequest();
-		if (!connected)
-		{
+		if (!connected) {
 			messageBoxMsg.text = "Unable to connect to server.";
 			messageBox.SetActive(true);
 		}
 	}
 
-	public void OnExitClick()
-	{
+	public void OnExitClick() {
 #if UNITY_EDITOR
 		UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -88,13 +83,11 @@ public class MainMenu : MonoBehaviour
 	#endregion
 
 	#region HotseatMenu
-	public void OnStartClick()
-	{
+	public void OnStartClick() {
 		StartHotseatGame();
 	}
 
-	public void OnBackClick()
-	{
+	public void OnBackClick() {
 		rootMenuPanel.SetActive(true);
 		hotseatMenuPanel.SetActive(false);
 		networkMenuPanel.SetActive(false);
@@ -103,20 +96,16 @@ public class MainMenu : MonoBehaviour
 	#endregion
 
 	#region NetworkMenu
-	public void OnResponseJoin(ExtendedEventArgs eventArgs)
-	{
+	public void OnResponseJoin(ExtendedEventArgs eventArgs) {
 		ResponseJoinEventArgs args = eventArgs as ResponseJoinEventArgs;
-		if (args.status == 0)
-		{
-			if (args.user_id == 1)
-			{
+		if (args.status == 0) {
+			if (args.user_id == 1) {
 				playerName = player1Name;
 				opponentName = player2Name;
 				playerInput = player1Input;
 				opponentInput = player2Input;
 			}
-			else if (args.user_id == 2)
-			{
+			else if (args.user_id == 2) {
 				playerName = player2Name;
 				opponentName = player1Name;
 				playerInput = player2Input;
@@ -132,10 +121,8 @@ public class MainMenu : MonoBehaviour
 			Constants.USER_ID = args.user_id;
 			Constants.OP_ID = 3 - args.user_id;
 
-			if (args.op_id > 0)
-			{
-				if (args.op_id == Constants.OP_ID)
-				{
+			if (args.op_id > 0) {
+				if (args.op_id == Constants.OP_ID) {
 					opponentName.text = args.op_name;
 					opReady = args.op_ready;
 				}
@@ -167,8 +154,7 @@ public class MainMenu : MonoBehaviour
 		}
 	}
 
-	public void OnLeave()
-	{
+	public void OnLeave() {
 		Debug.Log("Send LeaveReq");
 		networkManager.SendLeaveRequest();
 		rootMenuPanel.SetActive(true);
@@ -176,22 +162,18 @@ public class MainMenu : MonoBehaviour
 		ready = false;
 	}
 
-	public void OnResponseLeave(ExtendedEventArgs eventArgs)
-	{
+	public void OnResponseLeave(ExtendedEventArgs eventArgs) {
 		ResponseLeaveEventArgs args = eventArgs as ResponseLeaveEventArgs;
-		if (args.user_id != Constants.USER_ID)
-		{
+		if (args.user_id != Constants.USER_ID) {
 			opponentName.text = "Waiting for opponent";
 			opReady = false;
 		}
 	}
 
-	public void OnPlayerNameSet(string name)
-	{
+	public void OnPlayerNameSet(string name) {
 		Debug.Log("Send SetNameReq: " + name);
 		networkManager.SendSetNameRequest(name);
-		if (Constants.USER_ID == 1)
-		{
+		if (Constants.USER_ID == 1) {
 			p1Name = name;
 		}
 		else
@@ -200,14 +182,11 @@ public class MainMenu : MonoBehaviour
 		}
 	}
 
-	public void OnResponseSetName(ExtendedEventArgs eventArgs)
-	{
+	public void OnResponseSetName(ExtendedEventArgs eventArgs) {
 		ResponseSetNameEventArgs args = eventArgs as ResponseSetNameEventArgs;
-		if (args.user_id != Constants.USER_ID)
-		{
+		if (args.user_id != Constants.USER_ID) {
 			opponentName.text = args.name;
-			if (args.user_id == 1)
-			{
+			if (args.user_id == 1) {
 				p1Name = args.name;
 			}
 			else
@@ -217,14 +196,12 @@ public class MainMenu : MonoBehaviour
 		}
 	}
 
-	public void OnReadyClick()
-	{
+	public void OnReadyClick() {
 		Debug.Log("Send ReadyReq");
 		networkManager.SendReadyRequest();
 	}
 
-	public void OnResponseReady(ExtendedEventArgs eventArgs)
-	{
+	public void OnResponseReady(ExtendedEventArgs eventArgs) {
 		ResponseReadyEventArgs args = eventArgs as ResponseReadyEventArgs;
 		if (Constants.USER_ID == -1) // Haven't joined, but got ready message
 		{
@@ -232,12 +209,10 @@ public class MainMenu : MonoBehaviour
 		}
 		else
 		{
-			if (args.user_id == Constants.OP_ID)
-			{
+			if (args.user_id == Constants.OP_ID) {
 				opReady = true;
 			}
-			else if (args.user_id == Constants.USER_ID)
-			{
+			else if (args.user_id == Constants.USER_ID) {
 				ready = true;
 			}
 			else
@@ -249,29 +224,24 @@ public class MainMenu : MonoBehaviour
 			}
 		}
 
-		if (ready && opReady)
-		{
+		if (ready && opReady) {
 			StartNetworkGame();
 		}
 	}
 	#endregion
 
-	public void OnOKClick()
-	{
+	public void OnOKClick() {
 		messageBox.SetActive(false);
 	}
 
-	private void StartHotseatGame()
-	{
+	private void StartHotseatGame() {
 		Game gameManager = GameObject.Find("Game Manager").GetComponent<Game>();
 		string p1Name = GameObject.Find("HotPlayer1Name").GetComponent<TMPro.TextMeshProUGUI>().text;
-		if (p1Name.Length == 1)
-		{
+		if (p1Name.Length == 1) {
 			p1Name = "Player 1";
 		}
 		string p2Name = GameObject.Find("HotPlayer2Name").GetComponent<TMPro.TextMeshProUGUI>().text;
-		if (p2Name.Length == 1)
-		{
+		if (p2Name.Length == 1) {
 			p2Name = "Player 2";
 		}
 		// Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), true);
@@ -280,15 +250,12 @@ public class MainMenu : MonoBehaviour
 		SceneManager.LoadScene("Game");
 	}
 
-	private void StartNetworkGame()
-	{
+	private void StartNetworkGame() {
 		Game gameManager = GameObject.Find("Game Manager").GetComponent<Game>();
-		if (p1Name.Length == 0)
-		{
+		if (p1Name.Length == 0) {
 			p1Name = "Player 1";
 		}
-		if (p2Name.Length == 0)
-		{
+		if (p2Name.Length == 0) {
 			p2Name = "Player 2";
 		}
 		// Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), Constants.USER_ID == 1);

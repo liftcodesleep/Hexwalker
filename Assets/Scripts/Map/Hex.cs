@@ -29,8 +29,7 @@ public class Hex
 
     public List<Effect> ActiveEffects;
 
-    public Hex(int q, int r)
-    {
+    public Hex(int q, int r) {
         this.column = q;
         this.row = r;
         this.sum = -(q + r);
@@ -43,24 +42,20 @@ public class Hex
         // this.Units = new HashSet<Unit>();
     }
 
-    private Map.HexType CalcuateType()
-    {
+    private Map.HexType CalcuateType() {
 
         this.elevation = CalculateElevation();
 
         this.elevation += CalculateIslandElevationOffset();
 
-        if (elevation < 40)
-        {
+        if (elevation < 40) {
             Name = "Water";
             return Map.HexType.Water;
-        }else if (elevation < 52)
-        {
+        }else if (elevation < 52) {
             Name = "Flat";
             return Map.HexType.Flat;
         }
-        else if (elevation < 63)
-        {
+        else if (elevation < 63) {
             Name = "Forest";
             return Map.HexType.Forest;
         }
@@ -73,8 +68,7 @@ public class Hex
 
     ///////////////////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
 
-    private int CalculateElevation()
-    {
+    private int CalculateElevation() {
         float x, y, noiseValue, elevation;
         float scale = .55f;
 
@@ -92,8 +86,7 @@ public class Hex
 
         // Only change the largest values
         noiseValue = Mathf.Pow(noiseValue, 2) * 20 - 24;
-        if (Mathf.Abs(noiseValue) > 10)
-        {
+        if (Mathf.Abs(noiseValue) > 10) {
             elevation += (int)noiseValue;
         }
 
@@ -102,8 +95,7 @@ public class Hex
     }
 
 
-    private int CalculateIslandElevationOffset()
-    {
+    private int CalculateIslandElevationOffset() {
         int from_center = (Game.rows-1) / 2 - row;
 
         float island_steapness = 30f;
@@ -112,8 +104,7 @@ public class Hex
         // Bell like curve
         float island_offset = Mathf.Pow(2, -Mathf.Pow(from_center, 2) / island_steapness) * island_width - island_hight_increase;
 
-        if (island_offset > 0)
-        {
+        if (island_offset > 0) {
             island_offset = 0;
         }
 
@@ -121,19 +112,16 @@ public class Hex
     }
 
 
-    public float DistanceFrom(Hex b)
-    {
+    public float DistanceFrom(Hex b) {
 
         int dQ = Mathf.Abs(this.column - b.column);
 
-        if (dQ > Game.columns / 2)
-        {
+        if (dQ > Game.columns / 2) {
             dQ = Game.columns - dQ;
         }
 
         int dS = Mathf.Abs(this.sum - b.sum);
-        if (dS > Game.columns / 2)
-        {
+        if (dS > Game.columns / 2) {
             dS = Mathf.Abs(dS - Game.columns);
         }
 

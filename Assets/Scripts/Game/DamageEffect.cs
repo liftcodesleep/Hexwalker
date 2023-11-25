@@ -7,34 +7,26 @@ public class DamageEffect : Effect
 
     private int damageAmount;
 
-    public DamageEffect(Card card, int damageAmount) : base(card)
-    {
+    public DamageEffect(Card card, int damageAmount) : base(card) {
         EffectType = Type.MOVE;
         this.damageAmount = damageAmount;
     }
 
 
-    public override void EndTurnEffect()
-    {
+    public override void EndTurnEffect() { }
 
-    }
-
-    public override void Target(GameObject target)
-    {
+    public override void Target(GameObject target) {
         throw new System.NotImplementedException();
     }
 
-    public override void ImmediateEffect()
-    {
+    public override void ImmediateEffect() {
         Debug.Log("Damage Effect");
-        if (Card.Location == null)
-        {
+        if (Card.Location == null) {
             Debug.Log("No targets on hex");
             return;
         }
         Debug.Log("Damage End");
-        foreach (Card currentCard in Card.Location.cards)
-        {
+        foreach (Card currentCard in Card.Location.cards) {
 
             Unit currentUnit;
             try
@@ -49,8 +41,7 @@ public class DamageEffect : Effect
             Debug.Log("name is");
             Debug.Log(currentUnit.Name);
             Debug.Log("000oo");
-            if (currentUnit != null)
-            {
+            if (currentUnit != null) {
                 Debug.Log("AAAAAAAAAAAAAAAA");
             }
             currentUnit.TakeDamage( damageAmount );
@@ -61,8 +52,5 @@ public class DamageEffect : Effect
         
     }
 
-    public override void TargetedEffect(Type typeTargeted)
-    {
-
-    }
+    public override void TargetedEffect(Type typeTargeted) { }
 }

@@ -7,8 +7,7 @@ public class NetworkManager : MonoBehaviour
 {
 	private ConnectionManager cManager;
 
-	void Awake()
-	{
+	void Awake() {
 		DontDestroyOnLoad(gameObject);
 		gameObject.AddComponent<MessageQueue>();
 		gameObject.AddComponent<ConnectionManager>();
@@ -17,20 +16,16 @@ public class NetworkManager : MonoBehaviour
 	}
 
 	// Start is called before the first frame update
-	void Start()
-    {
+	void Start() {
 		cManager = GetComponent<ConnectionManager>();
-		if (cManager)
-		{
+		if (cManager) {
 			cManager.setupSocket();
 			StartCoroutine(RequestHeartbeat(0.1f));
 		}
 	}
 
-	public bool SendJoinRequest()
-	{
-		if (cManager && cManager.IsConnected())
-		{
+	public bool SendJoinRequest() {
+		if (cManager && cManager.IsConnected()) {
 			RequestJoin request = new RequestJoin();
 			request.send();
 			cManager.send(request);
@@ -39,10 +34,8 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-	public bool SendLeaveRequest()
-	{
-		if (cManager && cManager.IsConnected())
-		{
+	public bool SendLeaveRequest() {
+		if (cManager && cManager.IsConnected()) {
 			RequestLeave request = new RequestLeave();
 			request.send();
 			cManager.send(request);
@@ -51,10 +44,8 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-	public bool SendSetNameRequest(string Name)
-	{
-		if (cManager && cManager.IsConnected())
-		{
+	public bool SendSetNameRequest(string Name) {
+		if (cManager && cManager.IsConnected()) {
 			RequestSetName request = new RequestSetName();
 			request.send(Name);
 			cManager.send(request);
@@ -63,10 +54,8 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-	public bool SendReadyRequest()
-	{
-		if (cManager && cManager.IsConnected())
-		{
+	public bool SendReadyRequest() {
+		if (cManager && cManager.IsConnected()) {
 			RequestReady request = new RequestReady();
 			request.send();
 			cManager.send(request);
@@ -75,10 +64,8 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-	public bool SendMoveRequest(int pieceIndex, int x, int y)
-	{
-		if (cManager && cManager.IsConnected())
-		{
+	public bool SendMoveRequest(int pieceIndex, int x, int y) {
+		if (cManager && cManager.IsConnected()) {
 			RequestMove request = new RequestMove();
 			request.send(pieceIndex, x, y);
 			cManager.send(request);
@@ -97,10 +84,8 @@ public class NetworkManager : MonoBehaviour
   //   return false;
   // }
 
-	public bool SendInteractRequest(int pieceIndex, int targetIndex)
-	{
-		if (cManager && cManager.IsConnected())
-		{
+	public bool SendInteractRequest(int pieceIndex, int targetIndex) {
+		if (cManager && cManager.IsConnected()) {
 			RequestInteract request = new RequestInteract();
 			request.send(pieceIndex, targetIndex);
 			cManager.send(request);
@@ -109,12 +94,10 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-	public IEnumerator RequestHeartbeat(float time)
-	{
+	public IEnumerator RequestHeartbeat(float time) {
 		yield return new WaitForSeconds(time);
 
-		if (cManager)
-		{
+		if (cManager) {
 			RequestHeartbeat request = new RequestHeartbeat();
 			request.send();
 			cManager.send(request);

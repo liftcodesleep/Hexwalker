@@ -21,13 +21,10 @@ public class UnitDatabase : MonoBehaviour
     public List<UnitMap> units;
 
 
-    public GameObject GetPrefab(string name)
-    {
+    public GameObject GetPrefab(string name) {
 
-        foreach (UnitMap unit in units)
-        {
-            if(name.Equals(unit.name))
-            {
+        foreach (UnitMap unit in units) {
+            if(name.Equals(unit.name)) {
                 
                 return unit.prefab;
             }
@@ -39,10 +36,7 @@ public class UnitDatabase : MonoBehaviour
     }
 
 
-    public void PlaceGameObject(string name, Hex location)
-    {
-
-    }
+    public void PlaceGameObject(string name, Hex location) { }
 
 
 }

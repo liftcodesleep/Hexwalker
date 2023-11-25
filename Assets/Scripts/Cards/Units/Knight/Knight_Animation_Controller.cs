@@ -28,28 +28,24 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
 
 
 
-    public void AttackAnimation()
-    {
+    public void AttackAnimation() {
         
         StartCoroutine(attack());
         
     }
-    IEnumerator attack()
-    {
+    IEnumerator attack() {
         //Debug.Log("Aniimation Attack");
         _animator.SetBool("attacked", true);
         yield return new WaitForSeconds(.1f);
         _animator.SetBool("attacked", false);
 
     }
-    public void DeathAnimation()
-    {
+    public void DeathAnimation() {
         StartCoroutine(deathAnimationplay());
 
     }
 
-    IEnumerator deathAnimationplay()
-    {
+    IEnumerator deathAnimationplay() {
         //Debug.Log("Aniimation Attack");
         _animator.SetBool("attacked", true);
         yield return new WaitForSeconds(.1f);
@@ -57,11 +53,9 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
 
     }
 
-    public void IdleAnimation()
-    {
+    public void IdleAnimation() {
         
-        if (!_animator.GetBool("Moving"))
-        {
+        if (!_animator.GetBool("Moving")) {
             return;
         }
         Debug.Log("Starting Idel animation");
@@ -69,29 +63,24 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
        
     }
 
-    public void MoveAnimation()
-    {
+    public void MoveAnimation() {
         
-        if (_animator.GetBool("Moving"))
-        {
+        if (_animator.GetBool("Moving")) {
             return;
         }
         Debug.Log("Starting run animation");
         _animator.SetBool("Moving", true);
-        if(runSound == null)
-        {
+        if(runSound == null) {
             return;
         }
         runSound.Play();
     }
 
-    public void TakeDamageAnimation()
-    {
+    public void TakeDamageAnimation() {
         StartCoroutine(damageAnimationplay());
     }
 
-    IEnumerator damageAnimationplay()
-    {
+    IEnumerator damageAnimationplay() {
         Debug.Log("Aniimation Damage!!!!!!!!!!!!!");
         _animator.SetBool("damaged", true);
         yield return new WaitForSeconds(1f);
@@ -99,28 +88,24 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
 
     }
 
-    public void UseSpellAnimation()
-    {
+    public void UseSpellAnimation() {
         throw new System.NotImplementedException();
     }
 
-    private void Start()
-    {
+    private void Start() {
         _animator = GetComponent<Animator>();
 
         _animator.applyRootMotion = false;
 
         unitGO = this.transform.parent.gameObject.GetComponent<UnitComponent>();
-        if(!unitGO)
-        {
+        if(!unitGO) {
             throw new System.Exception("Animator is not attached to a unit");
         }
 
 
     }
 
-    private void Update()
-    {
+    private void Update() {
         //_animator.SetBool("attacked", false);
 
         //if(unitGO.currentVelocity.magnitude > 1)

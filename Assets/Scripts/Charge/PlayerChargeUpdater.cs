@@ -11,8 +11,7 @@ public class PlayerChargeUpdater : MonoBehaviour
     
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
 
 
         
@@ -20,8 +19,7 @@ public class PlayerChargeUpdater : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
         manaText[0].text = Game.players[0].Pool.Holy.ToString() ;
         manaText[1].text = Game.players[0].Pool.Unholy.ToString();

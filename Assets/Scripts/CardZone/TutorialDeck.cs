@@ -10,8 +10,7 @@ public class TutorialDeck : CardZone
     //    this.Owner = Owner;
     //}
 
-    public TutorialDeck(Player Owner)
-    {
+    public TutorialDeck(Player Owner) {
         this.Owner = Owner;
 
         Cards.Add(new ConnectToNature(this.Owner));

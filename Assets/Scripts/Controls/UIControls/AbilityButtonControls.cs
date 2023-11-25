@@ -9,8 +9,7 @@ public class AbilityButtonControls : MonoBehaviour, IMouseController
 
     private Effect _abilityEffect; 
     
-    public void SetUp(Effect ability, int abilityNumber)
-    {
+    public void SetUp(Effect ability, int abilityNumber) {
         this._abilityEffect = ability;
 
         nameText.text = this._abilityEffect.Name;
@@ -18,20 +17,16 @@ public class AbilityButtonControls : MonoBehaviour, IMouseController
         this.transform.position += Vector3.up * abilityNumber;
     }
 
-    public void OnClick()
-    {
+    public void OnClick() {
 
         open();
         
     }
 
 
-    private IEnumerator PlayEffect()
-    {
-        if(_abilityEffect.NumberOfTargets > 0)
-        {
-            while (_abilityEffect.NumberOfTargets < _abilityEffect.targets.Count)
-            {
+    private IEnumerator PlayEffect() {
+        if(_abilityEffect.NumberOfTargets > 0) {
+            while (_abilityEffect.NumberOfTargets < _abilityEffect.targets.Count) {
                 yield return new WaitForSeconds(.01f);
             }
         }
@@ -46,13 +41,11 @@ public class AbilityButtonControls : MonoBehaviour, IMouseController
         
     }
 
-    public MasterMouse.Task GetTask()
-    {
+    public MasterMouse.Task GetTask() {
         return MasterMouse.Task.UnitMenuClicked;
     }
 
-    public void open()
-    {
+    public void open() {
         MasterMouse.currentTask = MasterMouse.Task.UnitMenuClicked;
         MasterMouse.taskOwner.close();
         MasterMouse.taskOwner = this;
@@ -60,18 +53,15 @@ public class AbilityButtonControls : MonoBehaviour, IMouseController
         StartCoroutine(PlayEffect());
     }
 
-    public void LeftClicked(GameObject clickObject)
-    {
+    public void LeftClicked(GameObject clickObject) {
         _abilityEffect.Target(clickObject);
     }
 
-    public void RightClicked(GameObject clickObject)
-    {
+    public void RightClicked(GameObject clickObject) {
         close();
     }
 
-    public void close()
-    {
+    public void close() {
         Debug.Log("Closing button control");
 
         Game.map.UpdateVisible();

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class GiantGrowth : Spell
 {
-	public GiantGrowth(Player Owner) : base(Owner)
-	{
+	public GiantGrowth(Player Owner) : base(Owner) {
 		//Charge Cost;
 		Name = "GiantGrowth";
 		ETBs.Add(new BuffEffect(this, 3,3,0,1));
@@ -13,13 +12,11 @@ public class GiantGrowth : Spell
 	}
 
 
-	public override bool IsPlayableHex(Hex hex)
-	{
+	public override bool IsPlayableHex(Hex hex) {
 
 		
 
-		if (hex.cards.Count > 0)
-		{
+		if (hex.cards.Count > 0) {
 			return true;
         }
         

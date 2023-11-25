@@ -11,8 +11,7 @@ public class BuffEffect : Effect
 
     private int turns_left;
 
-    public BuffEffect(Card card, int heathAmount, int damageAmount, int actionsAmount, int turns) : base(card)
-    {
+    public BuffEffect(Card card, int heathAmount, int damageAmount, int actionsAmount, int turns) : base(card) {
         EffectType = Type.MOVE;
         this.heathAmount = heathAmount;
         this.damageAmount = damageAmount;
@@ -20,11 +19,9 @@ public class BuffEffect : Effect
         this.turns_left = turns;
     }
 
-    public override void EndTurnEffect()
-    {
+    public override void EndTurnEffect() {
         turns_left--;
-        if (turns_left <= 0)
-        {
+        if (turns_left <= 0) {
             currentUnit.Strength -= this.damageAmount;
             currentUnit.Health -= this.heathAmount;
             currentUnit.ActionPoints -= this.actionsAmount;
@@ -32,22 +29,18 @@ public class BuffEffect : Effect
         }
     }
 
-    public override void Target(GameObject target)
-    {
+    public override void Target(GameObject target) {
         throw new System.NotImplementedException();
     }
 
-    public override void ImmediateEffect()
-    {
+    public override void ImmediateEffect() {
         Debug.Log("Damage Effect");
-        if (Card.Location == null)
-        {
+        if (Card.Location == null) {
             Debug.Log("No targets on hex");
             return;
         }
         Debug.Log("Damage End");
-        foreach (Card currentCard in Card.Location.cards)
-        {
+        foreach (Card currentCard in Card.Location.cards) {
             try
             {
                 currentUnit = (Unit)currentCard;
@@ -60,8 +53,7 @@ public class BuffEffect : Effect
             //Debug.Log("name is");
             Debug.Log(currentUnit.Name);
             //Debug.Log("000oo");
-            if (currentUnit != null)
-            {
+            if (currentUnit != null) {
                 //Debug.Log("AAAAAAAAAAAAAAAA");
             }
             currentUnit.Strength += this.damageAmount;
@@ -76,8 +68,5 @@ public class BuffEffect : Effect
         
     }
 
-    public override void TargetedEffect(Type typeTargeted)
-    {
-
-    }
+    public override void TargetedEffect(Type typeTargeted) { }
 }

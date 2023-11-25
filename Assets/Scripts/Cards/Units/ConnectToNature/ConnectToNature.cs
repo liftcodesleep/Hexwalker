@@ -6,8 +6,7 @@ public class ConnectToNature : Unit
 {
 
 
-	public ConnectToNature(Player Owner) : base(Owner)
-	{
+	public ConnectToNature(Player Owner) : base(Owner) {
 		//Charge Cost;
 		Name = "ConnectToNature";
 		//string Rules;
@@ -31,21 +30,17 @@ public class ConnectToNature : Unit
 	}
 
 
-	public override bool IsPlayableHex(Hex hex)
-	{
+	public override bool IsPlayableHex(Hex hex) {
 
-		if (hex.type == Map.HexType.Water || hex.type == Map.HexType.High || hex.type == Map.HexType.Flat)
-		{
+		if (hex.type == Map.HexType.Water || hex.type == Map.HexType.High || hex.type == Map.HexType.Flat) {
 			return false;
 		}
 
-		if (hex.cards.Count > 0)
-		{
+		if (hex.cards.Count > 0) {
 			return false;
 		}
 
-		if (hex.DistanceFrom(Owner.Avatar.Location) > SummonRange)
-		{
+		if (hex.DistanceFrom(Owner.Avatar.Location) > SummonRange) {
 
 			return false;
 		}

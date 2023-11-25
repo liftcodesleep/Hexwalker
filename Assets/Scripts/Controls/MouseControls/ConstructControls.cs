@@ -11,40 +11,34 @@ public class ConstructControls : MonoBehaviour, IMouseController
     private Unit selectedUnit;
 
     private GameObject _filter;
-    private void Start()
-    {
+    private void Start() {
         _filter = Game.GetFilter();
     }
 
-    public void close()
-    {
+    public void close() {
         selectedToMoveGO = null;
         UnhighlightHexes();
         MasterMouse.taskOwner = null;
         MasterMouse.currentTask = MasterMouse.Task.StandBy;
     }
 
-    public MasterMouse.Task GetTask()
-    {
+    public MasterMouse.Task GetTask() {
         return MasterMouse.Task.MoveUnit;
     }
 
-    public void LeftClicked(GameObject clickObject)
-    {
+    public void LeftClicked(GameObject clickObject) {
         //Debug.Log("CC LC");
         
         selectedToMoveGO = clickObject.GetComponent<UnitComponent>();
 
-        if(!selectedToMoveGO)
-        {
+        if(!selectedToMoveGO) {
             //Debug.Log("Construct Controls: Not unit clicked");
             return;
         }
         
         selectedUnit = selectedToMoveGO.unit;
         
-        if (!selectedToMoveGO)
-        {
+        if (!selectedToMoveGO) {
             Debug.Log("Unit was Construct was null In left click");
             throw new NullReferenceException("Unit was Construct was null In left click");
         }
@@ -52,13 +46,11 @@ public class ConstructControls : MonoBehaviour, IMouseController
         HighlightHexes();
     }
 
-    public void open()
-    {
+    public void open() {
         //Debug.Log("CC open");
 
 
-        switch (MasterMouse.currentTask)
-        {
+        switch (MasterMouse.currentTask) {
 
             case MasterMouse.Task.PlayCard:
             case MasterMouse.Task.StandBy:
@@ -76,20 +68,17 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
     }
 
-    public void RightClicked(GameObject clickObject)
-    {
+    public void RightClicked(GameObject clickObject) {
 
         HexComponent targetHexGO = clickObject.GetComponent<HexComponent>();
 
-        if(targetHexGO)
-        {
+        if(targetHexGO) {
             move_to(targetHexGO);
             return;
         }
 
         UnitComponent targetUnitGO = clickObject.GetComponent<UnitComponent>();
-        if (targetUnitGO)
-        {
+        if (targetUnitGO) {
 
             targetUnitGO.GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
             selectedToMoveGO.GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
@@ -103,8 +92,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
     }
 
-    public static void PlayAttackAnimations(Unit attacker, Unit defender)
-    {
+    public static void PlayAttackAnimations(Unit attacker, Unit defender) {
 
         defender.Pieces[0].GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
         attacker.Pieces[0].GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
@@ -113,13 +101,9 @@ public class ConstructControls : MonoBehaviour, IMouseController
         defender.Pieces[0].transform.LookAt(attacker.Pieces[0].transform.position);
     }
 
-    private void attack()
-    {
+    private void attack() { }
 
-    }
-
-    private void move_to(HexComponent targetHexGO)
-    {
+    private void move_to(HexComponent targetHexGO) {
         //Debug.Log("CC Moving From " + selectedUnit.Location.Name);
         int hexesMoved = this.selectedUnit.Move(targetHexGO.hex);
         //Debug.Log("CC Moving to " + selectedUnit.Location.Name);
@@ -130,18 +114,15 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
 
 
-    private void HighlightHexes()
-    {
+    private void HighlightHexes() {
         
         Game.map.UnhighlightHexes();
 
         List<Hex> hexs = Game.map.GetHexList();
         List<Hex> hexsToHighlight = new List<Hex>();
 
-        foreach(Hex hex in hexs)
-        {
-            if(selectedUnit.Location.DistanceFrom(hex) <= selectedUnit.ActionPoints && selectedUnit.ValidMove(hex))
-            {
+        foreach(Hex hex in hexs) {
+            if(selectedUnit.Location.DistanceFrom(hex) <= selectedUnit.ActionPoints && selectedUnit.ValidMove(hex)) {
                 hexsToHighlight.Add(hex);
             }
         }
@@ -151,8 +132,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
     }
 
-    private void UnhighlightHexes()
-    {
+    private void UnhighlightHexes() {
 
         //Debug.Log(" CC Turning off highlight");
         //_filter.SetActive(false);

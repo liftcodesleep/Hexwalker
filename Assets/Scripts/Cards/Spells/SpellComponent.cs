@@ -7,17 +7,14 @@ public class SpellComponent : MonoBehaviour
 
     public Spell spell;
 
-    void Start()
-    {
+    void Start() {
         
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
-        if(spell.currentZone == CardZone.Types.GraveYard)
-        {
+        if(spell.currentZone == CardZone.Types.GraveYard) {
             Destroy(this);
         }
         

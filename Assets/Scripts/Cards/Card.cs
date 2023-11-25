@@ -20,8 +20,7 @@ public abstract class Card
 
     public CardZone.Types currentZone;
 
-    public Card(Player Owner)
-    {
+    public Card(Player Owner) {
         this.Owner = Owner;
         Cost = new Charge();
         Pieces = new List<GameObject>();

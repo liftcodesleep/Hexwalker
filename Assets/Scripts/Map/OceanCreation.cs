@@ -5,15 +5,13 @@ using UnityEngine;
 public class OceanCreation : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         StartCoroutine(SetUpOcean());
     }
 
  
 
-    IEnumerator SetUpOcean()
-    {
+    IEnumerator SetUpOcean() {
         
 
         yield return new WaitForSeconds(1);

@@ -9,8 +9,7 @@ public class ResponseMoveEventArgs : ExtendedEventArgs
 	public int x { get; set; } // The x coordinate of the target location
 	public int y { get; set; } // The y coordinate of the target location
 
-	public ResponseMoveEventArgs()
-	{
+	public ResponseMoveEventArgs() {
 		event_id = Constants.SMSG_MOVE;
 	}
 }
@@ -22,20 +21,17 @@ public class ResponseMove : NetworkResponse
 	private int x;
 	private int y;
 
-	public ResponseMove()
-	{
+	public ResponseMove() {
 	}
 
-	public override void parse()
-	{
+	public override void parse() {
 		user_id = DataReader.ReadInt(dataStream);
 		piece_idx = DataReader.ReadInt(dataStream);
 		x = DataReader.ReadInt(dataStream);
 		y = DataReader.ReadInt(dataStream);
 	}
 
-	public override ExtendedEventArgs process()
-	{
+	public override ExtendedEventArgs process() {
 		ResponseMoveEventArgs args = new ResponseMoveEventArgs
 		{
 			user_id = user_id,

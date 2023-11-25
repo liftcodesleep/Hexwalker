@@ -10,8 +10,7 @@ public class KnightsDeck : CardZone
     //    this.Owner = Owner;
     //}
 
-    public KnightsDeck(Player Owner)
-    {
+    public KnightsDeck(Player Owner) {
         this.Owner = Owner;
 
         Cards.Add(new Knight(this.Owner));

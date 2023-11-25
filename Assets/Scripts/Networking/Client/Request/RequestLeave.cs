@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class RequestLeave : NetworkRequest
 {
-	public RequestLeave()
-	{
+	public RequestLeave() {
 		request_id = Constants.CMSG_LEAVE;
 	}
 
-	public void send()
-	{
+	public void send() {
 		packet = new GamePacket(request_id);
 	}
 }
