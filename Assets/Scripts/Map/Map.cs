@@ -232,7 +232,7 @@ public class Map : MonoBehaviour {
 
   public void UpdateVisible() {
     UnhighlightHexes();
-    Debug.Log("Updating visible rage");
+    Debug.Log("Updating visible range");
     List<Hex> visibleHexes = new List<Hex>();
     foreach (Construct unit in Game.players[0].AllUnits) {
       foreach (Hex hex in Game.map.GetHexList()) {

@@ -18,7 +18,7 @@ public class Game : MonoBehaviour
   private NetworkManager networkManager;
 
   static Game() {
-    players = new Player[] { new Player(), new AI() };
+    players = new Player[] { new Player(), new Player() };
     players[0].Name = "Player 1";
     players[1].Name = "Player 2";
     stack = new Stack<Effect>();
@@ -40,7 +40,7 @@ public class Game : MonoBehaviour
     //return Camera.main.gameObject.transform.Find("Filter").gameObject; 
     if (_filter == null) {
       _filter = GameObject.Find("Main Camera");
-      _filter = _filter.transform.GetChild(1).gameObject;
+      // _filter = _filter.transform.GetChild(0).gameObject;
     }
     return _filter;
   }

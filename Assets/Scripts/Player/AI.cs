@@ -96,7 +96,7 @@ public class AI : Player {
       }
       newPath = new List<Hex>(currentPath);
       newPath.Add(newLocation);
-      allPaths[direction_index] =  FindPath(unit, destantion, newPath);
+      allPaths[direction_index] = FindPath(unit, destantion, newPath);
     }
     // If weighted paths change this section
     newPath = allPaths[0];
