@@ -123,6 +123,7 @@ public class Hex
 
     public float DistanceFrom(Hex b)
     {
+        if (b == null) return 999f;
 
         int dQ = Mathf.Abs(this.column - b.column);
 

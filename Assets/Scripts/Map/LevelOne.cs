@@ -10,7 +10,7 @@ public class LevelOne : Level
     private Dictionary<string, Construct> _levelUnits;
     private Dictionary<string, GameObject> _levelEffects;
 
-    private enum Stage { Starting, WalkedToFirst, PlayedMana, Tappedmana, PlayedUnit, AttackedUnit, TryPlayingASpell}
+    private enum Stage { Starting, WalkedToFirst, PlayedMana, Tappedmana, PlayedUnit, AttackedUnit, TryPlayingASpell, PlayedSpell}
     private Stage _stage;
     public LevelOne() : base(1, "Tutorial", "Learn To play Hexwalker")
     {
@@ -25,6 +25,9 @@ public class LevelOne : Level
         _levelUnits.Add("Knight2", new Knight(Game.players[1]));
         _levelUnits.Add("Knight3", new Knight(Game.players[1]));
         _levelUnits.Add("Knight4", new Knight(Game.players[1]));
+        _levelUnits.Add("Archer1", new Archer(Game.players[1]));
+        _levelUnits.Add("Archer2", new Archer(Game.players[1]));
+        _levelUnits.Add("Archer3", new Archer(Game.players[1]));
 
 
 
@@ -49,25 +52,39 @@ public class LevelOne : Level
 
 
         Game.map.TalkingDialog.SetText( new string[]
-            { 
-                "In a realm untethered by our understanding of reality, your journey begins. " +
-            "A traumatic event from your past has awakened a latent power within you. " +
-            "I have highlighted an area try moving there we need to make sure we are alone... ",
+            {
+            "In a realm untethered by our understanding of reality, your "+
+            "new life begins. A traumatic event has awakened latent power "+
+            "within you. To begin your journey, move to the highlighted "+
+            "area by left clicking the wizard and then right clicking the"+
+            "highlighted area... ",
 
+            "OH NO! Enemy forces! There is nothing we can do now! "+
+            "Pass the turn by clicking the button in the bottom right hand "+
+            "corner",
 
-                "O NO! Enemy forces! There is nothing we can do now! Press the end turn button in the bottom right hand coner",
+            "Quick! You need to harness the power of this world, play the "+
+            "Connect to Nature Card. To play a card right click it, then "+
+            "right click the hex you want to play it on ",
 
-                "Quick you need to harnse the power of this world, play the Connect to Nature Card. To play a card right click it than click the hex you want to play it on ",
+            "Good Job! To get a charge to play card you must first click the "+
+            "area you connected to and then press the 'Tap Mana' button on "+
+            "the menu that appears.",
 
-                "Good Job! To get a charge to play card you must first click the unit and than press the 'Tap Mana' button",
+            "Now that you have some mana, summon your Bear next to the "+
+            "Knight by right clicking the Bear Card, and then click the area "+
+            "you wish to summon it to.",
 
-                "Now that you have some mana try playing your Bear card next to the Knight",
+            "To attack, click on the Bear and then right click on to the "+
+            "Knight.",
 
-                "To attack trying clicking on the bear and then right click on to the Knight. You Bear should be stonger than just one Knight!",
+            "OH NO! It looks like they have called in some more units! "+
+            "But this is all we can do now for now so pass the turn...",
 
-                "O No! It looks like they have called in some more units! But this is all we can do now try ending the turn...",
+            "Look at this new card that you just drew... It's a spell card, "+
+            "you can cast these spells to buff your own units! Try playing it on your bear.",
 
-                "Look at this new card that you just drew... Its a spell card, your Avatar can cast these spells to buff your own units try playing it on your bear"
+            "Your unit is now stonger and healthier but this will only last for one turn!"
             }
             );
          
@@ -157,6 +174,28 @@ public class LevelOne : Level
             Game.map.PlaceItem(_levelUnits["Knight3"], Game.map.GetHex(18, 8));
             _stage = Stage.AttackedUnit;
             Game.map.TalkingDialog.NextLine();
+        }
+
+        if (_stage == Stage.TryPlayingASpell)
+        {
+            bool found = false;
+            foreach(Card card in Game.players[0].Hand.Cards) 
+            {
+                if (card.Name.Equals("GiantGrowth"))
+                {
+                    found = true; break;
+                }
+            }
+
+            if (!found)
+            {
+                _levelEffects["MoveMarker"].SetActive(false);
+                Game.map.PlaceItem(_levelUnits["Archer1"], Game.map.GetHex(18, 6));
+                Game.map.PlaceItem(_levelUnits["Archer2"], Game.map.GetHex(18, 8));
+                _stage = Stage.PlayedSpell;
+                Game.map.TalkingDialog.NextLine();
+            }
+            
         }
     }
 }
