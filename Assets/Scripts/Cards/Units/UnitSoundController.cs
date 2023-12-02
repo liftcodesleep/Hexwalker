@@ -2,25 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitSoundController : MonoBehaviour
-{
-
+public class UnitSoundController : MonoBehaviour {
     [SerializeField]
     private AudioSource runSound;
-
-
     // Start is called before the first frame update
     void Start() {
-        
-        
     }
-
     // Update is called once per frame
     void Update() {
-        
     }
 
     public void PlayRunSound() {
-        
     }
 }

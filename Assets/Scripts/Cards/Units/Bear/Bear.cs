@@ -21,23 +21,16 @@ public class Bear : Unit
 		Actions = 2;
 		Strength = 2;
 		moveableHexTypes = new Map.HexType[] { Map.HexType.Flat, Map.HexType.Forest };
-
-
 	}
 
-
 	public override bool IsPlayableHex(Hex hex) {
-
 		if (hex.type == Map.HexType.Water || hex.type == Map.HexType.High) {
 			return false;
 		}
-
 		if (hex.cards.Count > 0) {
 			return false;
 		}
-
 		if (hex.DistanceFrom(Owner.Avatar.Location) > SummonRange) {
-
 			return false;
 		}
 		return true;

@@ -12,7 +12,7 @@ public class UnitComponent : MonoBehaviour
     private Vector3 oldPostion;
     private Vector3 newPosition;
     public Vector3 currentVelocity;
-    private IUnitAnomator anomator;
+    private IUnitAnimator animator;
 
     [SerializeField]
     private UnitDatabase unitDatabase;
@@ -25,26 +25,16 @@ public class UnitComponent : MonoBehaviour
     //
     private Vector3 originalScale;
     private void Start() {
-        
         originalScale = this.transform.GetChild(0).transform.localScale;
         this.transform.GetChild(0).transform.localScale = new Vector3(.01f, .01f, .01f);
-
         oldPostion = newPosition = this.transform.position;
-        
-        anomator = this.GetComponentInChildren<IUnitAnomator>();
-
-        if(anomator == null) {
+        animator = this.GetComponentInChildren<IUnitAnimator>();
+        if(animator == null) {
             throw new System.Exception(unit.Name + " Has no animations");
         }
-
-        
-        
         //this.oldHealth = unit.HealthPoints;
     }
 
-    
-
-    //
     private void Update() {
         //if (unit.HealthPoints <= 0)
         //{
@@ -67,15 +57,12 @@ public class UnitComponent : MonoBehaviour
     }
 
     private void HandleDeath() {
-        
         if(unit.currentZone == CardZone.Types.GraveYard) {
             this.transform.localScale *= .9f;
         }
-
         if(this.transform.localScale.magnitude < .1f) {
             GameObject DeathEffect = Instantiate(unitDatabase.GetPrefab("Death"), this.transform.position, Quaternion.identity);
             DeathEffect.transform.position += Vector3.up;
-            
             GameObject.Destroy(this.gameObject);
         }
     }
@@ -89,16 +76,11 @@ public class UnitComponent : MonoBehaviour
             return;
         }
         Hex parentHex = parentComponent.hex;
-        
         if (this.unit.Location != parentHex) {
-            
             HexComponent newComponent = Game.map.GetHexGO(this.unit.Location).GetComponent<HexComponent>();
             newPosition = newComponent.PositionFromCamera();
             currentVelocity = Vector3.zero;
             this.transform.parent = newComponent.transform;
-        }else
-        {
-            
         }
     }
     //
@@ -141,41 +123,34 @@ public class UnitComponent : MonoBehaviour
     //}
     //
     public void HandleAttack() {
-        anomator.AttackAnimation();
+        animator.AttackAnimation();
         
     }
     
     private void UpdatePosition() {
         if (newPosition == oldPostion) {
-            if(anomator != null) {
-                anomator.IdleAnimation();
+            if(animator != null) {
+                animator.IdleAnimation();
             }
-            
-            
         }
         else if (FinishedMove()) {
-            if (anomator != null) {
-                anomator.IdleAnimation();
+            if (animator != null) {
+                animator.IdleAnimation();
             }
             oldPostion = newPosition;
         }
-        else
-        {
-            if (anomator != null) {
-                anomator.MoveAnimation();
+        else {
+            if (animator != null) {
+                animator.MoveAnimation();
             }
-            
             this.transform.position = Vector3.SmoothDamp(this.transform.position, newPosition, ref currentVelocity, smoothTime);
             Vector3 lookDirection = newPosition - transform.position;
             Quaternion rotation = Quaternion.LookRotation(lookDirection);
             transform.rotation = rotation;
         }
     }
-    //
+
     private bool FinishedMove() {
-        
         return (newPosition - this.transform.position).magnitude < .1f;
     }
-    //
-    //
 }

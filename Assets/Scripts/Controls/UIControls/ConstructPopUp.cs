@@ -68,7 +68,6 @@ public class ConstructPopUp : MonoBehaviour
         }
 
         GameObject currentChild = popUpPanel.transform.GetChild(0).gameObject;
-
         while ( currentChild != null) {
             GameObject.Destroy(currentChild);
             currentChild = popUpPanel.transform.GetChild(0).gameObject;
@@ -76,40 +75,37 @@ public class ConstructPopUp : MonoBehaviour
         }
         
     }
+
     private void addAbilityButtons() {
         GameObject currentAbilityButton;
         int ability_index = 0;
-        foreach(Effect currentAbility in currentUnit.Abilities) {
-            currentAbilityButton = Instantiate(abilityButtonPrefab, popUpPanel.transform);
-            currentAbilityButton.GetComponent<AbilityButtonControls>().SetUp(currentAbility, ability_index);
-            ability_index++;
+        if (currentUnit != null){
+          foreach(Effect currentAbility in currentUnit.Abilities) {
+              currentAbilityButton = Instantiate(abilityButtonPrefab, popUpPanel.transform);
+              currentAbilityButton.GetComponent<AbilityButtonControls>().SetUp(currentAbility, ability_index);
+              ability_index++;
+          }
         }
     }
+
     private void UpdateAbilities() {
         if( MasterMouse.lastSelectedUnit == currentUnit && MasterMouse.lastSelectedUnit != null ) {
             return;
         }
-
         removeOldAbilities();
         currentUnit = MasterMouse.lastSelectedUnit;
         addAbilityButtons();
-
     }
 
     public static void UseAbility() {
         MasterMouse.currentTask = MasterMouse.Task.UnitMenuClicked;
 
         Debug.Log("In pop up!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        
-
-
         Construct unit = MasterMouse.lastSelectedUnit;
-
         if (unit != null && unit.Abilities[0] != null) {
             //Effect.PutOnStack()
             unit.Abilities[0].ImmediateEffect();
         }
-
         MasterMouse.taskOwner.close();
         MasterMouse.SetTask(MasterMouse.Task.StandBy, null);
     }

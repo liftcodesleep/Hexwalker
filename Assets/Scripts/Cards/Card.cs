@@ -26,7 +26,6 @@ public abstract class Card
         Pieces = new List<GameObject>();
         Tapped = false;
         ETBs = new List<Effect>();
-
         currentZone = CardZone.Types.Deck;
     }
 
@@ -35,7 +34,6 @@ public abstract class Card
     public Type type;
 
     public abstract bool IsPlayableHex(Hex hex);
-
 
     public override string ToString() {
         

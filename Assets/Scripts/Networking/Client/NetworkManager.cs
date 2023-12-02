@@ -65,6 +65,7 @@ public class NetworkManager : MonoBehaviour
 	}
 
 	public bool SendMoveRequest(int pieceIndex, int x, int y) {
+		Debug.Log("Sending Move Request.\n");
 		if (cManager && cManager.IsConnected()) {
 			RequestMove request = new RequestMove();
 			request.send(pieceIndex, x, y);

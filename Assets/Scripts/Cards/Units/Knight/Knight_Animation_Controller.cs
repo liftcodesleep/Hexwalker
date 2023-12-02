@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knight_Animation_Controller : MonoBehaviour, IUnitAnomator
+public class Knight_Animation_Controller : MonoBehaviour, IUnitAnimator
 {
     private Animator _animator;
     UnitComponent unitGO;
