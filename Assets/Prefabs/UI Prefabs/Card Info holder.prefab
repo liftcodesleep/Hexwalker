@@ -31,6 +31,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3181433908746883912}
+  - {fileID: 4334248952888927580}
   m_Father: {fileID: 2366927610852415413}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -129,6 +130,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouse: {fileID: 0}
+  Text: {fileID: 0}
+  NameText: {fileID: 0}
+  HealthText: {fileID: 0}
+  StamanaText: {fileID: 0}
 --- !u!222 &2137117687372874250
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -239,7 +244,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3181433907883239883}
-  - {fileID: 4334248952888927580}
   m_Father: {fileID: 3181433908721486794}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -274,16 +278,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4341903223487704903}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -43.17708}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -3.4100003}
+  m_LocalScale: {x: 0.007307783, y: 0.027072916, z: 0.053975277}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2366927610852415413}
+  m_Father: {fileID: 3181433907883239883}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -448.9913, y: -6.2}
+  m_AnchoredPosition: {x: 0.37286377, y: -1.0869808}
   m_SizeDelta: {x: 302.0175, y: 83.95}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5022635490864140856

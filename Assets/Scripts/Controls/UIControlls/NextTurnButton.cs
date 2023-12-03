@@ -71,7 +71,7 @@ public class NextTurnButton : MonoBehaviour
     {
 
         Game.map.UpdateVisable();
-        count = 0;
+        //count = 0;
         //_nextTurnPlaying = true;
 
         //Game.GetCurrentPlayer().Draw(1);

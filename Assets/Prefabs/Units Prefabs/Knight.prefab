@@ -382,11 +382,11 @@ PrefabInstance:
     - target: {fileID: 9500000, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 9000000, guid: 6113d0ea44252774db53fa756483807d, type: 3}
+      objectReference: {fileID: 9000000, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
     - target: {fileID: 9500000, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: c4cf19c0b7549a34083d139601c1faf9, type: 2}
+      objectReference: {fileID: 9100000, guid: 68c4b9423e354ad408a31a3b3f71bdc0, type: 2}
     - target: {fileID: 1125501422111972014, guid: 417a287abb2cab94889f1f1ddd91f928, type: 3}
       propertyPath: m_Layer
       value: 7
