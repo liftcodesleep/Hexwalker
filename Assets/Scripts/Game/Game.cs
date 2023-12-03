@@ -14,7 +14,7 @@ public class Game : MonoBehaviour {
   public static Stack<Effect> stack;
   public static readonly int rows = 26;
   public static readonly int columns = 38;
-  public static bool networking;
+  public static bool networking = true;
   private static GameObject HexMapGO;
   private static GameObject _filter;
   private NetworkManager networkManager;

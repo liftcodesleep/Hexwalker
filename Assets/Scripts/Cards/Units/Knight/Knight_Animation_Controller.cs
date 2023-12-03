@@ -58,7 +58,7 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnimator
         if (!_animator.GetBool("Moving")) {
             return;
         }
-        Debug.Log("Starting Idel animation");
+        Debug.Log("Starting Idle animation");
         _animator.SetBool("Moving", false);
        
     }

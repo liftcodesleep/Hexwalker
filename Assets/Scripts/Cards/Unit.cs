@@ -15,12 +15,6 @@ public abstract class Unit : Construct {
 
   public Map.HexType[] moveableHexTypes;
 
-  public bool init_unit(){
-    DontDestroyOnLoad(gameObject);
-		networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
-		MessageQueue msgQueue = networkManager.GetComponent<MessageQueue>();
-		msgQueue.AddCallback(Constants.SMSG_MOVE, OnResponseMove);
-  }
 
   public Unit(Player Owner) : base(Owner) {
     type = Card.Type.UNIT;
@@ -103,25 +97,4 @@ public abstract class Unit : Construct {
     }
     return true;
   }
-
-  public void OnResponseMove(ExtendedEventArgs eventArgs) {
-		ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
-		if (args.user_id == Constants.OP_ID) {
-			int pieceIndex = args.piece_idx;
-			int x = args.x;
-			int y = args.y;
-			Unit unit = Game.players[args.user_id - 1].Heroes[pieceIndex];
-			gameBoard[unit.x, unit.y] = null;
-			unit.Move(x, y);
-			gameBoard[x, y] = unit;
-		}
-		else if (args.user_id == Constants.USER_ID) {
-			// Ignore
-		}
-		else
-		{
-			Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
-		}
-	}
-
 }

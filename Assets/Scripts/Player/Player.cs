@@ -88,8 +88,6 @@ public class Player
         //Debug.Log("Drew Another card");
     }
 
-    public 
-
     public virtual void OnTurnEnd() { }
 
 

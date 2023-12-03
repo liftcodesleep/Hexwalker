@@ -12,7 +12,6 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
 
   private void Start() {
-    DontDestroyOnLoad(gameObject);
     networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
     MessageQueue msgQueue = networkManager.GetComponent<MessageQueue>();
     msgQueue.AddCallback(Constants.SMSG_MOVE, OnResponseMove);
@@ -63,12 +62,17 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
   public void RightClicked(GameObject clickObject) {
     HexComponent targetHexGO = clickObject.GetComponent<HexComponent>();
-    if(targetHexGO) {
+    Debug.Log("RightClicked: received targetHexGO");
+    if(targetHexGO != null) {
+      Debug.Log("RightClicked: targetHexGO valid");
       move_to(targetHexGO);
       return;
     }
+    else{
+        Debug.Log("ur dum");
+    }
     UnitComponent targetUnitGO = clickObject.GetComponent<UnitComponent>();
-    if (targetUnitGO) {
+    if (targetUnitGO != null) {
       targetUnitGO.GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
       selectedToMoveGO.GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
       targetUnitGO.transform.LookAt(selectedToMoveGO.transform.position);
@@ -88,11 +92,16 @@ public class ConstructControls : MonoBehaviour, IMouseController
   private void attack() { }
 
   private void move_to(HexComponent targetHexGO) {
+    Debug.Log("move_to: Moving!\n");
     if (Game.networking) {
-      networkManager.SendMoveRequest(Game.GetCurrentPlayer().Units.FindIndex(selectedUnit), x, y);
+      Debug.Log("move_to: Networking!\n");
+      networkManager.SendMoveRequest(Game.GetCurrentPlayer().Units.IndexOf(selectedUnit), 
+      targetHexGO.hex.row, targetHexGO.hex.column);
+      Debug.Log("move_to: Networked!\n");
     }
     this.selectedUnit.Move(targetHexGO.hex);
     close();
+    Debug.Log("move_to: Done!\n");
   }
 
   private void HighlightHexes() {
@@ -113,16 +122,21 @@ public class ConstructControls : MonoBehaviour, IMouseController
   }
 
   public void OnResponseMove(ExtendedEventArgs eventArgs) {
-		ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
-		if (args.user_id == Constants.OP_ID) {
-			Unit unit = Game.GetCurrentPlayer().Units[args.piece_idx];
-            unit.Move(Game.map.GetHex(args.x, args.y));
-		}
-		else if (args.user_id == Constants.USER_ID) {
-			// Ignore
-		}
-		else {
-			Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
-		}
+    Debug.Log("OnResponseMove: begin");
+	ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
+	if (args.user_id == Constants.OP_ID) {
+      Debug.Log("OnResponseMove: moving");
+      Debug.Log("OnResponseMove: UnitID: " + args.piece_idx.ToString());
+      Debug.Log("OnResponseMove: Hex Col: " + args.x.ToString());
+      Debug.Log("OnResponseMove: Hex Row: " + args.y.ToString());
+	  Unit unit = (Unit) Game.GetCurrentPlayer().Units[args.piece_idx];
+      unit.Move(Game.map.GetHex(args.x, args.y));
+    //   Game.players[0].Avatar.Move(Game.map.GetHex(args.x, args.y));
 	}
+	else if (args.user_id == Constants.USER_ID) {
+	}
+	else {
+		Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
+	}
+  }
 }

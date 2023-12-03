@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
+// using static UnityEditor.FilePathAttribute;
 
 [System.Serializable]
 public struct TileStyle {
@@ -31,7 +31,7 @@ public class Map : MonoBehaviour {
   public int columns;
   public enum HexType { Water, Flat, Forest, High }
   public static readonly int WaterStartElevation = 20;
-  private List<HexComponent> _playableHexs;
+  private List<HexComponent> _playableHexes;
   private List<GameObject> highlightedHexes;
   public Level CurrentLevel;
   public enum Direction { Left, Right, UpLeft, UpRight, DownLeft, DownRight }
@@ -48,7 +48,7 @@ public class Map : MonoBehaviour {
     CurrentLevel = new LevelOne();
     CurrentLevel.StartLevel();
     _filter = Game.GetFilter();
-    _playableHexs = new List<HexComponent>();
+    _playableHexes = new List<HexComponent>();
     UpdateVisible();
   }
 
@@ -85,17 +85,17 @@ public class Map : MonoBehaviour {
   public void GenerateMap() {
     _hexes = new Hex[this.rows, this.columns];
     _hexToGameObject = new Dictionary<Hex, GameObject>();
-    GameObject hexGo;
+    GameObject hexGO;
     for (int column = 0; column < this.columns; column++) {
       for (int row = 0; row < this.rows; row++) {
         Hex h = new Hex(column, row);
-        hexGo = MakeTile(h);
-        hexGo.name = h.column + ", " + h.row;
-        HexComponent component = hexGo.GetComponent<HexComponent>();
+        hexGO = MakeTile(h);
+        hexGO.name = h.column + ", " + h.row;
+        HexComponent component = hexGO.GetComponent<HexComponent>();
         component.hex = h;
-        hexGo.transform.position = component.PositionFromCamera();
+        hexGO.transform.position = component.PositionFromCamera();
         _hexes[row, column] = h;
-        _hexToGameObject[h] = hexGo;
+        _hexToGameObject[h] = hexGO;
       }
     }
   }
@@ -199,13 +199,13 @@ public class Map : MonoBehaviour {
     List<TileStyle> styles = GetStyles(hex);
     int index = Random.Range(0, styles.Count);
     Quaternion rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
-    GameObject hexGo = Instantiate(
+    GameObject hexGO = Instantiate(
        styles[index].style,
        new Vector3(0, 0, 0),
        rotation,
        this.transform
     );
-    return hexGo;
+    return hexGO;
   }
 
   private List<TileStyle> GetStyles(Hex hex) {
