@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CardComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -12,12 +13,18 @@ public class CardComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField]
     public  GameObject PreFabs;
 
+    [SerializeField]
+    public CardImageDataBase CardImageDataBase;
+
 
     [SerializeField]
     public TMPro.TMP_Text Title;
 
     [SerializeField]
     public TMPro.TMP_Text Type;
+
+    [SerializeField]
+    public Image CardImage;
 
     private Vector3 scaleStaring = new Vector3(0.00730778277f,0.0270729158f,0.0539752766f);
     private bool Shrinking = false;
@@ -39,6 +46,7 @@ public class CardComponent : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         this.card = card;
         Title.text = card.Name;
         Type.text = card.type.ToString();
+        CardImage.sprite = CardImageDataBase.GetImage(card.Name);
     }
 
 

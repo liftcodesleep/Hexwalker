@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class ConstructPopUp : MonoBehaviour
@@ -85,6 +86,8 @@ public class ConstructPopUp : MonoBehaviour
     {
         GameObject currentAbilityButton;
         int ability_index = 0;
+        if(currentUnit == null) { return; }
+        if(currentUnit.Abilities == null || currentUnit.Abilities.Count == 0 ) { return; }
         foreach(Effect currentAbility in currentUnit.Abilities)
         {
             currentAbilityButton = Instantiate(abilityButtonPrefab, popUpPanel.transform);

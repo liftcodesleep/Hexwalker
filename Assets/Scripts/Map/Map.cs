@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
+//using static UnityEditor.FilePathAttribute;
 
 
 ////////////////For Organazation //////////////////////////////////////
@@ -322,7 +322,7 @@ public class Map : MonoBehaviour
     {
 
         UnHighLightHexs();
-        Debug.Log("Updating visable rage");
+        //Debug.Log("Updating visable rage");
         List<Hex> visableHexs = new List<Hex>();
 
 

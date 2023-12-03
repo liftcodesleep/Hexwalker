@@ -27,13 +27,15 @@ public class Player
         this.Sources = new List<Charge>();
         this.Pool = new Charge();
         Hand.Capacity = 6;
-
+        
         AllUnits = new List<Construct>();
         ActiveEffects = new List<Effect>();
         Avatar = new Avatar(this);
         AllUnits.Add(Avatar); 
         //placeAvatar();
         //Draw(5);
+
+       
     }
 
     public int GainCharge(Charge charge)

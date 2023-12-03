@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardInfoComponent : MonoBehaviour
 {
@@ -14,6 +15,23 @@ public class CardInfoComponent : MonoBehaviour
 
     [SerializeField]
     public TMPro.TMP_Text Text;
+
+    [SerializeField]
+    public TMPro.TMP_Text NameText;
+    [SerializeField]
+    public TMPro.TMP_Text HealthText;
+    [SerializeField]
+    public TMPro.TMP_Text StamanaText;
+    [SerializeField]
+    public TMPro.TMP_Text AttackText;
+    [SerializeField]
+    public TMPro.TMP_Text RangeText;
+
+    [SerializeField]
+    private RawImage HealthBar;
+
+    [SerializeField]
+    private RawImage StamanaBar;
 
     private UnitComponent UnitGO;
 
@@ -48,7 +66,35 @@ public class CardInfoComponent : MonoBehaviour
 
             if(UnitGO)
             {
+                NameText.text = UnitGO.unit.Name;
+                AttackText.text =  UnitGO.unit.Strength.ToString();
+                RangeText.text = UnitGO.unit.Range.ToString();
+
+                HealthText.text = UnitGO.unit.Health.ToString() + "/" + UnitGO.unit.HealthPoints.ToString();
+                StamanaText.text = UnitGO.unit.ActionPoints.ToString() + "/" + UnitGO.unit.Actions.ToString();
+
+                if (UnitGO.unit.HealthPoints == 0)
+                {
+                    HealthBar.transform.localScale = new Vector3(0, 1, 1);
+                }
+                else
+                {
+                    HealthBar.transform.localScale = new Vector3((float)UnitGO.unit.Health / (float)UnitGO.unit.HealthPoints, 1, 1);
+                }
+
+                if (UnitGO.unit.Actions == 0)
+                {
+                    StamanaBar.transform.localScale = new Vector3(0, 1, 1);
+                }
+                else
+                {
+                    StamanaBar.transform.localScale = new Vector3((float)UnitGO.unit.ActionPoints / (float)UnitGO.unit.Actions, 1, 1);
+                }
+
+                
                 Text.text = UnitGO.unit.ToString();
+
+
                 if(!UnitGO.CardCamera.enabled)
                 {
                     UnitGO.CardCamera.enabled = true;

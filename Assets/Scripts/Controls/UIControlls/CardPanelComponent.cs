@@ -10,6 +10,7 @@ public class CardPanelComponent : MonoBehaviour
     [SerializeField]
     private GameObject cardGO;
 
+    private float movementSpeed = 6f;
 
     void Start()
     {
@@ -29,7 +30,7 @@ public class CardPanelComponent : MonoBehaviour
         {
             if(this.transform.GetChild(current_child).localPosition.x > current_child - 3)
             {
-                this.transform.GetChild(current_child).position += Vector3.left * 2f;
+                this.transform.GetChild(current_child).position += Vector3.left * movementSpeed;
             }
             current_child++;
         }
@@ -101,8 +102,8 @@ public class CardPanelComponent : MonoBehaviour
 
             while(true)
             {
-                yield return new WaitForSeconds(.1f);
-                newCardGO.transform.position += Vector3.left;
+                yield return new WaitForSeconds(movementSpeed);
+                newCardGO.transform.position += Vector3.left*2;
 
             }
 
