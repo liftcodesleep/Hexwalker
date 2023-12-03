@@ -13,9 +13,7 @@ public class Player
     public int Attunement;
     public int SourcePlays;
     public int SourcesPlayed;
-
-    public List<Construct> AllUnits;
-
+    public List<Construct> Units;
     public Unit Avatar;
     public List<Effect> ActiveEffects;
 
@@ -27,10 +25,10 @@ public class Player
         this.Pool = new Charge();
         Hand.Capacity = 6;
 
-        AllUnits = new List<Construct>();
+        Units = new List<Construct>();
         ActiveEffects = new List<Effect>();
         Avatar = new Avatar(this);
-        AllUnits.Add(Avatar); 
+        Units.Add(Avatar); 
         //placeAvatar();
         //Draw(5);
     }
@@ -83,28 +81,24 @@ public class Player
 
 
     public virtual void OnTurnStart() {
-
         Draw(1);
-
-        foreach(Unit construct in AllUnits) {
+        foreach(Unit construct in Units) {
             construct.ActionPoints = 2;
         }
         //Debug.Log("Drew Another card");
     }
+
+    public 
 
     public virtual void OnTurnEnd() { }
 
 
     public void placeAvatar() {
         Hex avatarLocation = Game.map.GetRandomHex();
-
         while(avatarLocation.type == Map.HexType.Water || avatarLocation.type == Map.HexType.High) {
-            
             avatarLocation = Game.map.GetRandomHex();
         }
-
         Game.map.PlaceItem(Avatar, avatarLocation);
-
     }
 
 }

@@ -153,7 +153,7 @@ public class PlayCard : MonoBehaviour, IMouseController
             UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
             unitGOComp.unit = (Unit)card;
             unitGOComp.unit.Location = hex;
-            card.Owner.AllUnits.Add((Construct)card);
+            card.Owner.Units.Add((Construct)card);
         }
         if (card.type == Card.Type.CHARGE) {
 

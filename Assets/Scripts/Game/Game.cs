@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class Game : MonoBehaviour
-{
+
+// TODO: should this be monobehaviour/static maybe separate networking logic
+// into another class?
+public class Game : MonoBehaviour {
   private static int _currentPlayer = 0;
   public static int turnCount = 0;
   public static Player[] players;
@@ -12,9 +14,9 @@ public class Game : MonoBehaviour
   public static Stack<Effect> stack;
   public static readonly int rows = 26;
   public static readonly int columns = 38;
+  public static bool networking;
   private static GameObject HexMapGO;
   private static GameObject _filter;
-  private bool networking;
   private NetworkManager networkManager;
 
   static Game() {
@@ -50,7 +52,7 @@ public class Game : MonoBehaviour
       foreach(Effect currentEffect in player.ActiveEffects) {
         currentEffect.EndTurnEffect();
       }
-      foreach( Construct currentConstruct in player.AllUnits) {
+      foreach( Construct currentConstruct in player.Units) {
         foreach(Effect currentEffect in currentConstruct.ActiveEffects) {
           currentEffect.EndTurnEffect();
         }

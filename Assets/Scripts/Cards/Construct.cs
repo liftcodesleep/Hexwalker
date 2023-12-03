@@ -18,7 +18,7 @@ public abstract class Construct : Card
     public Construct(Player owner) : base(owner) {
         ActiveEffects = new List<Effect>();
         Abilities = new List<Effect>();
-        //owner.AllUnits.Add(this);
+        //owner.Units.Add(this);
     }
 
 

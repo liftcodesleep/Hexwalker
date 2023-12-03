@@ -17,10 +17,10 @@ public class AI : Player {
 
   IEnumerator HandleTurn() {
     Draw(1);
-    foreach (Unit construct in AllUnits) {
+    foreach (Unit construct in Units) {
       construct.ActionPoints = 2;
     }
-    foreach (Unit construct in AllUnits) {
+    foreach (Unit construct in Units) {
       if (AIAttack(construct) ) yield return new WaitForSeconds(1f);
       MoveUnitToLocation(construct, Game.players[0].Avatar.Location);
       yield return new WaitForSeconds(2f);
@@ -109,7 +109,7 @@ public class AI : Player {
   }
 
   public bool AIAttack(Unit testUnit) {
-    //Unit testUnit = (Unit)Game.players[1].AllUnits[2];
+    //Unit testUnit = (Unit)Game.players[1].Units[2];
     for (int direction_index = 0; direction_index < 6; direction_index++) {
       Hex newLocation = Game.map.GetAdjacentHex(testUnit.Location, (Map.Direction)direction_index);
       if (newLocation == null) continue;

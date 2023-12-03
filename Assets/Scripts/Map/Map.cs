@@ -62,7 +62,7 @@ public class Map : MonoBehaviour {
     unitGO.GetComponent<UnitComponent>().unit = (Unit)item;
     item.Location = location;
     location.cards.Add(item);
-    item.Owner.AllUnits.Add(item);
+    item.Owner.Units.Add(item);
     unitGO.transform.rotation = Quaternion.Euler(0, 180, 0);
     if (item.Owner == Game.players[0]) {
     }
@@ -234,7 +234,7 @@ public class Map : MonoBehaviour {
     UnhighlightHexes();
     Debug.Log("Updating visible range");
     List<Hex> visibleHexes = new List<Hex>();
-    foreach (Construct unit in Game.players[0].AllUnits) {
+    foreach (Construct unit in Game.players[0].Units) {
       foreach (Hex hex in Game.map.GetHexList()) {
         if (hex.DistanceFrom(unit.Location) < 4) {
           visibleHexes.Add(hex);

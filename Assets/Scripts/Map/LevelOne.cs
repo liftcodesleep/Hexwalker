@@ -28,7 +28,7 @@ public class LevelOne : Level
     //PlaceStartingUnits();
     Game.players[0].Draw(2);
     Game.map.PlaceItem(_levelUnits["Player"], Game.map.GetHex(14, 10));
-    //owner.AllUnits.Add(this);
+    //owner.Units.Add(this);
     Game.map.PlaceItem(_levelUnits["AI"], Game.map.GetHex(15, 35));
     GameObject moveMarker = Game.map.PlaceEffect("Marker", 
       Game.map.GetHexGO(Game.map.GetHex(16, 8)).transform.position + Vector3.up * .2f);
@@ -116,7 +116,7 @@ public class LevelOne : Level
       _stage = Stage.Tappedmana;
       Game.map.TalkingDialog.NextLine();
     }
-    if (_stage == Stage.Tappedmana && Game.players[0].AllUnits.Count > 3) {
+    if (_stage == Stage.Tappedmana && Game.players[0].Units.Count > 3) {
       _levelEffects["MoveMarker"].SetActive(false);
       _stage = Stage.PlayedUnit;
       Game.map.TalkingDialog.NextLine();
