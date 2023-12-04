@@ -12,8 +12,6 @@ public class Game : MonoBehaviour {
   public static Player[] players;
   public static Map map;
   public static Stack<Effect> stack;
-  public static readonly int rows = 26;
-  public static readonly int columns = 38;
   public static bool networking = true;
   private static GameObject HexMapGO;
   private static GameObject _filter;
@@ -58,7 +56,7 @@ public class Game : MonoBehaviour {
         }
       }
     }
-    GetCurrentPlayer().OnTurnEnd();
+    // GetCurrentPlayer().OnTurnEnd();
     _currentPlayer++;
     GetCurrentPlayer().OnTurnStart();
     if(GetCurrentPlayer() == players[0]) turnCount++;

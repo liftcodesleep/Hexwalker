@@ -13,8 +13,6 @@ public class AI : Player {
     Game.map.StartCoroutine(HandleTurn());
   }
 
-  public override void OnTurnEnd() { }
-
   IEnumerator HandleTurn() {
     Draw(1);
     foreach (Unit construct in Units) {
@@ -49,7 +47,7 @@ public class AI : Player {
       if (newLocation == null) continue;
       if (newLocation.DistanceFrom(target_location) < startingLocation.DistanceFrom(target_location)) {
         //Debug.Log(newLocation.row + " " + newLocation.column + " " + unit.ValidMove(newLocation));
-        if (unit.ValidMove(newLocation) && newLocation.cards.Count == 0) {
+        if (unit.ValidMove(newLocation) && newLocation.Constructs.Count == 0) {
           unit.Move(newLocation);
           return;
         }
@@ -62,7 +60,7 @@ public class AI : Player {
       if (newLocation == null) continue;
       if (newLocation.DistanceFrom(target_location) <= startingLocation.DistanceFrom(target_location)) {
         Debug.Log(newLocation.row + " " + newLocation.column + " " + unit.ValidMove(newLocation));
-        if (unit.ValidMove(newLocation) && newLocation.cards.Count == 0) {
+        if (unit.ValidMove(newLocation) && newLocation.Constructs.Count == 0) {
           unit.Move(newLocation);
           return;
         }
@@ -113,10 +111,10 @@ public class AI : Player {
     for (int direction_index = 0; direction_index < 6; direction_index++) {
       Hex newLocation = Game.map.GetAdjacentHex(testUnit.Location, (Map.Direction)direction_index);
       if (newLocation == null) continue;
-      if (newLocation.cards.Count != 0 && newLocation.cards[0].Owner != this) {
+      if (newLocation.Constructs.Count != 0 && newLocation.Constructs[0].Owner != this) {
         Debug.Log("Attacking!!!!!!!!!!");
-        ConstructControls.PlayAttackAnimations(testUnit, (Unit)newLocation.cards[0]);
-        testUnit.Attack((Unit)newLocation.cards[0]);
+        ConstructControls.PlayAttackAnimations(testUnit, (Unit)newLocation.Constructs[0]);
+        testUnit.Attack((Unit)newLocation.Constructs[0]);
         return true;
       }
     }

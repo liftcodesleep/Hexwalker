@@ -61,7 +61,7 @@ public class Map : MonoBehaviour {
     GameObject unitGO = Instantiate(itemPreFab, GetHexGO(location).transform.position, Quaternion.identity, GetHexGO(location).transform);
     unitGO.GetComponent<UnitComponent>().unit = (Unit)item;
     item.Location = location;
-    location.cards.Add(item);
+    location.Constructs.Add(item);
     item.Owner.Units.Add(item);
     unitGO.transform.rotation = Quaternion.Euler(0, 180, 0);
     if (item.Owner == Game.players[0]) {

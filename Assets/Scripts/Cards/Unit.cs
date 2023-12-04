@@ -31,9 +31,9 @@ public abstract class Unit : Construct {
       return 0;
     }
     int hexesTraveled = (int)Location.DistanceFrom(hexTarget);
-    Location.cards.Remove(this);
+    Location.Constructs.Remove(this);
     Location = hexTarget;
-    hexTarget.cards.Add(this);
+    hexTarget.Constructs.Add(this);
     ActionPoints -= hexesTraveled * MoveCost;
     return hexesTraveled;
   }

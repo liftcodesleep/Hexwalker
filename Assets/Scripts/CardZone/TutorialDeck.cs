@@ -33,7 +33,7 @@ public class TutorialDeck : CardZone
         //Cards.Add(new Bear(this.Owner));
 
 
-        //.Add(new FireBall(this.Owner));
+        //.Add(new Fireball(this.Owner));
 
         //Cards.Add(new Knight(this.Owner));
 

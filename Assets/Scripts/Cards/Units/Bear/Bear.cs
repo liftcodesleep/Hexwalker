@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bear : Unit
-{
+public class Bear : Unit {
 	public Bear(Player Owner) : base(Owner) {
 		this.Cost = new Charge(0,1,0,0, false);
 		Name = "Bear";
@@ -27,7 +26,7 @@ public class Bear : Unit
 		if (hex.type == Map.HexType.Water || hex.type == Map.HexType.High) {
 			return false;
 		}
-		if (hex.cards.Count > 0) {
+		if (hex.Constructs.Count > 0) {
 			return false;
 		}
 		if (hex.DistanceFrom(Owner.Avatar.Location) > SummonRange) {

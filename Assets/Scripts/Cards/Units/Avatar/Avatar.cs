@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Avatar : Unit
-{
+public class Avatar : Unit {
 	public Avatar(Player Owner) : base(Owner) {
 		//Charge Cost;
 		Name = "Avatar";
@@ -12,7 +11,6 @@ public class Avatar : Unit
 		//Priority;
 		//Range;
 		//IsCard;
-
 		HealthPoints = 20;
 		Health = 20;
 		//AttackCost;
@@ -24,14 +22,11 @@ public class Avatar : Unit
 
 	}
 
-
 	public override bool IsPlayableHex(Hex hex) {
-
 		if (hex.type == Map.HexType.Water || hex.type == Map.HexType.High) {
 			return false;
 		}
-
-		if (hex.cards.Count > 0) {
+		if (hex.Constructs.Count > 0) {
 			return false;
 		}
 		return true;

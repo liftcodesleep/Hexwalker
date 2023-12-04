@@ -42,7 +42,7 @@ public class HexComponent : MonoBehaviour {
   }
   
   public Vector3 PositionFromCamera(Vector3 cameraPosition) {
-    float mapWidth = Game.columns * HexHorizontalSpacing;
+    float mapWidth = Game.map.columns * HexHorizontalSpacing;
     Vector3 position = this.Position();
     float howManyWidthsFromCamera = (position.x - cameraPosition.x) / mapWidth;
     //We want howmanyWidthsFromCamera to be between -0.5 to 0.5

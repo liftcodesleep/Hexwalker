@@ -104,7 +104,7 @@ public class LevelOne : Level
       _stage = Stage.WalkedToFirst;
       Game.map.TalkingDialog.NextLine();
     }
-    if (Game.map.GetHex(15, 7).cards.Count > 0 && _stage == Stage.WalkedToFirst) {
+    if (Game.map.GetHex(15, 7).Constructs.Count > 0 && _stage == Stage.WalkedToFirst) {
       //Map.DestroyObject();
       _levelEffects["MoveMarker"].SetActive(false);
       //Game.map.PlaceItem(_levelUnits["Knight2"], Game.map.GetHex(17, 5));
