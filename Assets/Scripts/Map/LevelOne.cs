@@ -50,7 +50,7 @@ public class LevelOne : Level
 
         GameObject[] moveMarkers = 
             {
-                Game.map.PlaceEffect("Marker", Game.map.GetHexGO(Game.map.GetHex(14, 8)).transform.position + Vector3.up * .2f),
+                //Game.map.PlaceEffect("Marker", Game.map.GetHexGO(Game.map.GetHex(14, 8)).transform.position + Vector3.up * .2f),
                 Game.map.PlaceEffect("Marker", Game.map.GetHexGO(Game.map.GetHex(0, 0)).transform.position + Vector3.up * .2f),
                 Game.map.PlaceEffect("Marker", Game.map.GetHexGO(Game.map.GetHex(0, 0)).transform.position + Vector3.up * .2f),
                 Game.map.PlaceEffect("Marker", Game.map.GetHexGO(Game.map.GetHex(0, 0)).transform.position + Vector3.up * .2f),

@@ -201,36 +201,48 @@ public class PlayCard : MonoBehaviour, IMouseController
         GameObject hexMap = Game.GetHexMapGo();
         _filter.SetActive(true);
 
+        List<Hex> hexes = new List<Hex>();
+
+
         HexComponent hexGO;
         foreach ( Transform currentHex in hexMap.transform)
         {
             
+            
+
             hexGO = currentHex.gameObject.GetComponent<HexComponent>();
 
-            
+
             if (cardGO.card.IsPlayableHex(hexGO.hex))
             {
-                
-                hexGO.gameObject.layer = 6;
-                _playableHexs.Add(hexGO);
-    
-                foreach (Transform subItem in hexGO.transform)
-                {
-                    subItem.gameObject.layer = 6;
-                }
-    
-    
+                hexes.Add(hexGO.hex);
             }
-            else
-            {
-                foreach (Transform subItem in hexGO.transform)
-                {
-                    subItem.gameObject.layer = 0;
-                }
-                
-            }
-            
+
+            //if (cardGO.card.IsPlayableHex(hexGO.hex))
+            //{
+            //    
+            //    hexGO.gameObject.layer = 6;
+            //    _playableHexs.Add(hexGO);
+            //
+            //    foreach (Transform subItem in hexGO.transform)
+            //    {
+            //        subItem.gameObject.layer = 6;
+            //    }
+            //
+            //
+            //}
+            //else
+            //{
+            //    foreach (Transform subItem in hexGO.transform)
+            //    {
+            //        subItem.gameObject.layer = 0;
+            //    }
+            //    
+            //}
+
         }
+
+        Game.map.SelectHexs(hexes);
     }
     
     private void UnHighLightHexs()
@@ -245,7 +257,7 @@ public class PlayCard : MonoBehaviour, IMouseController
         //}
 
         Game.map.UpdateVisable();
-        
+        Game.map.DeSelectHexes();
     }
     
     

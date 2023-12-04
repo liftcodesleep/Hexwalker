@@ -76,6 +76,6 @@ public class NextTurnButton : MonoBehaviour
 
         //Game.GetCurrentPlayer().Draw(1);
         Game.NextTurn();
-        cardPanel.updateCards();
+        //cardPanel.updateCards();
     }
 }

@@ -343,4 +343,21 @@ public class Map : MonoBehaviour
         Game.map.HighLightHexs(visableHexs);
         //_filter.GetComponent<Renderer>().material.color = Color.black;
     }
+
+
+    public  void SelectHexs(List<Hex> hexs)
+    {
+        foreach (Hex hex in hexs)
+        {
+            hex.selected = true;
+        }
+    }
+
+    public void DeSelectHexes()
+    {
+        foreach(Hex hex in Game.map.GetHexList())
+        {
+            hex.selected = false;
+        }
+    }
 }

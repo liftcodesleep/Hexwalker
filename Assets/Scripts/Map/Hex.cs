@@ -25,6 +25,8 @@ public class Hex
     //TODO determine job of elevation
     public int elevation;
 
+    public bool selected;
+
     public List<Card> cards;
 
     public List<Effect> ActiveEffects;
@@ -34,7 +36,7 @@ public class Hex
         this.column = q;
         this.row = r;
         this.sum = -(q + r);
-
+        this.selected = false;
         this.type = CalcuateType();
 
         cards = new List<Card>();

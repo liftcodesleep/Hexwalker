@@ -34,8 +34,15 @@ public class CardPanelComponent : MonoBehaviour
             }
             current_child++;
         }
-        
+
+        updateCards();
+
+
     }
+
+
+
+
 
     private List<Card> AddedCards()
     {

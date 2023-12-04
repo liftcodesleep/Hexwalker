@@ -145,9 +145,12 @@ public class ConstructControls : MonoBehaviour, IMouseController
                 hexsToHighlight.Add(hex);
             }
         }
-        hexsToHighlight.Add(selectedUnit.Location); 
-        Game.map.HighLightHexs(hexsToHighlight);
-        
+        hexsToHighlight.Add(selectedUnit.Location);
+
+        //Game.map.HighLightHexs(hexsToHighlight);
+        Game.map.SelectHexs(hexsToHighlight);
+        Game.map.UpdateVisable();
+
 
     }
 
@@ -166,7 +169,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
         //        subItem.gameObject.layer = 0;
         //    }
         //}
-
+        Game.map.DeSelectHexes();
         Game.map.UpdateVisable();
     }
 }
