@@ -9,7 +9,7 @@ public class SpellComponent : MonoBehaviour {
 
   // Update is called once per frame
   void Update() {
-    if(spell.currentZone == CardZone.Types.GraveYard) {
+    if(spell.currentZone == CardZone.Types.Graveyard) {
       Destroy(this);
     }
   }

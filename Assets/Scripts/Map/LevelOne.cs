@@ -121,7 +121,7 @@ public class LevelOne : Level
       _stage = Stage.PlayedUnit;
       Game.map.TalkingDialog.NextLine();
     }
-    if (_stage == Stage.PlayedUnit && ((Unit)_levelUnits["Knight1"]).currentZone == CardZone.Types.GraveYard) {
+    if (_stage == Stage.PlayedUnit && ((Unit)_levelUnits["Knight1"]).currentZone == CardZone.Types.Graveyard) {
       _levelEffects["MoveMarker"].SetActive(false);
       Game.map.PlaceItem(_levelUnits["Knight2"], Game.map.GetHex(18, 6));
       Game.map.PlaceItem(_levelUnits["Knight3"], Game.map.GetHex(18, 8));

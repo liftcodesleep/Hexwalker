@@ -21,7 +21,7 @@ public class PlayCard : MonoBehaviour, IMouseController {
     UnitDatabase data = cardGO.PreFabs.GetComponent<UnitDatabase>();
     cardPreFab = data.GetPrefab(cardGO.card.Name);
     if(cardPreFab == null) {
-      throw new System.Exception("PlayCard " + cardGO.card.Name + " Did not have a prefab");
+      throw new System.Exception("PlayCard " + cardGO.card.Name + " did not have a prefab");
     }
   }
   

@@ -17,7 +17,7 @@ public class Player {
   public List<Effect> ActiveEffects;
 
   public Player() {
-    this.Deck = new TutorialDeck(this);
+//    this.Deck = new TutorialDeck(this);
     this.Graveyard = new CardZone();
     this.Hand = new CardZone();
     this.Sources = new List<Charge>();

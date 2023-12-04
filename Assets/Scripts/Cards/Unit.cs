@@ -22,7 +22,7 @@ public abstract class Unit : Construct {
 
   public void OnDeath() {
     Location = null;
-    currentZone = CardZone.Types.GraveYard;
+    currentZone = CardZone.Types.Graveyard;
     Owner.Units.Remove(this);
   }
 
@@ -52,7 +52,7 @@ public abstract class Unit : Construct {
   public void TakeDamage(int damage_amount) {
     this.Health -= damage_amount;
     if(Health <= 0) {
-      this.currentZone = CardZone.Types.GraveYard;
+      this.currentZone = CardZone.Types.Graveyard;
       Location = null;
       Debug.Log("Unit was put into the graveyard");
     }
