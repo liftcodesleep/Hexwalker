@@ -12,7 +12,7 @@ public class TutorialDeck : CardZone
 
     public TutorialDeck(Player Owner) {
         this.Owner = Owner;
-
+        //Cards.Add(new Archer(this.Owner));
         Cards.Add(new ConnectToNature(this.Owner));
         //Cards.Add(new Knight(this.Owner));
         Cards.Add(new Bear(this.Owner));
