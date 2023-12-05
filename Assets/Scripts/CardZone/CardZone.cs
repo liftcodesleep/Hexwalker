@@ -29,7 +29,6 @@ public class CardZone
   public Card PopCard() {
     Card topCard = Cards[0];
     Cards.Remove(topCard);
-
     return topCard;
   }
 
@@ -37,7 +36,6 @@ public class CardZone
     if (n > TargetZone.Cards.Count) {
       n = TargetZone.Cards.Count;
     }
-
     for (int i = 0; i < n; i++) {
       if (Capacity > Cards.Count) {
         Cards.Add(TargetZone.PopCard());

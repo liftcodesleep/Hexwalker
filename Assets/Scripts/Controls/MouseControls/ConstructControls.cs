@@ -92,19 +92,14 @@ public class ConstructControls : MonoBehaviour, IMouseController
   private void attack() { }
 
   private void move_to(HexComponent targetHexGO) {
-    Debug.Log("move_to: Moving!\n");
-        if (Game.networking)
-        {
-            Debug.Log("move_to: Networking!\n");
+        if (Game.networking) {
             networkManager.SendMoveRequest(Game.GetCurrentPlayer().Units.IndexOf(selectedUnit),
             targetHexGO.hex.row, targetHexGO.hex.column);
-            Debug.Log("move_to: Networked!\n");
         }
         else { 
             this.selectedUnit.Move(targetHexGO.hex); 
         }
     close();
-    Debug.Log("move_to: Done!\n");
   }
 
   private void HighlightHexes() {
