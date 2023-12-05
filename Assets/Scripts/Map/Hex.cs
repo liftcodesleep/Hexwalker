@@ -19,6 +19,7 @@ public class Hex {
   public readonly int sum;
   //TODO determine job of elevation
   public int elevation;
+  public bool selected;
   public List<Effect> ActiveEffects;
   public List<Construct> Constructs;
 

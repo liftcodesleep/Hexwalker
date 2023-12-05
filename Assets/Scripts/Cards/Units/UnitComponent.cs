@@ -23,7 +23,7 @@ public class UnitComponent : MonoBehaviour {
   private Vector3 originalScale;
   private void Start() {
     originalScale = this.transform.GetChild(0).transform.localScale;
-    this.transform.GetChild(0).transform.localScale = new Vector3(.01f, .01f, .01f);
+    // this.transform.GetChild(0).transform.localScale = new Vector3(.01f, .01f, .01f);
     oldPostion = newPosition = this.transform.position;
     animator = this.GetComponentInChildren<IUnitAnimator>();
     if(animator == null) {
@@ -38,9 +38,9 @@ public class UnitComponent : MonoBehaviour {
     //  HandleDeath();
     //  return;
     //}
-    if (this.transform.GetChild(0).transform.localScale.x < originalScale.x) {
-      this.transform.GetChild(0).transform.localScale += new Vector3(.01f, .01f, .01f);
-    }
+ //   if (this.transform.GetChild(0).transform.localScale.x < originalScale.x) {
+ //     this.transform.GetChild(0).transform.localScale += new Vector3(.01f, .01f, .01f);
+ //   }
   
     //if (this.oldHealth != unit.HealthPoints)
     //{

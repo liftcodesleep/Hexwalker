@@ -30,13 +30,11 @@ namespace DevionGames
         public delegate void CreateCallbackDelegate(string scriptName);
         public AddObjectWindow.CreateCallbackDelegate onCreateCallback;
 
-        public static void ShowWindow<T>(Rect buttonRect, AddObjectWindow.AddCallbackDelegate addCallback, AddObjectWindow.CreateCallbackDelegate createCallback)
-        {
+        public static void ShowWindow<T>(Rect buttonRect, AddObjectWindow.AddCallbackDelegate addCallback, AddObjectWindow.CreateCallbackDelegate createCallback) {
             ShowWindow(buttonRect,typeof(T),addCallback,createCallback);
         }
 
-        public static void ShowWindow(Rect buttonRect,Type type, AddObjectWindow.AddCallbackDelegate addCallback, AddObjectWindow.CreateCallbackDelegate createCallback)
-        {
+        public static void ShowWindow(Rect buttonRect,Type type, AddObjectWindow.AddCallbackDelegate addCallback, AddObjectWindow.CreateCallbackDelegate createCallback) {
             AddObjectWindow window = ScriptableObject.CreateInstance<AddObjectWindow>();
             buttonRect = GUIToScreenRect(buttonRect);
             window.m_Type = type;
@@ -45,24 +43,20 @@ namespace DevionGames
             window.ShowAsDropDown(buttonRect, new Vector2(buttonRect.width, 280f));
         }
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             this.m_SearchString = EditorPrefs.GetString("AddAssetSearch",this.m_SearchString);
 
         }
 
-        private void Update()
-        {
+        private void Update() {
             Repaint();
         }
 
-        private void OnGUI()
-        {
+        private void OnGUI() {
             if (AddObjectWindow.m_Styles == null){
                 AddObjectWindow.m_Styles = new AddObjectWindow.Styles();
             }
-            if (this.m_RootElement == null)
-            {
+            if (this.m_RootElement == null) {
                 this.m_RootElement = BuildElements();
                 this.m_SelectedElement = this.m_RootElement;
             }
@@ -87,8 +81,7 @@ namespace DevionGames
         private void Header() {
             GUIContent content = this.m_SelectedElement.label;
             Rect headerRect = GUILayoutUtility.GetRect(content, AddObjectWindow.m_Styles.header);
-            if (GUI.Button(headerRect,content, AddObjectWindow.m_Styles.header))
-            {
+            if (GUI.Button(headerRect,content, AddObjectWindow.m_Styles.header)) {
                 if (this.m_SelectedElement.parent != null && !isSearching){
                     this.m_SelectedElement = this.m_SelectedElement.parent;
                 }
@@ -98,20 +91,16 @@ namespace DevionGames
             }
         }
 
-        private void DrawElements(Element[] elements)
-        {
+        private void DrawElements(Element[] elements) {
             this.m_ScrollPosition = EditorGUILayout.BeginScrollView(this.m_ScrollPosition);
-            foreach (Element element in elements)
-            {
-                if (element.onGUI != null && ! isSearching)
-                {
+            foreach (Element element in elements) {
+                if (element.onGUI != null && ! isSearching) {
                     element.onGUI();
                     continue;
                 }
 
 
-                if (!SearchMatch(element))
-                {
+                if (!SearchMatch(element)) {
                     continue;
                 }
 
@@ -123,14 +112,11 @@ namespace DevionGames
                 AddObjectWindow.m_Styles.elementButton.normal.textColor = (rect.Contains(Event.current.mousePosition) ? Color.white : textColor);
                 Texture2D icon = null;//(Texture2D)EditorGUIUtility.ObjectContent(null, element.type).image;
 
-                if (element.type != null)
-                {
+                if (element.type != null) {
                     icon = EditorGUIUtility.FindTexture("cs Script Icon");
                     IconAttribute iconAttribute = element.type.GetCustomAttribute<IconAttribute>();
-                    if (iconAttribute != null)
-                    {
-                        if (iconAttribute.type != null)
-                        {
+                    if (iconAttribute != null) {
+                        if (iconAttribute.type != null) {
                             icon = AssetPreview.GetMiniTypeThumbnail(iconAttribute.type);
                         }
                         else
@@ -144,11 +130,9 @@ namespace DevionGames
                 AddObjectWindow.m_Styles.elementButton.padding.left = (icon != null? 22 : padding);
 
 
-                if (GUI.Button(rect, element.label, AddObjectWindow.m_Styles.elementButton))
-                {
+                if (GUI.Button(rect, element.label, AddObjectWindow.m_Styles.elementButton)) {
                     
-                    if (element.children.Count == 0)
-                    {
+                    if (element.children.Count == 0) {
                         if (onAddCallback != null) {
                             onAddCallback(element.type);
                         }
@@ -161,12 +145,10 @@ namespace DevionGames
                 AddObjectWindow.m_Styles.elementButton.normal.textColor = textColor;
                 AddObjectWindow.m_Styles.elementButton.padding.left = padding;
 
-                if (icon != null)
-                {
+                if (icon != null) {
                     GUI.Label(new Rect(rect.x, rect.y, 20f, 20f), icon);
                 }
-                if (element.children.Count > 0)
-                {
+                if (element.children.Count > 0) {
                     GUI.Label(new Rect(rect.x + rect.width - 16f, rect.y + 2f, 16f, 16f), "", AddObjectWindow.m_Styles.rightArrow);
                 }
 
@@ -176,19 +158,16 @@ namespace DevionGames
 
         private bool SearchMatch(Element element) {
           
-            if (isSearching && (element.type == null || element.type.IsAbstract  || !m_SearchString.ToLower().Split(' ').All(element.type.Name.ToLower().Contains)))
-            {
+            if (isSearching && (element.type == null || element.type.IsAbstract  || !m_SearchString.ToLower().Split(' ').All(element.type.Name.ToLower().Contains))) {
                 return false;
             }
             return true;
         }
 
-        public static bool IsAssignableToGenericType(Type givenType, Type genericType)
-        {
+        public static bool IsAssignableToGenericType(Type givenType, Type genericType) {
             var interfaceTypes = givenType.GetInterfaces();
 
-            foreach (var it in interfaceTypes)
-            {
+            foreach (var it in interfaceTypes) {
                 if (it.IsGenericType && it.GetGenericTypeDefinition() == genericType)
                     return true;
             }
@@ -203,15 +182,13 @@ namespace DevionGames
         }
 
 
-        private Element BuildElements()
-        {
+        private Element BuildElements() {
             Element root = new Element(ObjectNames.NicifyVariableName(this.m_Type.Name), "");
 
              Type[] types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly => assembly.GetTypes()).Where(type => (IsAssignableToGenericType(type,this.m_Type) || this.m_Type.IsAssignableFrom(type)) && !type.IsAbstract && !type.HasAttribute(typeof(ExcludeFromCreation))).ToArray();
            // Type[] types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly => assembly.GetTypes()).Where(c => c.GetType().GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == this.m_Type)).ToArray();
             types = types.OrderBy(x => x.BaseType.Name).ToArray();
-            foreach (Type type in types)
-            {
+            foreach (Type type in types) {
                 ComponentMenu attribute = type.GetCustomAttribute<ComponentMenu>();
 
                 string menu = attribute != null ? attribute.componentMenu : string.Empty;
@@ -226,15 +203,12 @@ namespace DevionGames
 
                 Element prev = null;
                 string cur = string.Empty;
-                for (int i = 0; i < s.Length-1; i++)
-                {
+                for (int i = 0; i < s.Length-1; i++) {
                     cur += (string.IsNullOrEmpty(cur) ? "" : ".") + s[i];
                     Element parent = root.Find(cur);
-                    if (parent == null)
-                    {
+                    if (parent == null) {
                         parent = new Element(s[i], cur);
-                        if (prev != null)
-                        {
+                        if (prev != null) {
                             parent.parent = prev;
                             prev.children.Add(parent);
                         }
@@ -246,8 +220,7 @@ namespace DevionGames
                     }
                     prev = parent;
                 }
-                if (prev != null)
-                {
+                if (prev != null) {
                     Element element = new Element(ObjectNames.NicifyVariableName(type.Name), menu);
                     element.type = type;
                     element.parent = prev;
@@ -269,8 +242,7 @@ namespace DevionGames
                 GUI.FocusControl("AddAssetNewScript");
                 GUILayout.FlexibleSpace();
                 EditorGUI.BeginDisabledGroup(onCreateCallback ==null || string.IsNullOrEmpty(this.m_NewScriptName));
-                if (GUILayout.Button("Create and add") || Event.current.keyCode == KeyCode.Return)
-                {
+                if (GUILayout.Button("Create and add") || Event.current.keyCode == KeyCode.Return) {
                     onCreateCallback(this.m_NewScriptName);
                     Close();
                 }
@@ -283,24 +255,20 @@ namespace DevionGames
             return root;
         }
 
-        private Element[] GetAllElements(Element root)
-        {
+        private Element[] GetAllElements(Element root) {
             List<Element> elements = new List<Element>();
             GetElements(root, ref elements);
             return elements.ToArray();
         }
 
-        private void GetElements(Element current, ref List<Element> list)
-        {
+        private void GetElements(Element current, ref List<Element> list) {
             list.Add(current);
-            for (int i = 0; i < current.children.Count; i++)
-            {
+            for (int i = 0; i < current.children.Count; i++) {
                 GetElements(current.children[i], ref list);
             }
         }
 
-        private string SearchField(string search, params GUILayoutOption[] options)
-        {
+        private string SearchField(string search, params GUILayoutOption[] options) {
             EditorGUILayout.BeginHorizontal();
             string before = search;
 
@@ -314,8 +282,7 @@ namespace DevionGames
             if (!String.IsNullOrEmpty(before))
                 EditorGUIUtility.AddCursorRect(buttonRect, MouseCursor.Arrow);
 
-            if (Event.current.type == EventType.MouseUp && buttonRect.Contains(Event.current.mousePosition) || before == "Search..." && GUI.GetNameOfFocusedControl() == "SearchTextFieldFocus")
-            {
+            if (Event.current.type == EventType.MouseUp && buttonRect.Contains(Event.current.mousePosition) || before == "Search..." && GUI.GetNameOfFocusedControl() == "SearchTextFieldFocus") {
                 before = "";
                 GUI.changed = true;
                 GUI.FocusControl(null);
@@ -323,8 +290,7 @@ namespace DevionGames
             }
             GUI.SetNextControlName("SearchTextFieldFocus");
             GUIStyle style = new GUIStyle("ToolbarSeachTextField");
-            if (before == "Search...")
-            {
+            if (before == "Search...") {
                 style.normal.textColor = Color.gray;
                 style.hover.textColor = Color.gray;
             }
@@ -336,8 +302,7 @@ namespace DevionGames
             return after;
         }
 
-        private static Rect GUIToScreenRect(Rect guiRect)
-        {
+        private static Rect GUIToScreenRect(Rect guiRect) {
             Vector2 vector = GUIUtility.GUIToScreenPoint(new Vector2(guiRect.x, guiRect.y));
             guiRect.x = vector.x;
             guiRect.y = vector.y;
@@ -375,8 +340,7 @@ namespace DevionGames
                 }
             }
 
-            public Element(string label, string path)
-            {
+            public Element(string label, string path) {
                 this.label = new GUIContent(label);
                 this.m_Path = path;
             }
@@ -388,8 +352,7 @@ namespace DevionGames
             {
                 get
                 {
-                    if (this.m_children == null)
-                    {
+                    if (this.m_children == null) {
                         this.m_children = new List<Element>();
                     }
                     return m_children;
@@ -400,34 +363,26 @@ namespace DevionGames
                 }
             }
 
-            public bool Contains(Element item)
-            {
-                if (item.label.text == label.text)
-                {
+            public bool Contains(Element item) {
+                if (item.label.text == label.text) {
                     return true;
                 }
-                for (int i = 0; i < children.Count; i++)
-                {
+                for (int i = 0; i < children.Count; i++) {
                     bool contains = children[i].Contains(item);
-                    if (contains)
-                    {
+                    if (contains) {
                         return true;
                     }
                 }
                 return false;
             }
 
-            public Element Find(string path)
-            {
-                if (this.path == path)
-                {
+            public Element Find(string path) {
+                if (this.path == path) {
                     return this;
                 }
-                for (int i = 0; i < children.Count; i++)
-                {
+                for (int i = 0; i < children.Count; i++) {
                     Element tree = children[i].Find(path);
-                    if (tree != null)
-                    {
+                    if (tree != null) {
                         return tree;
                     }
                 }
@@ -443,8 +398,7 @@ namespace DevionGames
             public GUIStyle elementButton = new GUIStyle("MeTransitionSelectHead");
             public GUIStyle background = "grey_border";
 
-            public Styles()
-            {
+            public Styles() {
 
                 this.header.stretchWidth = true;
                 this.header.margin = new RectOffset(1, 1, 0, 4);

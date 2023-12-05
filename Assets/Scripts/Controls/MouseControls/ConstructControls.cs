@@ -93,13 +93,16 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
   private void move_to(HexComponent targetHexGO) {
     Debug.Log("move_to: Moving!\n");
-    if (Game.networking) {
-      Debug.Log("move_to: Networking!\n");
-      networkManager.SendMoveRequest(Game.GetCurrentPlayer().Units.IndexOf(selectedUnit), 
-      targetHexGO.hex.row, targetHexGO.hex.column);
-      Debug.Log("move_to: Networked!\n");
-    }
-    this.selectedUnit.Move(targetHexGO.hex);
+        if (Game.networking)
+        {
+            Debug.Log("move_to: Networking!\n");
+            networkManager.SendMoveRequest(Game.GetCurrentPlayer().Units.IndexOf(selectedUnit),
+            targetHexGO.hex.row, targetHexGO.hex.column);
+            Debug.Log("move_to: Networked!\n");
+        }
+        else { 
+            this.selectedUnit.Move(targetHexGO.hex); 
+        }
     close();
     Debug.Log("move_to: Done!\n");
   }
@@ -125,10 +128,6 @@ public class ConstructControls : MonoBehaviour, IMouseController
     Debug.Log("OnResponseMove: begin");
 	ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
 	if (args.user_id == Constants.OP_ID) {
-      Debug.Log("OnResponseMove: moving");
-      Debug.Log("OnResponseMove: UnitID: " + args.piece_idx.ToString());
-      Debug.Log("OnResponseMove: Hex Col: " + args.x.ToString());
-      Debug.Log("OnResponseMove: Hex Row: " + args.y.ToString());
 	  Unit unit = (Unit) Game.GetCurrentPlayer().Units[args.piece_idx];
       unit.Move(Game.map.GetHex(args.x, args.y));
     //   Game.players[0].Avatar.Move(Game.map.GetHex(args.x, args.y));

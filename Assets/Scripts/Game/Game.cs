@@ -12,7 +12,7 @@ public class Game : MonoBehaviour {
   public static Player[] players;
   public static Map map;
   public static Stack<Effect> stack;
-  public static bool networking = true;
+  public static bool networking = false;
   private static GameObject HexMapGO;
   private static GameObject _filter;
   private NetworkManager networkManager;

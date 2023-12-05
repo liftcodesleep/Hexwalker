@@ -14,8 +14,7 @@ public class ResponseMoveEventArgs : ExtendedEventArgs
 	}
 }
 
-public class ResponseMove : NetworkResponse
-{
+public class ResponseMove : NetworkResponse {
 	private int user_id;
 	private int piece_idx;
 	private int x;
@@ -32,14 +31,12 @@ public class ResponseMove : NetworkResponse
 	}
 
 	public override ExtendedEventArgs process() {
-		ResponseMoveEventArgs args = new ResponseMoveEventArgs
-		{
+		ResponseMoveEventArgs args = new ResponseMoveEventArgs {
 			user_id = user_id,
 			piece_idx = piece_idx,
 			x = x,
 			y = y
 		};
-
 		return args;
 	}
 }

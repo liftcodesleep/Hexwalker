@@ -130,10 +130,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouse: {fileID: 0}
-  Text: {fileID: 0}
+  Text: {fileID: 2544817578278024297}
   NameText: {fileID: 0}
   HealthText: {fileID: 0}
   StamanaText: {fileID: 0}
+  AttackText: {fileID: 0}
+  RangeText: {fileID: 0}
+  HealthBar: {fileID: 0}
+  StamanaBar: {fileID: 0}
 --- !u!222 &2137117687372874250
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ public class AncestralRecall : Spell {
 
 	public override bool IsPlayableHex(Hex hex) {
 		if (hex.Constructs.Count > 0) {
-      Owner.Draw(3);
+			Owner.Draw(3);
 			return true;
 		}
 		return false;

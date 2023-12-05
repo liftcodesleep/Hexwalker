@@ -91,7 +91,7 @@ public class ConstructPopUp : MonoBehaviour
         foreach(Effect currentAbility in currentUnit.Abilities)
         {
             currentAbilityButton = Instantiate(abilityButtonPrefab, popUpPanel.transform);
-            currentAbilityButton.GetComponent<AbilityButtonControlls>().SetUp(currentAbility, ability_index);
+            currentAbilityButton.GetComponent<AbilityButtonControls>().SetUp(currentAbility, ability_index);
             ability_index++;
         }
     }
