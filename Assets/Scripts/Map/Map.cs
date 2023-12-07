@@ -360,4 +360,10 @@ public class Map : MonoBehaviour
             hex.selected = false;
         }
     }
+
+
+
+
+
+
 }

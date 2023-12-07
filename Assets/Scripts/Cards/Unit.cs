@@ -103,21 +103,17 @@ public abstract class Unit : Construct
             return false;
         }
 
-        //if(hex.cards.Count  > 0)
+
+
+
+        //if (this.Location.DistanceFrom(hex) > this.ActionPoints)
         //{
         //    return false;
         //}
-
-        //if (hex.cards.Count > 0 && hex.cards[0].Owner != this.Owner)
-        //{
-        //    return false;
-        //}
-
-        if (this.Location.DistanceFrom(hex) > this.ActionPoints)
+        if (AStartPathfinding.AStartPath(this, this.Location, hex).Count < this.ActionPoints)
         {
             return false;
         }
-
         return true;
     }
 }

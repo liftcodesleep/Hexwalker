@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ConstructControls : MonoBehaviour, IMouseController
@@ -83,6 +84,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
         if(targetHexGO)
         {
+            
             move_to(targetHexGO);
             return;
         }
@@ -90,6 +92,8 @@ public class ConstructControls : MonoBehaviour, IMouseController
         UnitComponent targetUnitGO = clickObject.GetComponent<UnitComponent>();
         if (targetUnitGO)
         {
+
+            if (selectedUnit == targetUnitGO.unit) return;
 
             targetUnitGO.GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
             selectedToMoveGO.GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
@@ -120,15 +124,34 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
     private void move_to(HexComponent targetHexGO)
     {
-        //Debug.Log("CC Moving From " + selectedUnit.Location.Name);
-        int hexesMoved = this.selectedUnit.Move(targetHexGO.hex);
-        //Debug.Log("CC Moving to " + selectedUnit.Location.Name);
+
+        List<Hex> path = AStartPathfinding.AStartPath(selectedUnit, selectedUnit.Location, targetHexGO.hex);
+        StartCoroutine(MoveOneHexAtATime(selectedUnit, path ));
+        //int hexesMoved = this.selectedUnit.Move(targetHexGO.hex);
+
+        
+        //if(hexesMoved > 0)
+        //{
+        //    Camera.main.GetComponent<CameraMovment>().MoveCamera(targetHexGO.transform);
+        //}
 
         close();
 
     }
 
+    IEnumerator MoveOneHexAtATime(Unit unit, List<Hex> moveList)
+    {
 
+        
+        foreach (Hex move in moveList)
+        {
+            this.selectedUnit.Move(move);
+            
+            yield return new WaitForSeconds(.8f);
+
+        }
+        
+    }
 
     private void HighLightHexs()
     {
@@ -140,14 +163,19 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
         foreach(Hex hex in hexs)
         {
-            if(selectedUnit.Location.DistanceFrom(hex) <= selectedUnit.ActionPoints && selectedUnit.ValidMove(hex))
+            if (  selectedUnit.Location.DistanceFrom(hex) <= selectedUnit.ActionPoints && selectedUnit.ValidMove(hex))
             {
-                hexsToHighlight.Add(hex);
+
+                List<Hex> path = AStartPathfinding.AStartPath(selectedUnit, selectedUnit.Location, hex);
+                if(path.Count-1 <= selectedUnit.ActionPoints)
+                {
+                    hexsToHighlight.Add(hex);
+                }
+                
             }
         }
         hexsToHighlight.Add(selectedUnit.Location);
 
-        //Game.map.HighLightHexs(hexsToHighlight);
         Game.map.SelectHexs(hexsToHighlight);
         Game.map.UpdateVisable();
 
@@ -157,18 +185,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
     private void UnHighLightHexs()
     {
 
-        //Debug.Log(" CC Turning off highlight");
-        //_filter.SetActive(false);
-        //GameObject hexMap = Game.GetHexMapGo();
-        //HexComponent hexGO;
-        //foreach (Transform currentHex in hexMap.transform)
-        //{
-        //    hexGO = currentHex.gameObject.GetComponent<HexComponent>();
-        //    foreach (Transform subItem in hexGO.transform)
-        //    {
-        //        subItem.gameObject.layer = 0;
-        //    }
-        //}
+
         Game.map.DeSelectHexes();
         Game.map.UpdateVisable();
     }

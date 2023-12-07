@@ -189,7 +189,7 @@ public class PlayCard : MonoBehaviour, IMouseController
         card.Owner.Hand.Cards.Remove(card);
 
         card.Pieces.Add(unitGO);
-
+        Camera.main.GetComponent<CameraMovment>().MoveCamera(unitGO.transform);
         return true;
     }
     
