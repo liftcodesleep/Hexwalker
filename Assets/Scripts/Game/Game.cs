@@ -9,7 +9,7 @@ public static class Game
     public static Player[] players;
 
     public static Map map;
-    public static Stack<Effect> stack;
+    public static EffectStack stack;
 
     public static readonly int rows = 26;
     public static readonly int columns = 38;
@@ -24,7 +24,7 @@ public static class Game
         players[0].Name = "Player 1";
         players[1].Name = "Player 2";
 
-        stack = new Stack<Effect>();
+        stack = new EffectStack();
 
         //map.CurrentLevel.OnStartTurn(0);
 

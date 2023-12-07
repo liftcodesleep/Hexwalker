@@ -40,13 +40,13 @@ public class BuffEffect : Effect
 
     public override void ImmediateEffect()
     {
-        Debug.Log("Damage Effect");
+        
         if (Card.Location == null)
         {
             Debug.Log("No targets on hex");
             return;
         }
-        Debug.Log("Damage End");
+        
         foreach (Card currentCard in Card.Location.cards)
         {
 
@@ -75,7 +75,7 @@ public class BuffEffect : Effect
         }
         
 
-        PutOnStack(this);
+        //PutOnStack(this);
         
     }
 

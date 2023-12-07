@@ -17,7 +17,7 @@ public class AStartPathfinding : MonoBehaviour
 
     public static List<Hex> AStartPath(Unit unit, Hex starting, Hex ending)
     {
-        Debug.Log("Setup");
+        //Debug.Log("Setup");
         List<AStarData> open = new List<AStarData>();
         List<AStarData> closed = new List<AStarData>();
 
@@ -31,13 +31,13 @@ public class AStartPathfinding : MonoBehaviour
         }); ;
 
         
-        Debug.Log("starting up");
+        //Debug.Log("starting up");
         AStarData current;
         while (true)
         {
             
             current = getLowestCost(open);
-            Debug.Log("Inside: " + current.hex.row + " " + current.hex.column);
+            //Debug.Log("Inside: " + current.hex.row + " " + current.hex.column);
             open.Remove(current);
             closed.Add(current);
             

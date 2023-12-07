@@ -121,7 +121,8 @@ public class ConstructPopUp : MonoBehaviour
         if (unit != null && unit.Abilities[0] != null)
         {
             //Effect.PutOnStack()
-            unit.Abilities[0].ImmediateEffect();
+            //unit.Abilities[0].ImmediateEffect();
+            Game.stack.Push(unit.Abilities[0]);
         }
 
         MasterMouse.taskOwner.close();

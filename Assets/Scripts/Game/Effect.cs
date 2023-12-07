@@ -14,6 +14,7 @@ public abstract class Effect
     public bool Resolved;
 
     public float ResolveTime;
+    public float maxResolveTime = 30f;
 
     public enum Type { ATTACK, DAMAGE, MOVE };
     public Type EffectType; 
@@ -24,7 +25,7 @@ public abstract class Effect
         Resolved = false;
         targets = new List<GameObject>();
 
-        ResolveTime = 100f;
+        ResolveTime = maxResolveTime;
     }
 
     public abstract void Target(GameObject target);

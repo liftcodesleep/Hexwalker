@@ -39,7 +39,7 @@ public class LevelOne : Level
     public override void StartLevel()
     {
         //PlaceStartingUnits();
-        Game.players[0].Draw(2);
+        Game.players[0].Draw(5);
 
         Game.map.PlaceItem(_levelUnits["Player"], Game.map.GetHex(14, 10));
         //owner.AllUnits.Add(this);

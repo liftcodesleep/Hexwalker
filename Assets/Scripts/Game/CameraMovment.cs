@@ -35,7 +35,7 @@ public class CameraMovment : MonoBehaviour
 
 
 
-        Debug.Log("Camera Move Paning to target");
+        //Debug.Log("Camera Move Paning to target");
         if(target == null)
         {
             throw new System.Exception("Camera move Null target pan");

@@ -15,6 +15,8 @@ public class ManaTap : Effect
         this.Name = "Tap Mana";
         this.Desctiption = "Addes mana to players mana pool";
         this.NumberOfTargets = 0;
+        this.maxResolveTime = 30;
+        this.ResolveTime = maxResolveTime;
     }
 
     public override void EndTurnEffect()

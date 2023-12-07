@@ -121,6 +121,10 @@ public class PlayCard : MonoBehaviour, IMouseController
         {
             Destroy(this.gameObject);
         }
+        else
+        {
+            //Game.stack.
+        }
 
         
 
@@ -141,13 +145,65 @@ public class PlayCard : MonoBehaviour, IMouseController
         else
         {
             card.Owner.Pool -= card.Cost;
+            Effect.PutOnStack(new PlayCardEffect(card, hex));
         }
         
         
 
+        //UnitDatabase data = GameObject.Find("UnitSpellsDataBase").GetComponent<UnitDatabase>();
+        //
+        //if(data == null)
+        //{
+        //    throw new System.Exception("Could not find DataBase in play card");
+        //}
+        //
+        //GameObject cardPreFab = data.GetPrefab(card.Name);
+        //
+        //GameObject unitGO = Instantiate(cardPreFab, Game.map.GetHexGO(hex).transform.position, Quaternion.identity, Game.map.GetHexGO(hex).transform);
+        //
+        //
+        //
+        //Game.GetCurrentPlayer().Avatar.Pieces[0].transform.LookAt(unitGO.transform.position);
+        //Game.GetCurrentPlayer().Avatar.Pieces[0].GetComponent<UnitComponent>().HandleAttack();
+        //
+        //
+        //hex.cards.Add(card);
+        //
+        //
+        //if (unitGO.GetComponent<UnitComponent>())
+        //{
+        //    UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
+        //    unitGOComp.unit = (Unit)card;
+        //    unitGOComp.unit.Location = hex;
+        //    card.Owner.AllUnits.Add((Construct)card);
+        //}
+        //if (card.type == Card.Type.CHARGE)
+        //{
+        //
+        //    //this.transform.localRotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
+        //}
+        //
+        //card.Location = hex;
+        //foreach (Effect currentEffect in card.ETBs)
+        //{
+        //    currentEffect.ImmediateEffect();
+        //
+        //}
+        //
+        //Debug.Log("PlayCard finished playing !!!!!!!!!!!! " + card.Name);
+        //card.Owner.Hand.Cards.Remove(card);
+        //
+        //card.Pieces.Add(unitGO);
+        //Camera.main.GetComponent<CameraMovment>().MoveCamera(unitGO.transform);
+        return true;
+    }
+
+
+    public static void ResolveCard(Card card, Hex hex)
+    {
         UnitDatabase data = GameObject.Find("UnitSpellsDataBase").GetComponent<UnitDatabase>();
 
-        if(data == null)
+        if (data == null)
         {
             throw new System.Exception("Could not find DataBase in play card");
         }
@@ -190,10 +246,10 @@ public class PlayCard : MonoBehaviour, IMouseController
 
         card.Pieces.Add(unitGO);
         Camera.main.GetComponent<CameraMovment>().MoveCamera(unitGO.transform);
-        return true;
+
+        Game.map.UpdateVisable();
     }
-    
- 
+
 
 
     private void HighLightHexs()
