@@ -29,7 +29,7 @@ public class GameRequestTable {
     add(Constants.CMSG_SETNAME, "RequestName");
     add(Constants.CMSG_READY, "RequestReady");
     add(Constants.CMSG_MOVE, "RequestMove");
-    add(Constants.CMSG_INTERACT, "RequestInteract");
+    add(Constants.CMSG_ATTACK, "RequestAttack");
     add(Constants.CMSG_SPAWN, "RequestSpawn");
     add(Constants.CMSG_HEARTBEAT, "RequestHeartbeat");
   }

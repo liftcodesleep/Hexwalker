@@ -15,6 +15,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
     networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
     MessageQueue msgQueue = networkManager.GetComponent<MessageQueue>();
     msgQueue.AddCallback(Constants.SMSG_MOVE, OnResponseMove);
+    msgQueue.AddCallback(Constants.SMSG_ATTACK, OnResponseAttack);
     _filter = Game.GetFilter();
   }
 
@@ -77,7 +78,8 @@ public class ConstructControls : MonoBehaviour, IMouseController
       selectedToMoveGO.GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
       targetUnitGO.transform.LookAt(selectedToMoveGO.transform.position);
       selectedToMoveGO.transform.LookAt(targetUnitGO.transform.position);
-      selectedUnit.Attack(targetUnitGO.unit);
+      //changed to wrapper attack function
+      attack(selectedUnit, targetUnitGO.unit);
       close();
     }
   }
@@ -89,7 +91,16 @@ public class ConstructControls : MonoBehaviour, IMouseController
     defender.Pieces[0].transform.LookAt(attacker.Pieces[0].transform.position);
   }
 
-  private void attack() { }
+  private void attack(Unit attacker, Unit defender) {
+    if (Game.networking){
+      networkManager.SendAttackRequest(Game.players.IndexOf(attacker.Owner), 
+      attacker.Units.IndexOf(attacker), Game.players.IndexOf(defender.Owner), 
+      defender.Owner.Units.IndexOf(defender));
+    }else {
+      attacker.Attack(defender);
+      }
+      close();
+  }
 
   private void move_to(HexComponent targetHexGO) {
         if (Game.networking) {
@@ -132,5 +143,20 @@ public class ConstructControls : MonoBehaviour, IMouseController
 	else {
 		Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
 	}
+  }
+
+  public void OnResponseAttack(ExtendedEventArgs eventArgs){
+	ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
+  if (args.user_id == Constants.OP_ID) {
+    Player attacking = (Player) Game.players.IndexOf(args.attPid);
+    Player defending = (Player) Game.players.IndexOf(args.defPid);
+    Unit  attacker = (Unit) attacking.Units[attUid];
+    Unit  defender = (Unit) defending.Units[defUid];
+    attacker.Attack(defender);
+  }
+  	else if (args.user_id == Constants.USER_ID) {
+	}	else {
+		  Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
+    }
   }
 }

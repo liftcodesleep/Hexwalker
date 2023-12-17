@@ -121,7 +121,6 @@ public class UnitComponent : MonoBehaviour {
   //
   public void HandleAttack() {
     animator.AttackAnimation();
-    
   }
   
   private void UpdatePosition() {

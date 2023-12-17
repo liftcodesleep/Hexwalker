@@ -85,10 +85,10 @@ public class NetworkManager : MonoBehaviour
   //   return false;
   // }
 
-	public bool SendInteractRequest(int pieceIndex, int targetIndex) {
+	public bool SendAttackRequest(int attPid, int attUid, int defPid, int defUid) {
 		if (cManager && cManager.IsConnected()) {
-			RequestInteract request = new RequestInteract();
-			request.send(pieceIndex, targetIndex);
+			RequestAttack request = new RequestAttack();
+			request.send(attPid, attUid, defPid, defUid);
 			cManager.send(request);
 			return true;
 		}

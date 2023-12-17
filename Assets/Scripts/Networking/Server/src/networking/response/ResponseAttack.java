@@ -5,17 +5,18 @@ import metadata.Constants;
 import model.Player;
 import utility.GamePacket;
 import utility.Log;
+
 /**
  * The ResponseLogin class contains information about the authentication
  * process.
  */
-public class ResponseInteract extends GameResponse {
+public class ResponseAttack extends GameResponse {
     private Player player;
     private int targetIndex;
     private int index;
 
-    public ResponseInteract() {
-        responseCode = Constants.SMSG_INTERACT;
+    public ResponseAttack() {
+        responseCode = Constants.SMSG_ATTACK;
     }
 
     @Override
@@ -25,9 +26,9 @@ public class ResponseInteract extends GameResponse {
         packet.addInt32(index);
         packet.addInt32(targetIndex);
 
+        Log.printf("Player with id %d has had a piece at index %d attack another player's piece at index %d.",
+                player.getID(), index, targetIndex);
 
-        Log.printf("Player with id %d has had a piece at index %d interact with another player's piece at index %d.", player.getID(), index, targetIndex);
- 
         return packet.getBytes();
     }
 

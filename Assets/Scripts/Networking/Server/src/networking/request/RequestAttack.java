@@ -5,17 +5,17 @@ import java.io.IOException;
 
 // Other Imports
 import model.Player;
-import networking.response.ResponseInteract;
+import networking.response.ResponseAttack;
 import utility.DataReader;
 import core.NetworkManager;
 
-public class RequestInteract extends GameRequest {
+public class RequestAttack extends GameRequest {
     private int pieceIndex, targetIndex;
     // Responses
-    private ResponseInteract responseInteract;
+    private ResponseAttack responseAttack;
 
-    public RequestInteract() {
-        responses.add(responseInteract = new ResponseInteract());
+    public RequestAttack() {
+        responses.add(responseAttack = new ResponseAttack());
     }
 
     @Override
@@ -27,9 +27,8 @@ public class RequestInteract extends GameRequest {
     @Override
     public void doBusiness() throws Exception {
         Player player = client.getPlayer();
-
-        responseInteract.setPlayer(player);
-        responseInteract.setData(pieceIndex, targetIndex);
-        NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseInteract);
+        responseAttack.setPlayer(player);
+        responseAttack.setData(pieceIndex, targetIndex);
+        NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseAttack);
     }
 }
