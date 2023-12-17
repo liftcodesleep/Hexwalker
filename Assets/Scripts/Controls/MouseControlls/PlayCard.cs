@@ -115,7 +115,7 @@ public class PlayCard : MonoBehaviour, IMouseController
         }
         MasterMouse.Selecteditems.Add(clickObject);
 
-        
+        //Game.stack.Push(new PlayCardEffect(cardGO.card, hex));
 
         if( Play(cardGO.card,hex))
         {
