@@ -93,8 +93,8 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
   private void attack(Unit attacker, Unit defender) {
     if (Game.networking){
-      networkManager.SendAttackRequest(Game.players.IndexOf(attacker.Owner), 
-      attacker.Units.IndexOf(attacker), Game.players.IndexOf(defender.Owner), 
+      networkManager.SendAttackRequest(Array.IndexOf(Game.players, attacker.Owner), 
+      attacker.Owner.Units.IndexOf(attacker), Array.IndexOf(Game.players, defender.Owner),
       defender.Owner.Units.IndexOf(defender));
     }else {
       attacker.Attack(defender);
@@ -146,12 +146,12 @@ public class ConstructControls : MonoBehaviour, IMouseController
   }
 
   public void OnResponseAttack(ExtendedEventArgs eventArgs){
-	ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
+	ResponseAttackEventArgs args = eventArgs as ResponseAttackEventArgs;
   if (args.user_id == Constants.OP_ID) {
-    Player attacking = (Player) Game.players.IndexOf(args.attPid);
-    Player defending = (Player) Game.players.IndexOf(args.defPid);
-    Unit  attacker = (Unit) attacking.Units[attUid];
-    Unit  defender = (Unit) defending.Units[defUid];
+    Player attacking = (Player) Game.players[args.attPid];
+    Player defending = (Player) Game.players[args.defPid];
+    Unit  attacker = (Unit) attacking.Units[args.attUid];
+    Unit  defender = (Unit) defending.Units[args.defUid];
     attacker.Attack(defender);
   }
   	else if (args.user_id == Constants.USER_ID) {

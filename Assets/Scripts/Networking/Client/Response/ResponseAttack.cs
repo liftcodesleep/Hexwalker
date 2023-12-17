@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class ResponseAttackEventArgs : ExtendedEventArgs
 {
-	public int user_id { get; set; } // The user_id of whom who sent the request
-	public int piece_idx { get; set; } // The index of the piece that is initiating the interaction. Belongs to player with id user_id
-	public int target_idx { get; set; } // The index of the piece that is being interacted with. Belongs to the opponent of the player with id user_id
+	public int user_id { get; set; } // 1 is first to join, 2 is second, anything else is not valid!
+	public int attPid { get; set; } // The user_id of the attacking player
+	public int attUid { get; set; } // The index of the attacking unit
+	public int defPid { get; set; } // The index of the defending player
+	public int defUid { get; set; } // The index of the defending unit
 
 	public ResponseAttackEventArgs() {
 		event_id = Constants.SMSG_ATTACK;
