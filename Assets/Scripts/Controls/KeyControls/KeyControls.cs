@@ -37,6 +37,11 @@ public class KeyControls : MonoBehaviour
             CamaraControls();
         }
 
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            TogglePauseStack();
+        }
+
     }
 
     private void CamaraControls() {
@@ -101,5 +106,10 @@ public class KeyControls : MonoBehaviour
         shiftingTarget = new Vector3(target.transform.position.x, Camera.main.transform.position.y, Camera.main.transform.position.z);
         shiftingTargetz = new Vector3(HexMap.transform.position.x, HexMap.transform.position.y, -(height - 2));
         isShifting = true;
+    }
+
+    public void TogglePauseStack()
+    {
+        Game.stack.isPaused = !Game.stack.isPaused;
     }
 }

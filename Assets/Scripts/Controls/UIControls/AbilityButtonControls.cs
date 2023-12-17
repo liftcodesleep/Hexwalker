@@ -30,9 +30,11 @@ public class AbilityButtonControls : MonoBehaviour, IMouseController
                 yield return new WaitForSeconds(.01f);
             }
         }
-        
-        
-        _abilityEffect.ImmediateEffect();
+
+
+        //_abilityEffect.ImmediateEffect();
+
+        Effect.PutOnStack(_abilityEffect);
 
         MasterMouse.taskOwner.close();
         MasterMouse.SetTask(MasterMouse.Task.StandBy, null);
