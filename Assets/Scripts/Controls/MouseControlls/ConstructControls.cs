@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ConstructControls : MonoBehaviour, IMouseController
@@ -95,13 +96,17 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
             if (selectedUnit == targetUnitGO.unit) return;
 
-            targetUnitGO.GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
-            selectedToMoveGO.GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
 
-            targetUnitGO.transform.LookAt(selectedToMoveGO.transform.position);
-            selectedToMoveGO.transform.LookAt(targetUnitGO.transform.position);
 
-            selectedUnit.Attack(targetUnitGO.unit);
+            //targetUnitGO.GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
+            //selectedToMoveGO.GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
+            //
+            //targetUnitGO.transform.LookAt(selectedToMoveGO.transform.position);
+            //selectedToMoveGO.transform.LookAt(targetUnitGO.transform.position);
+            //
+            //selectedUnit.Attack(targetUnitGO.unit);
+
+            Effect.PutOnStack(new AttackEffect(selectedUnit, targetUnitGO.unit, targetUnitGO, targetUnitGO));
             close();
         }
 

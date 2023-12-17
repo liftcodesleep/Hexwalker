@@ -19,10 +19,13 @@ public class EffectStack
     private static readonly int secondsToAct = 10;
     private static readonly int secondsForError = 2;
 
+    public bool isPaused;
+
     public EffectStack() 
     { 
     
         effects = new List<Effect>();
+        this.isPaused = false;
 
     
     }
@@ -42,7 +45,7 @@ public class EffectStack
     public void UpdateStack()
     {
         if(effects.Count  == 0) { return; }
-
+        if(isPaused) { return; }
         //this.effects[1].Time = 1f; //e -= 1f; ;
         effects[^1].ResolveTime--;
         if (effects[^1].ResolveTime < 0)
