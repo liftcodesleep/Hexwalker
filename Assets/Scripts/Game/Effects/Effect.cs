@@ -2,34 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Effect {
-  public string Name;
-  public string Desctiption;
-  public int NumberOfTargets;
-  public List<GameObject> targets;
-  public Card Card;
-  public bool Resolved;
-  public float ResolveTime;
-  public enum Type { ATTACK, DAMAGE, MOVE };
-  public Type EffectType; 
+public abstract class Effect 
+{
+    public string Name;
+    public string Desctiption;
 
-  public Effect(Card card) {
-    this.Card = card;
-    Resolved = false;
-    targets = new List<GameObject>();
-    ResolveTime = 100f;
-  }
+    public int NumberOfTargets;
+    public List<GameObject> targets;
 
-  public abstract void Target(GameObject target);
+    public Card Card;
+    public bool Resolved;
 
-  public static void PutOnStack(Effect effect) {
-    Effect copyedEffect = (Effect)effect.MemberwiseClone();
-    Game.stack.Push(copyedEffect );
-  }
+    public float ResolveTime;
+    public float maxResolveTime = 30f;
 
-  public abstract void ImmediateEffect();
+    public enum Type { ATTACK, DAMAGE, MOVE };
+    public Type EffectType; 
 
-  public abstract void EndTurnEffect();
+    public Effect(Card card)
+    {
+        this.Card = card;
+        Resolved = false;
+        targets = new List<GameObject>();
 
-  public abstract void TargetedEffect(Type typeTargeted);
+        ResolveTime = maxResolveTime;
+    }
+
+    public abstract void Target(GameObject target);
+
+
+    public static void PutOnStack(Effect effect)
+    {
+        Effect copyedEffect = (Effect)effect.MemberwiseClone();
+
+        
+        Game.stack.Push(copyedEffect );
+    }
+
+    public abstract void ImmediateEffect();
+
+
+    public abstract void EndTurnEffect();
+
+
+    public abstract void TargetedEffect(Type typeTargeted);
+
 }

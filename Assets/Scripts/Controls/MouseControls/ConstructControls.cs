@@ -78,6 +78,8 @@ public class ConstructControls : MonoBehaviour, IMouseController
       selectedToMoveGO.GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
       targetUnitGO.transform.LookAt(selectedToMoveGO.transform.position);
       selectedToMoveGO.transform.LookAt(targetUnitGO.transform.position);
+      // Effect.PutOnStack(new AttackEffect(selectedUnit, targetUnitGO.unit, targetUnitGO, targetUnitGO));
+
       //changed to wrapper attack function
       attack(selectedUnit, targetUnitGO.unit);
       close();
@@ -103,6 +105,9 @@ public class ConstructControls : MonoBehaviour, IMouseController
   }
 
   private void move_to(HexComponent targetHexGO) {
+    //TODO
+    // List<Hex> path = AStartPathfinding.AStartPath(selectedUnit, selectedUnit.Location, targetHexGO.hex);
+    // StartCoroutine(MoveOneHexAtATime(selectedUnit, path ));
         if (Game.networking) {
             networkManager.SendMoveRequest(Game.GetCurrentPlayer().Units.IndexOf(selectedUnit),
             targetHexGO.hex.row, targetHexGO.hex.column);
@@ -129,6 +134,14 @@ public class ConstructControls : MonoBehaviour, IMouseController
   private void UnhighlightHexes() {
     Game.map.UpdateVisible();
   }
+
+    IEnumerator MoveOneHexAtATime(Unit unit, List<Hex> moveList) {
+        foreach (Hex move in moveList) {
+            this.selectedUnit.Move(move);
+            yield return new WaitForSeconds(.8f);
+        }
+    }
+
 
   public void OnResponseMove(ExtendedEventArgs eventArgs) {
     Debug.Log("OnResponseMove: begin");

@@ -11,7 +11,8 @@ public class Game : MonoBehaviour {
   public static int turnCount = 0;
   public static Player[] players;
   public static Map map;
-  public static Stack<Effect> stack;
+  public static EffectStack stack;
+  // public static Stack<Effect> stack;
   public static bool networking = false;
   private static GameObject HexMapGO;
   private static GameObject _filter;
@@ -25,7 +26,7 @@ public class Game : MonoBehaviour {
     P2.Name = "Player 2";
     P1.Deck = new TestDeck1(P1);
     P2.Deck = new TestDeck2(P2);
-    stack = new Stack<Effect>();
+    stack = new EffectStack();
     //map.CurrentLevel.OnStartTurn(0);
   }
 

@@ -35,7 +35,7 @@ public class PlayCard : MonoBehaviour, IMouseController {
   }
   
   public void LeftClicked(GameObject clickedObject) {
-    //MasterMouse.Selecteditems.Add(this.gameObject);
+    //MasterMouse.SelectedItems.Add(this.gameObject);
     //HighlightHexes();
     HighlightHexes();
   }
@@ -72,7 +72,7 @@ public class PlayCard : MonoBehaviour, IMouseController {
       Debug.Log("PlayCard not a hex?!?!");
       return;
     }
-    MasterMouse.Selecteditems.Add(clickObject);
+    MasterMouse.SelectedItems.Add(clickObject);
     if( Play(cardGO.card,hex)) {
       Destroy(this.gameObject);
     }
@@ -81,6 +81,15 @@ public class PlayCard : MonoBehaviour, IMouseController {
 
 
   public static bool Play(Card card, Hex hex) {
+    // TODO
+    // if (!( card.Cost <= card.Owner.Pool) ) {
+    //     return false;
+    // }
+    // else {
+    //     card.Owner.Pool -= card.Cost;
+    //     Effect.PutOnStack(new PlayCardEffect(card, hex));
+    // }
+
     if (!( card.Cost <= card.Owner.Pool) ) {
       return false;
     }
@@ -137,6 +146,37 @@ public class PlayCard : MonoBehaviour, IMouseController {
     }
   }
   
+    public static void ResolveCard(Card card, Hex hex) {
+        UnitDatabase data = GameObject.Find("UnitSpellsDataBase").GetComponent<UnitDatabase>();
+        if (data == null) {
+            throw new System.Exception("Could not find DataBase in play card");
+        }
+        GameObject cardPreFab = data.GetPrefab(card.Name);
+        GameObject unitGO = Instantiate(cardPreFab, Game.map.GetHexGO(hex).transform.position, Quaternion.identity, Game.map.GetHexGO(hex).transform);
+        Game.GetCurrentPlayer().Avatar.Pieces[0].transform.LookAt(unitGO.transform.position);
+        Game.GetCurrentPlayer().Avatar.Pieces[0].GetComponent<UnitComponent>().HandleAttack();
+        if (unitGO.GetComponent<UnitComponent>()) {
+            UnitComponent unitGOComp = unitGO.GetComponent<UnitComponent>();
+            unitGOComp.unit = (Unit)card;
+            unitGOComp.unit.Location = hex;
+            card.Owner.Units.Add((Construct)card);
+            hex.Constructs.Add((Construct)card);
+        }
+        if (card.type == Card.Type.CHARGE) {
+            //this.transform.localRotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
+        }
+        card.Location = hex;
+        foreach (Effect currentEffect in card.ETBs) {
+            currentEffect.ImmediateEffect();
+        }
+        Debug.Log("PlayCard finished playing !!!!!!!!!!!! " + card.Name);
+        card.Owner.Hand.Cards.Remove(card);
+        card.Pieces.Add(unitGO);
+        Camera.main.GetComponent<CameraMovement>().MoveCamera(unitGO.transform);
+        Game.map.UpdateVisible();
+    }
+
+
   private void UnhighlightHexes() {
     Game.map.UpdateVisible();
   }

@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Abilty : MonoBehaviour, IMouseController
-{
-
+public class Abilty : MonoBehaviour, IMouseController {
     private GameObject _filter;
 
     void Start() {
@@ -12,8 +10,6 @@ public class Abilty : MonoBehaviour, IMouseController
     }
 
     public static List<Hex> TargetHexes() {
-
-
         return null;
     }
 

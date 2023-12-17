@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraMovment : MonoBehaviour
+public class CameraMovement : MonoBehaviour
 {
 
     public Transform target; // The target location to pan to
     public float panSpeed = 5f; // The speed of the panning
-    public static CameraMovment mainCamera;
+    public static CameraMovement mainCamera;
 
     void Start()
     {
         
         //StartCoroutine(IntroPan());
-        mainCamera = GetComponent<CameraMovment>();
+        mainCamera = GetComponent<CameraMovement>();
 
     }
 

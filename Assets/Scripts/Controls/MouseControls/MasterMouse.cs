@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MasterMouse : MonoBehaviour
 {
-  public static List<GameObject> Selecteditems;
+  public static List<GameObject> SelectedItems;
   public static GameObject selectedItem;
   public static Unit lastSelectedUnit;
   public enum Task { StandBy, PlayCard, MoveUnit, UnitMenuClicked, Transition }
@@ -17,7 +17,7 @@ public class MasterMouse : MonoBehaviour
   
   // Start is called before the first frame update
   void Start() {
-      Selecteditems = new List<GameObject>();
+      SelectedItems = new List<GameObject>();
       currentTask = Task.StandBy;
       // _filter = null;
   }

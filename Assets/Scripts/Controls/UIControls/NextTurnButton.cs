@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class NextTurnButton : MonoBehaviour {
   [SerializeField]
-  private GameObject light;
+  private GameObject illumination;
   [SerializeField]
   private CardPanelComponent cardPanel;
   private bool _nextTurnPlaying;
@@ -17,7 +17,7 @@ public class NextTurnButton : MonoBehaviour {
 
   // Start is called before the first frame update
   void Start() {
-    startingRotation = light.transform.rotation;
+    startingRotation = illumination.transform.rotation;
     _nextTurnPlaying = false;
     count = 0;
     thisButton = GetComponent<Button>();
@@ -30,13 +30,13 @@ public class NextTurnButton : MonoBehaviour {
     if(_nextTurnPlaying) {
       // Calculate the rotation angle based on time
       //float angle = (Time.time / dayCycleDuration) * 360.0f;
-      // Set the light's rotation
-      light.transform.rotation *= Quaternion.Euler(0, angle, 0);
+      // Set the illumination's rotation
+      illumination.transform.rotation *= Quaternion.Euler(0, angle, 0);
       count++;
     }
     if(count > 360 && _nextTurnPlaying) {
       _nextTurnPlaying = false;
-      light.transform.rotation = startingRotation;
+      illumination.transform.rotation = startingRotation;
     }
     if (Game.GetCurrentPlayer() != Game.players[0]) {
       thisButton.interactable = false;
