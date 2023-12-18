@@ -127,12 +127,16 @@ public class ConstructControls : MonoBehaviour, IMouseController
         hexesToHighlight.Add(hex);
       }
     }
-    hexesToHighlight.Add(selectedUnit.Location); 
-    Game.map.HighlightHexes(hexesToHighlight);
+    hexesToHighlight.Add(selectedUnit.Location);
+
+        //Game.map.HighlightHexes(new List<Hex>());
+        Game.map.UpdateVisible();
+        Game.map.SelectHexs(hexesToHighlight);
   }
 
   private void UnhighlightHexes() {
     Game.map.UpdateVisible();
+    Game.map.DeselectHexes();
   }
 
     IEnumerator MoveOneHexAtATime(Unit unit, List<Hex> moveList) {

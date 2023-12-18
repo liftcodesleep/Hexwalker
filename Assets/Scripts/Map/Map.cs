@@ -252,6 +252,7 @@ public class Map : MonoBehaviour {
 
 
     public  void SelectHexs(List<Hex> hexs){
+        _filter.SetActive(true);
         foreach (Hex hex in hexs){
             hex.selected = true;
         }
