@@ -17,7 +17,7 @@ public class Avatar : Unit {
 		MoveCost = 2;
 		ActionPoints = 2;
 		Actions = 2;
-		Strength = 0;
+		Strength = 10;
 		moveableHexTypes = new Map.HexType[] { Map.HexType.Flat, Map.HexType.Forest };
 
 	}

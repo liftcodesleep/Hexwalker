@@ -33,7 +33,7 @@ public class LevelOne : Level
         Game.players[0].Draw(5);
         Game.map.PlaceItem(_levelUnits["Player"], Game.map.GetHex(14, 10));
         //owner.Units.Add(this);
-        Game.map.PlaceItem(_levelUnits["AI"], Game.map.GetHex(15, 35));
+        Game.map.PlaceItem(_levelUnits["AI"], Game.map.GetHex(14, 11));
         GameObject moveMarker = Game.map.PlaceEffect("Marker", Game.map.GetHexGO(Game.map.GetHex(16, 8)).transform.position + Vector3.up * .2f);
         GameObject[] moveMarkers = 
             {

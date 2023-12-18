@@ -13,7 +13,7 @@ public class Game : MonoBehaviour {
   public static Map map;
   public static EffectStack stack;
   // public static Stack<Effect> stack;
-  public static bool networking = false;
+  public static bool networking = true;
   private static GameObject HexMapGO;
   private static GameObject _filter;
   private NetworkManager networkManager;
@@ -21,7 +21,7 @@ public class Game : MonoBehaviour {
   static Game() {
     Player P1 = new Player();
     Player P2 = new Player();
-    players = new Player[] { P1, P2};
+    players = new Player[] {P1, P2};
     P1.Name = "Player 1";
     P2.Name = "Player 2";
     P1.Deck = new TestDeck1(P1);

@@ -64,22 +64,24 @@ public class ConstructControls : MonoBehaviour, IMouseController
   public void RightClicked(GameObject clickObject) {
     HexComponent targetHexGO = clickObject.GetComponent<HexComponent>();
     Debug.Log("RightClicked: received targetHexGO");
+    Debug.Log("Clicked object: " + clickObject);
+    Debug.Log("targetHexGO: " + targetHexGO);
     if(targetHexGO != null) {
       Debug.Log("RightClicked: targetHexGO valid");
       move_to(targetHexGO);
       return;
     }
     else{
-        Debug.Log("ur dum");
+        Debug.Log("Object clicked was null.");
     }
     UnitComponent targetUnitGO = clickObject.GetComponent<UnitComponent>();
     if (targetUnitGO != null) {
-      targetUnitGO.GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
-      selectedToMoveGO.GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
+      // targetUnitGO.GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
+      // selectedToMoveGO.GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
       targetUnitGO.transform.LookAt(selectedToMoveGO.transform.position);
       selectedToMoveGO.transform.LookAt(targetUnitGO.transform.position);
       // Effect.PutOnStack(new AttackEffect(selectedUnit, targetUnitGO.unit, targetUnitGO, targetUnitGO));
-
+      Debug.Log("Calling attack()");
       //changed to wrapper attack function
       attack(selectedUnit, targetUnitGO.unit);
       close();
@@ -87,8 +89,8 @@ public class ConstructControls : MonoBehaviour, IMouseController
   }
 
   public static void PlayAttackAnimations(Unit attacker, Unit defender) {
-    defender.Pieces[0].GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
-    attacker.Pieces[0].GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
+    // defender.Pieces[0].GetComponentInChildren<Knight_Animation_Controller>().TakeDamageAnimation();
+    // attacker.Pieces[0].GetComponentInChildren<Knight_Animation_Controller>().AttackAnimation();
     attacker.Pieces[0].transform.LookAt(defender.Pieces[0].transform.position);
     defender.Pieces[0].transform.LookAt(attacker.Pieces[0].transform.position);
   }
@@ -98,8 +100,12 @@ public class ConstructControls : MonoBehaviour, IMouseController
       networkManager.SendAttackRequest(Array.IndexOf(Game.players, attacker.Owner), 
       attacker.Owner.Units.IndexOf(attacker), Array.IndexOf(Game.players, defender.Owner),
       defender.Owner.Units.IndexOf(defender));
+      Debug.Log("Sent AttackRequest");
     }else {
+      Debug.Log("Client side attack");
       attacker.Attack(defender);
+      Debug.Log(Array.IndexOf(Game.players, attacker.Owner));
+      Debug.Log(Array.IndexOf(Game.players, defender.Owner));
       }
       close();
   }
@@ -153,9 +159,10 @@ public class ConstructControls : MonoBehaviour, IMouseController
 	if (args.user_id == Constants.OP_ID) {
 	  Unit unit = (Unit) Game.GetCurrentPlayer().Units[args.piece_idx];
       unit.Move(Game.map.GetHex(args.x, args.y));
-    //   Game.players[0].Avatar.Move(Game.map.GetHex(args.x, args.y));
 	}
 	else if (args.user_id == Constants.USER_ID) {
+    Game.GetCurrentPlayer().Avatar.Move(Game.map.GetHex(args.x, args.y));
+
 	}
 	else {
 		Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
@@ -163,17 +170,12 @@ public class ConstructControls : MonoBehaviour, IMouseController
   }
 
   public void OnResponseAttack(ExtendedEventArgs eventArgs){
+  Debug.Log("Received attack callback");
 	ResponseAttackEventArgs args = eventArgs as ResponseAttackEventArgs;
-  if (args.user_id == Constants.OP_ID) {
     Player attacking = (Player) Game.players[args.attPid];
     Player defending = (Player) Game.players[args.defPid];
     Unit  attacker = (Unit) attacking.Units[args.attUid];
     Unit  defender = (Unit) defending.Units[args.defUid];
     attacker.Attack(defender);
-  }
-  	else if (args.user_id == Constants.USER_ID) {
-	}	else {
-		  Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
-    }
   }
 }

@@ -63,7 +63,7 @@ public class Map : MonoBehaviour {
         //{
         //    player.placeAvatar();
         //}
-        CurrentLevel = new TestLevel();
+        CurrentLevel = new LevelOne();
         CurrentLevel.StartLevel();
         _filter = Game.GetFilter();
         _playableHexs = new List<HexComponent>();

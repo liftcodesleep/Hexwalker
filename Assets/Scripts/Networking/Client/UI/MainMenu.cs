@@ -238,6 +238,7 @@ public class MainMenu : MonoBehaviour
 		// Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), true);
 		// Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), true);
 		// gameManager.Init(player1, player2);
+		Game.networking = false;
 		SceneManager.LoadScene("TutorialScene 1");
 		SceneManager.UnloadSceneAsync("MainMenu");
 	}
@@ -253,6 +254,7 @@ public class MainMenu : MonoBehaviour
 		// Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), Constants.USER_ID == 1);
 		// Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), Constants.USER_ID == 2);
 		// gameManager.Init(player1, player2);
+		Game.networking = true;
 		SceneManager.LoadScene("TutorialScene 1");
 		SceneManager.UnloadSceneAsync("MainMenu");
 	}
