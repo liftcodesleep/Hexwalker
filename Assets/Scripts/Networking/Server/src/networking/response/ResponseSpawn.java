@@ -6,8 +6,11 @@ import utility.GamePacket;
 import utility.Log;
 
 public class ResponseSpawn extends GameResponse {
-  private int pID, x, y;
-  private String unitName;
+  Player playerID;
+  private int pID;
+  private int x;
+  private int y;
+  private int cardID;
 
   public ResponseSpawn() {
     responseCode = Constants.SMSG_SPAWN;
@@ -19,8 +22,8 @@ public class ResponseSpawn extends GameResponse {
     packet.addInt32(pID);
     packet.addInt32(x);
     packet.addInt32(y);
-    packet.addString(unitName);
-    Log.printf("Player with ID %d has Spawned piece %d at (%d, %d)", pID, unitName, x, y);
+    packet.addInt32(cardID);
+    Log.printf("Player with ID %d has Spawned piece %d at (%d, %d)", pID, cardID, x, y);
     return packet.getBytes();
   }
 
@@ -28,10 +31,10 @@ public class ResponseSpawn extends GameResponse {
     this.playerID = playerID;
   }
 
-  public void setData(int pID, int x, int y, String unitName) {
+  public void setData(int pID, int x, int y, int cardID) {
     this.pID = pID;
     this.y = y;
     this.x = x;
-    this.unitName = unitName;
+    this.cardID = cardID;
   }
 }

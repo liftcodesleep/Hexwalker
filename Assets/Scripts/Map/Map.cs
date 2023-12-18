@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //using static UnityEditor.FilePathAttribute;
-
-
 ////////////////For Organazation //////////////////////////////////////
 
 [System.Serializable]
@@ -20,9 +18,6 @@ public struct TileDictionary {
     public TileStyle[] styles;
 }
 //////////////////////////////////////////////////////
-
-
-
 
 public class Map : MonoBehaviour {
   private Hex[,] _hexes;
@@ -42,31 +37,26 @@ public class Map : MonoBehaviour {
   private List<GameObject> highlightedHexes;
   public Level CurrentLevel;
   public enum Direction { Left, Right, UpLeft, UpRight, DownLeft, DownRight }
-  private NetworkManager networkManager;
 
     private void Start() {
-    Game.map = this;
-    this.rows = 26;
-    this.columns = 38;
-    while (transform.childCount > 0) {
-      DestroyImmediate(transform.GetChild(0).gameObject);
-    }
-    GenerateMap();
-    seed = Random.Range(0, 1000);
-    CurrentLevel = new LevelOne();
-    CurrentLevel.StartLevel();
-    _filter = Game.GetFilter();
-    _playableHexes = new List<HexComponent>();
-    UpdateVisible();
-    networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
-    MessageQueue msgQueue = networkManager.GetComponent<MessageQueue>();
-    msgQueue.AddCallback(Constants.SMSG_SPAWN, OnResponseSpawn);
-
+        Game.map = this;
+        this.rows = 26;
+        this.columns = 38;
+        while (transform.childCount > 0) {
+        DestroyImmediate(transform.GetChild(0).gameObject);
+        }
+        GenerateMap();
+        seed = Random.Range(0, 1000);
+        CurrentLevel = new LevelOne();
+        CurrentLevel.StartLevel();
+        _filter = Game.GetFilter();
+        _playableHexes = new List<HexComponent>();
+        UpdateVisible();
     }
 
     private void Update() {
-    CurrentLevel.UpdateLevel();
-  }
+        CurrentLevel.UpdateLevel();
+    }
 
     public void PlaceItem(Construct item, Hex location) {
         GameObject itemPreFab = data.GetPrefab(item.Name);
@@ -250,11 +240,4 @@ public class Map : MonoBehaviour {
         }
     }
 
-    public void OnResponseSpawn(ExtendedEventArgs eventArgs) {
-      ResponseSpawnEventArgs args = eventArgs as ResponseSpawnEventArgs;
-      Player summoner = (Player)Game.players[args.pID];
-      Hex hex = GetHex(args.x, args.y);
-      Unit summon = typeof(args.unitName);
-      PlaceItem(summon, hex);
-  }
 }

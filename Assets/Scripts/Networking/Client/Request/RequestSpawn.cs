@@ -5,14 +5,14 @@ using UnityEngine;
 public class RequestSpawn : NetworkRequest
 {
 	public RequestSpawn() {
-		request_id = Constants.CMSG_MOVE;
+		request_id = Constants.CMSG_SPAWN;
 	}
 
-	public void send(int pID, int x, int y, string unitName) {
+	public void send(int pID, int x, int y, int cardID) {
 		packet = new GamePacket(request_id);
         packet.addInt32(pID);
         packet.addInt32(x);
         packet.addInt32(y);
-        packet.addString(unitName);
+        packet.addInt32(cardID);
     }
 }

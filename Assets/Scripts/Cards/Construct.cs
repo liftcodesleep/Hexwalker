@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Construct : Card {
-    //public Card Card;
+    public Card card;
     //public List<Effect> ConstructEffects;
     //    public abstract int Spawn();
     //    public abstract int Despawn();

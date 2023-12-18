@@ -1,16 +1,16 @@
 package networking.request;
 
 import java.io.IOException;
-
 import core.NetworkManager;
 import model.Player;
 import networking.response.ResponseSpawn;
 import utility.DataReader;
 
 public class RequestSpawn extends GameRequest {
-    private int pID, x, y;
-    private String unitName;
-
+  private int pID;
+  private int x;
+  private int y;
+  private int cardID;
   // Responses
   private ResponseSpawn responseSpawn;
 
@@ -23,14 +23,14 @@ public class RequestSpawn extends GameRequest {
     pID = DataReader.readInt(dataInput);
     x = DataReader.readInt(dataInput);
     y = DataReader.readInt(dataInput);
-    unitName = DataReader.readString(dataInput);
+    cardID = DataReader.readInt(dataInput);
   }
 
   @Override
   public void doBusiness() throws Exception {
     Player player = client.getPlayer();
     responseSpawn.setPlayerID(player);
-    responseSpawn.setData(pID, x, y, unitName);
+    responseSpawn.setData(pID, x, y, cardID);
     NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseSpawn);
   }
 }

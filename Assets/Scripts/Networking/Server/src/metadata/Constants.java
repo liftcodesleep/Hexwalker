@@ -23,8 +23,8 @@ public class Constants {
   final public static short SMSG_MOVE = 205;
   final public static short CMSG_ATTACK = 106;
   final public static short SMSG_ATTACK = 206;
-  final public static short SMSG_SPAWN = 107;
-  final public static short CMSG_SPAWN = 207;
+  final public static short CMSG_SPAWN = 107;
+  final public static short SMSG_SPAWN = 207;
 
   final public static short CMSG_HEARTBEAT = 111;
 

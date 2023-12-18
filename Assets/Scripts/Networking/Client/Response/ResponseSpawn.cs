@@ -6,10 +6,10 @@ public class ResponseSpawnEventArgs : ExtendedEventArgs {
 	public int pID { get; set; } // The user_id of whom who sent the request
 	public int x { get; set; } // The x coordinate of the target location
 	public int y { get; set; } // The y coordinate of the target location
-	public string unitName { get; set; }
+	public int cardID { get; set; }
 
 	public ResponseSpawnEventArgs() {
-		event_id = Constants.SMSG_MOVE;
+		event_id = Constants.SMSG_SPAWN;
 	}
 }
 
@@ -17,7 +17,7 @@ public class ResponseSpawn : NetworkResponse {
 	private int pID;
 	private int x;
 	private int y;
-	private string unitName;
+	private int cardID;
 
 	public ResponseSpawn() {
 	}
@@ -26,7 +26,7 @@ public class ResponseSpawn : NetworkResponse {
 		pID = DataReader.ReadInt(dataStream);
 		x = DataReader.ReadInt(dataStream);
 		y = DataReader.ReadInt(dataStream);
-		unitName = DataReader.ReadString(dataStream);
+		cardID = DataReader.ReadInt(dataStream);
 	}
 
 	public override ExtendedEventArgs process() {
@@ -34,7 +34,7 @@ public class ResponseSpawn : NetworkResponse {
 			pID = pID,
 			x = x,
 			y = y,
-			unitName = unitName
+			cardID = cardID
 		};
 		return args;
 	}

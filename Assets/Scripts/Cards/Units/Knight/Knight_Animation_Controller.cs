@@ -58,7 +58,7 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnimator
         if (!_animator.GetBool("Moving")) {
             return;
         }
-        Debug.Log("Starting Idle animation");
+        // Debug.Log("Starting Idle animation");
         _animator.SetBool("Moving", false);
        
     }
@@ -68,7 +68,7 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnimator
         if (_animator.GetBool("Moving")) {
             return;
         }
-        Debug.Log("Starting run animation");
+        // Debug.Log("Starting run animation");
         _animator.SetBool("Moving", true);
         if(runSound == null) {
             return;

@@ -97,17 +97,17 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
   private void attack(Unit attacker, Unit defender) {
     if (Game.networking){
-      Debug.Log("attacker id: " + Array.IndexOf(Game.players, attacker.Owner));
-      Debug.Log("defender id: " + Array.IndexOf(Game.players, defender.Owner));
+      // Debug.Log("attacker id: " + Array.IndexOf(Game.players, attacker.Owner));
+      // Debug.Log("defender id: " + Array.IndexOf(Game.players, defender.Owner));
       networkManager.SendAttackRequest(Array.IndexOf(Game.players, attacker.Owner), 
       attacker.Owner.Units.IndexOf(attacker), Array.IndexOf(Game.players, defender.Owner),
       defender.Owner.Units.IndexOf(defender));
-      Debug.Log("Sent AttackRequest");
+      // Debug.Log("Sent AttackRequest");
     }else {
-      Debug.Log("Client side attack");
+      // Debug.Log("Client side attack");
       attacker.Attack(defender);
-      Debug.Log("attacker id: " + Array.IndexOf(Game.players, attacker.Owner));
-      Debug.Log("defender id: " + Array.IndexOf(Game.players, defender.Owner));
+      // Debug.Log("attacker id: " + Array.IndexOf(Game.players, attacker.Owner));
+      // Debug.Log("defender id: " + Array.IndexOf(Game.players, defender.Owner));
       }
       close();
   }
@@ -117,6 +117,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
     // List<Hex> path = AStartPathfinding.AStartPath(selectedUnit, selectedUnit.Location, targetHexGO.hex);
     // StartCoroutine(MoveOneHexAtATime(selectedUnit, path ));
         if (Game.networking) {
+            Debug.Log("ConstructControls: Sending MoveRequest");
             networkManager.SendMoveRequest(Game.GetCurrentPlayer().Units.IndexOf(selectedUnit),
             targetHexGO.hex.row, targetHexGO.hex.column);
         }
@@ -155,33 +156,34 @@ public class ConstructControls : MonoBehaviour, IMouseController
     }
 
 
+  //TODO conditionals only let avatar move
   public void OnResponseMove(ExtendedEventArgs eventArgs) {
     Debug.Log("OnResponseMove: begin");
-	ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
-	if (args.user_id == Constants.OP_ID) {
-	  Unit unit = (Unit) Game.GetCurrentPlayer().Units[args.piece_idx];
-      unit.Move(Game.map.GetHex(args.x, args.y));
-	}
-	else if (args.user_id == Constants.USER_ID) {
-    Game.GetCurrentPlayer().Avatar.Move(Game.map.GetHex(args.x, args.y));
-
-	}
-	else {
-		Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
-	}
+	  ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
+	  if (args.user_id == Constants.OP_ID) {
+	    Unit unit = (Unit) Game.GetCurrentPlayer().Units[args.piece_idx];
+        unit.Move(Game.map.GetHex(args.x, args.y));
+	  }
+	  else if (args.user_id == Constants.USER_ID) {
+      Game.GetCurrentPlayer().Avatar.Move(Game.map.GetHex(args.x, args.y));
+  
+	  }
+	  else {
+	  	Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
+	  }
   }
 
   public void OnResponseAttack(ExtendedEventArgs eventArgs){
-  Debug.Log("Received attack callback");
-	ResponseAttackEventArgs args = eventArgs as ResponseAttackEventArgs;
-  Debug.Log("args.attPid: " + args.attPid);
-  Debug.Log("args.defPid: " + args.defPid);
-  Debug.Log("args.attUid: " + args.attUid);
-  Debug.Log("args.defUid: " + args.defUid);
+    Debug.Log("Received attack callback");
+  	ResponseAttackEventArgs args = eventArgs as ResponseAttackEventArgs;
+    Debug.Log("args.attPid: " + args.attPid);
+    Debug.Log("args.defPid: " + args.defPid);
+    Debug.Log("args.attUid: " + args.attUid);
+    Debug.Log("args.defUid: " + args.defUid);
     Player attacking = (Player) Game.players[args.attPid];
     Player defending = (Player) Game.players[args.defPid];
-    Unit  attacker = (Unit) attacking.Units[args.attUid];
-    Unit  defender = (Unit) defending.Units[args.defUid];
+    Unit attacker = (Unit) attacking.Units[args.attUid];
+    Unit defender = (Unit) defending.Units[args.defUid];
     attacker.Attack(defender);
   }
 }

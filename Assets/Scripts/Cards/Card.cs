@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Card {
+  private static int cardID = 0;
+  public static Dictionary<int, Card> cardDict = new Dictionary<int, Card>();
+  public int ID;
   public Charge Cost;
   public string Name;
   public string Rules;
@@ -19,11 +22,14 @@ public abstract class Card {
 
   public Card(Player Owner) {
     this.Owner = Owner;
-    Cost = new Charge();
-    Pieces = new List<GameObject>();
-    Tapped = false;
-    ETBs = new List<Effect>();
-    currentZone = CardZone.Types.Deck;
+    this.Cost = new Charge();
+    this.Pieces = new List<GameObject>();
+    this.Tapped = false;
+    this.ETBs = new List<Effect>();
+    this.currentZone = CardZone.Types.Deck;
+    cardID++;
+    cardDict[cardID] = this;
+    this.ID = cardID;
   }
 
   public enum Type { CHARGE, UNIT, ARTIFACT, SPELL  }

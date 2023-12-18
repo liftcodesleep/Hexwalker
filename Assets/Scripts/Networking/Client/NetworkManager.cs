@@ -65,7 +65,7 @@ public class NetworkManager : MonoBehaviour
 	}
 
 	public bool SendMoveRequest(int pieceIndex, int x, int y) {
-		Debug.Log("Sending Move Request.\n");
+		Debug.Log("Sending Move Request.");
 		if (cManager && cManager.IsConnected()) {
 			RequestMove request = new RequestMove();
 			request.send(pieceIndex, x, y);
@@ -75,10 +75,11 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-    public bool SendSpawnRequest(int pID, int x, int y, string unitName){
+    public bool SendSpawnRequest(int pID, int x, int y, int cardID){
+			Debug.Log("Sending Spawn Request.");
       if(cManager && cManager.IsConnected()){
         RequestSpawn request = new RequestSpawn();
-        request.send(pID, x, y , unitName);
+        request.send(pID, x, y , cardID);
         cManager.send(request);
         return true;
       }
@@ -86,6 +87,7 @@ public class NetworkManager : MonoBehaviour
     }
 
 	public bool SendAttackRequest(int attPid, int attUid, int defPid, int defUid) {
+		Debug.Log("Sending Attack Request.");
 		if (cManager && cManager.IsConnected()) {
 			RequestAttack request = new RequestAttack();
 			request.send(attPid, attUid, defPid, defUid);
