@@ -70,4 +70,4 @@ MonoBehaviour:
   - name: IAMNEW
     prefab: {fileID: 2518381961790850285, guid: f80f3065274b0614cb46deed056a2e60, type: 3}
   - name: Migo
-    prefab: {fileID: 3970697337432781781, guid: ba819cb4652435a0aa53d9152fdbfeaf, type: 3}
+    prefab: {fileID: 6518293428844311935, guid: 4ac70a3f3eb565837af90f004945825e, type: 3}
