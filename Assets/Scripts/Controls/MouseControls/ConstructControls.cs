@@ -139,7 +139,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
         //Game.map.HighlightHexes(new List<Hex>());
         Game.map.UpdateVisible();
-        Game.map.SelectHexs(hexesToHighlight);
+        Game.map.SelectHexes(hexesToHighlight);
   }
 
   private void UnhighlightHexes() {

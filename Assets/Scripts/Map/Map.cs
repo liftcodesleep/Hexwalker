@@ -25,54 +25,48 @@ public struct TileDictionary {
 
 
 public class Map : MonoBehaviour {
-    private Hex[,] _hexes;
-    private Dictionary<Hex, GameObject> _hexToGameObject;
-    [SerializeField]
-    private GameObject ocean;
-    [SerializeField]
-    private TileDictionary[] tileDictionary;
-    [SerializeField]
-    UnitDatabase data;
-    [SerializeField]
-    private GameObject _filter;
-    [SerializeField]
-    private UnitDatabase AllPreFabs;
-    [SerializeField]
-    public TalkingText TalkingDialog;
-    public int seed;
-    public int columns;
-    public int rows;
-    public enum HexType {Water, Flat, Forest, High }
-    public static readonly int WaterStartElevation = 20;
-    private List<HexComponent> _playableHexs;
-    private List<GameObject> highlightedHexes;
-    //private GameObject oceanHex;
-    public Level CurrentLevel;
-    public enum Direction { Left, Right, UpLeft, UpRight, DownLeft, DownRight }
+  private Hex[,] _hexes;
+  private Dictionary<Hex, GameObject> _hexToGameObject;
+  [SerializeField] private GameObject ocean;
+  [SerializeField] private TileDictionary[] tileDictionary;
+  [SerializeField] UnitDatabase data;
+  [SerializeField] private GameObject _filter;
+  [SerializeField] private UnitDatabase AllPreFabs;
+  [SerializeField] public TalkingText TalkingDialog;
+  public int seed;
+  public int rows;
+  public int columns;
+  public enum HexType { Water, Flat, Forest, High }
+  public static readonly int WaterStartElevation = 20;
+  private List<HexComponent> _playableHexes;
+  private List<GameObject> highlightedHexes;
+  public Level CurrentLevel;
+  public enum Direction { Left, Right, UpLeft, UpRight, DownLeft, DownRight }
+  private NetworkManager networkManager;
 
     private void Start() {
-        Game.map = this;
-        while (transform.childCount > 0) {
-            DestroyImmediate(transform.GetChild(0).gameObject);
-        }
-        this.rows = 28;
-        this.columns = 36;
-        GenerateMap();
-        seed = Random.Range(0, 1000);
-        //foreach(Player player in Game.players)
-        //{
-        //    player.placeAvatar();
-        //}
-        CurrentLevel = new LevelOne();
-        CurrentLevel.StartLevel();
-        _filter = Game.GetFilter();
-        _playableHexs = new List<HexComponent>();
-        UpdateVisible();
+    Game.map = this;
+    this.rows = 26;
+    this.columns = 38;
+    while (transform.childCount > 0) {
+      DestroyImmediate(transform.GetChild(0).gameObject);
+    }
+    GenerateMap();
+    seed = Random.Range(0, 1000);
+    CurrentLevel = new LevelOne();
+    CurrentLevel.StartLevel();
+    _filter = Game.GetFilter();
+    _playableHexes = new List<HexComponent>();
+    UpdateVisible();
+    networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
+    MessageQueue msgQueue = networkManager.GetComponent<MessageQueue>();
+    msgQueue.AddCallback(Constants.SMSG_SPAWN, OnResponseSpawn);
+
     }
 
     private void Update() {
-        CurrentLevel.UpdateLevel();
-    }
+    CurrentLevel.UpdateLevel();
+  }
 
     public void PlaceItem(Construct item, Hex location) {
         GameObject itemPreFab = data.GetPrefab(item.Name);
@@ -229,34 +223,38 @@ public class Map : MonoBehaviour {
         return _hexToGameObject[hex];
     }
 
-
-    public void UpdateVisible() {
-        UnhighlightHexes();
-        //Debug.Log("Updating visable rage");
-        List<Hex> visibleHexes = new List<Hex>();
-        foreach (Construct unit in Game.players[0].Units) {
-            foreach (Hex hex in Game.map.GetHexList()) {
-                if (hex.DistanceFrom(unit.Location) < 4) {
-                    //Debug.Log("dafd");
-                    visibleHexes.Add(hex);
-                }
-            }
+  public void UpdateVisible() {
+    UnhighlightHexes();
+    Debug.Log("Updating visible range");
+    List<Hex> visibleHexes = new List<Hex>();
+    foreach (Construct unit in Game.players[0].Units) {
+      foreach (Hex hex in Game.map.GetHexList()) {
+        if (hex.DistanceFrom(unit.Location) < 4) {
+          visibleHexes.Add(hex);
         }
-        Game.map.HighlightHexes(visibleHexes);
-        //_filter.GetComponent<Renderer>().material.color = Color.black;
+      }
     }
+    Game.map.HighlightHexes(visibleHexes);
+  }
 
-
-    public  void SelectHexs(List<Hex> hexs){
+    public void SelectHexes(List<Hex> hexs) {
         _filter.SetActive(true);
-        foreach (Hex hex in hexs){
+        foreach (Hex hex in hexs) {
             hex.selected = true;
         }
     }
 
     public void DeselectHexes() {
-        foreach(Hex hex in Game.map.GetHexList()) {
+        foreach (Hex hex in Game.map.GetHexList()) {
             hex.selected = false;
         }
     }
+
+    public void OnResponseSpawn(ExtendedEventArgs eventArgs) {
+      ResponseSpawnEventArgs args = eventArgs as ResponseSpawnEventArgs;
+      Player summoner = (Player)Game.players[args.pID];
+      Hex hex = GetHex(args.x, args.y);
+      Unit summon = typeof(args.unitName);
+      PlaceItem(summon, hex);
+  }
 }

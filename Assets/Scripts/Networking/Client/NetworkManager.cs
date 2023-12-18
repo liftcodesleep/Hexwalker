@@ -75,15 +75,15 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-  // public bool SendSpawnRequest(int unitID, int x, int y, int playerID){
-  //   if(cManager && cManager.IsConnected()){
-  //     RequestSpawn request = new RequestSpawn();
-  //     request.send(unitID, x, y , playerID);
-  //     cManager.send(request);
-  //     return true;
-  //   }
-  //   return false;
-  // }
+    public bool SendSpawnRequest(int pID, int x, int y, string unitName){
+      if(cManager && cManager.IsConnected()){
+        RequestSpawn request = new RequestSpawn();
+        request.send(pID, x, y , unitName);
+        cManager.send(request);
+        return true;
+      }
+      return false;
+    }
 
 	public bool SendAttackRequest(int attPid, int attUid, int defPid, int defUid) {
 		if (cManager && cManager.IsConnected()) {

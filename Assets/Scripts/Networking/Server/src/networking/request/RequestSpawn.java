@@ -8,7 +8,9 @@ import networking.response.ResponseSpawn;
 import utility.DataReader;
 
 public class RequestSpawn extends GameRequest {
-  private int unitID, x, y;
+    private int pID, x, y;
+    private String unitName;
+
   // Responses
   private ResponseSpawn responseSpawn;
 
@@ -18,16 +20,17 @@ public class RequestSpawn extends GameRequest {
 
   @Override
   public void parse() throws IOException {
-    unitID = DataReader.readInt(dataInput);
+    pID = DataReader.readInt(dataInput);
     x = DataReader.readInt(dataInput);
     y = DataReader.readInt(dataInput);
+    unitName = DataReader.readString(dataInput);
   }
 
   @Override
   public void doBusiness() throws Exception {
     Player player = client.getPlayer();
     responseSpawn.setPlayerID(player);
-    responseSpawn.setData(unitID, x, y);
+    responseSpawn.setData(pID, x, y, unitName);
     NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseSpawn);
   }
 }
