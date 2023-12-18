@@ -51,3 +51,7 @@ MonoBehaviour:
     Image: {fileID: 21300000, guid: b082b777b9b155346981b0211c2e5cd3, type: 3}
   - Name: GiantGrowth
     Image: {fileID: 21300000, guid: 9caae7ff142984946946f599b2e3c142, type: 3}
+  - Name: Migo
+    Image: {fileID: 21300000, guid: 2786d67b5357a7c41833bc0324cf3cd7, type: 3}
+  - Name: AncestralRecall
+    Image: {fileID: 21300000, guid: 9c9c0e4995de31a419512628aaccb385, type: 3}

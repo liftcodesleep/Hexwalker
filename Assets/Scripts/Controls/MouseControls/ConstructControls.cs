@@ -32,6 +32,7 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
   public void LeftClicked(GameObject clickObject) {
     //Debug.Log("CC LC");
+    Game.map.DeselectHexes();
     selectedToMoveGO = clickObject.GetComponent<UnitComponent>();
     if(!selectedToMoveGO) {
       //Debug.Log("Construct Controls: Not unit clicked");
@@ -138,9 +139,9 @@ public class ConstructControls : MonoBehaviour, IMouseController
     }
     hexesToHighlight.Add(selectedUnit.Location);
 
-        //Game.map.HighlightHexes(new List<Hex>());
-        Game.map.UpdateVisible();
-        Game.map.SelectHexes(hexesToHighlight);
+    //Game.map.HighlightHexes(new List<Hex>());
+    Game.map.UpdateVisible();
+    Game.map.SelectHexes(hexesToHighlight);
   }
 
   private void UnhighlightHexes() {

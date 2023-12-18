@@ -32,6 +32,10 @@ public class HexOutLiner : MonoBehaviour
     // Update is called once per frame
     void Update() {
 
+        if (hex == null)
+        {
+            return;
+        }
         
         if(hex.selected && this.offset >=0 ) {
             HilightedObject.SetActive(true);

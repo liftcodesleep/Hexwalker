@@ -150,23 +150,34 @@ public class PlayCard : MonoBehaviour, IMouseController {
   private void HighlightHexes() {
     GameObject hexMap = Game.GetHexMapGo();
     _filter.SetActive(true);
-    HexComponent hexGO;
-    foreach ( Transform currentHex in hexMap.transform) {
-      hexGO = currentHex.gameObject.GetComponent<HexComponent>();
-      if (cardGO.card.IsPlayableHex(hexGO.hex)) {
-        hexGO.gameObject.layer = 6;
-        _playableHexes.Add(hexGO);
-        foreach (Transform subItem in hexGO.transform) {
-          subItem.gameObject.layer = 6;
+    //HexComponent hexGO;
+    //foreach ( Transform currentHex in hexMap.transform) {
+    //  hexGO = currentHex.gameObject.GetComponent<HexComponent>();
+    //  if (cardGO.card.IsPlayableHex(hexGO.hex)) {
+    //    hexGO.gameObject.layer = 6;
+    //    _playableHexes.Add(hexGO);
+    //    foreach (Transform subItem in hexGO.transform) {
+    //      subItem.gameObject.layer = 6;
+    //    }
+    //  }
+    //  else {
+    //    foreach (Transform subItem in hexGO.transform) {
+    //      subItem.gameObject.layer = 0;
+    //    }
+    //  }
+    //}
+    List<Hex> hexList = new List<Hex>();
+    foreach(Hex currentHex in Game.map.GetHexList())
+        {
+            if(cardGO.card.IsPlayableHex(currentHex))
+            {
+                hexList.Add(currentHex);
+            }
         }
-      }
-      else {
-        foreach (Transform subItem in hexGO.transform) {
-          subItem.gameObject.layer = 0;
-        }
-      }
+        Game.map.UpdateVisible();
+        Game.map.SelectHexes(hexList);
+
     }
-  }
   
     public static void ResolveCard(Card card, Hex hex) {
         UnitDatabase data = GameObject.Find("UnitSpellsDataBase").GetComponent<UnitDatabase>();
@@ -201,7 +212,9 @@ public class PlayCard : MonoBehaviour, IMouseController {
 
   private void UnhighlightHexes() {
     Game.map.UpdateVisible();
-  }
+       
+        Game.map.DeselectHexes();
+    }
   
   public MasterMouse.Task GetTask() {
     return MasterMouse.Task.PlayCard;
