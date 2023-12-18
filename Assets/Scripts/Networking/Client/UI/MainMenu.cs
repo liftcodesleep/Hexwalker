@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
 	private GameObject rootMenuPanel;
 	private GameObject hotseatMenuPanel;
 	private GameObject networkMenuPanel;
+    private GameObject settingsMenuPanel;
+	
 
-	private GameObject messageBox;
+    private GameObject messageBox;
 	private TMPro.TextMeshProUGUI messageBoxMsg;
 
 	private TMPro.TextMeshProUGUI player1Name;
@@ -37,7 +40,10 @@ public class MainMenu : MonoBehaviour
 		rootMenuPanel = GameObject.Find("Root Menu");
 		hotseatMenuPanel = GameObject.Find("Hotseat Menu");
 		networkMenuPanel = GameObject.Find("Network Menu");
-		messageBox = GameObject.Find("Message Box");
+        settingsMenuPanel = GameObject.Find("Settings Menu");
+		
+
+        messageBox = GameObject.Find("Message Box");
 		messageBoxMsg = messageBox.transform.Find("Message").gameObject.GetComponent<TMPro.TextMeshProUGUI>();
 		player1Name = GameObject.Find("Player1Name").GetComponent<TMPro.TextMeshProUGUI>();
 		player2Name = GameObject.Find("Player2Name").GetComponent<TMPro.TextMeshProUGUI>();
@@ -52,7 +58,8 @@ public class MainMenu : MonoBehaviour
 		rootMenuPanel.SetActive(true);
 		hotseatMenuPanel.SetActive(false);
 		networkMenuPanel.SetActive(false);
-		messageBox.SetActive(false);
+        settingsMenuPanel.SetActive(false);
+        messageBox.SetActive(false);
 	}
 
 	#region RootMenu
@@ -225,7 +232,18 @@ public class MainMenu : MonoBehaviour
 		messageBox.SetActive(false);
 	}
 
-	private void StartHotseatGame() {
+	public void SettingsMenuClicked()
+	{
+		rootMenuPanel.SetActive(false);
+		settingsMenuPanel.SetActive(true);
+	}
+    public void SettingsMenuReturn()
+    {
+        rootMenuPanel.SetActive(true);
+        settingsMenuPanel.SetActive(false);
+    }
+
+    private void StartHotseatGame() {
 		Game gameManager = GameObject.Find("Game Manager").GetComponent<Game>();
 		string p1Name = GameObject.Find("HotPlayer1Name").GetComponent<TMPro.TextMeshProUGUI>().text;
 		if (p1Name.Length == 1) {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class KeyControls : MonoBehaviour
 {
     private Vector3 oldPosition;
-    int speed = 100;
+    public static float speed = 100;
     [SerializeField] GameObject HexMap;
     [SerializeField] Camera otherCamera;
     private Vector3 lastMousePosition;
@@ -15,7 +15,7 @@ public class KeyControls : MonoBehaviour
     private bool isShifting;
     private Vector3 shiftingTarget;
     private Vector3 shiftingTargetz;
-    private float shiftingSpeed = 3f;
+    public static float shiftingSpeed = 3f;
     public float zoomSpeed = 10;
     public float minZoom = 10.0f;
     public float maxZoom = 100.0f;
@@ -90,6 +90,8 @@ public class KeyControls : MonoBehaviour
     }
 
     private void ShiftCamera() {
+
+        Debug.Log(KeyControls.shiftingSpeed);
         Vector3 newPosition = Vector3.Lerp(Camera.main.transform.position, shiftingTarget, shiftingSpeed * Time.deltaTime);
         transform.position = newPosition;
 
