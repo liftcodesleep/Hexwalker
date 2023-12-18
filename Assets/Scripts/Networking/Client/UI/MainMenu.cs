@@ -239,6 +239,7 @@ public class MainMenu : MonoBehaviour
 		// Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), true);
 		// gameManager.Init(player1, player2);
 		SceneManager.LoadScene("TutorialScene 1");
+		SceneManager.UnloadSceneAsync("MainMenu");
 	}
 
 	private void StartNetworkGame() {
@@ -253,5 +254,6 @@ public class MainMenu : MonoBehaviour
 		// Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), Constants.USER_ID == 2);
 		// gameManager.Init(player1, player2);
 		SceneManager.LoadScene("TutorialScene 1");
+		SceneManager.UnloadSceneAsync("MainMenu");
 	}
 }
