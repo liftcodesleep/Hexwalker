@@ -240,7 +240,6 @@ public class MainMenu : MonoBehaviour
 		// gameManager.Init(player1, player2);
 		Game.networking = false;
 		SceneManager.LoadScene("TutorialScene 1");
-		SceneManager.UnloadSceneAsync("MainMenu");
 	}
 
 	private void StartNetworkGame() {
@@ -256,6 +255,5 @@ public class MainMenu : MonoBehaviour
 		// gameManager.Init(player1, player2);
 		Game.networking = true;
 		SceneManager.LoadScene("TutorialScene 1");
-		SceneManager.UnloadSceneAsync("MainMenu");
 	}
 }

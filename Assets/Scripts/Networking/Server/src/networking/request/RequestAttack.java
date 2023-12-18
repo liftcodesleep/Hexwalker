@@ -10,7 +10,7 @@ import utility.DataReader;
 import core.NetworkManager;
 
 public class RequestAttack extends GameRequest {
-    private int pieceIndex, targetIndex;
+    private int attPid, defPid, attUid, defUid;
     // Responses
     private ResponseAttack responseAttack;
 
@@ -20,15 +20,17 @@ public class RequestAttack extends GameRequest {
 
     @Override
     public void parse() throws IOException {
-        pieceIndex = DataReader.readInt(dataInput);
-        targetIndex = DataReader.readInt(dataInput);
+        attPid = DataReader.readInt(dataInput);
+        defPid = DataReader.readInt(dataInput);
+        attUid = DataReader.readInt(dataInput);
+        defUid = DataReader.readInt(dataInput);
     }
 
     @Override
     public void doBusiness() throws Exception {
         Player player = client.getPlayer();
         responseAttack.setPlayer(player);
-        responseAttack.setData(pieceIndex, targetIndex);
+        responseAttack.setData(attPid, defPid, attUid, defUid);
         NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseAttack);
     }
 }

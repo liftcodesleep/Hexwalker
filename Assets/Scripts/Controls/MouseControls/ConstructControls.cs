@@ -97,6 +97,8 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
   private void attack(Unit attacker, Unit defender) {
     if (Game.networking){
+      Debug.Log("attacker id: " + Array.IndexOf(Game.players, attacker.Owner));
+      Debug.Log("defender id: " + Array.IndexOf(Game.players, defender.Owner));
       networkManager.SendAttackRequest(Array.IndexOf(Game.players, attacker.Owner), 
       attacker.Owner.Units.IndexOf(attacker), Array.IndexOf(Game.players, defender.Owner),
       defender.Owner.Units.IndexOf(defender));
@@ -104,8 +106,8 @@ public class ConstructControls : MonoBehaviour, IMouseController
     }else {
       Debug.Log("Client side attack");
       attacker.Attack(defender);
-      Debug.Log(Array.IndexOf(Game.players, attacker.Owner));
-      Debug.Log(Array.IndexOf(Game.players, defender.Owner));
+      Debug.Log("attacker id: " + Array.IndexOf(Game.players, attacker.Owner));
+      Debug.Log("defender id: " + Array.IndexOf(Game.players, defender.Owner));
       }
       close();
   }
@@ -172,6 +174,10 @@ public class ConstructControls : MonoBehaviour, IMouseController
   public void OnResponseAttack(ExtendedEventArgs eventArgs){
   Debug.Log("Received attack callback");
 	ResponseAttackEventArgs args = eventArgs as ResponseAttackEventArgs;
+  Debug.Log("args.attPid: " + args.attPid);
+  Debug.Log("args.defPid: " + args.defPid);
+  Debug.Log("args.attUid: " + args.attUid);
+  Debug.Log("args.defUid: " + args.defUid);
     Player attacking = (Player) Game.players[args.attPid];
     Player defending = (Player) Game.players[args.defPid];
     Unit  attacker = (Unit) attacking.Units[args.attUid];

@@ -81,16 +81,12 @@ public class Map : MonoBehaviour {
         item.Location = location;
         location.Constructs.Add(item);
         item.Owner.Units.Add(item);
-
         //unitGO.transform.rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
         unitGO.transform.rotation = Quaternion.Euler(0, 180, 0);
-
-        if (item.Owner == Game.players[0])
-        {
+        if (item.Owner == Game.players[0]) {
             //GameObject playereffect = data.GetPrefab("PlayerAura");
             //Instantiate(playereffect, unitGO.transform.position, Quaternion.identity, unitGO.transform);
         }
-
         item.Pieces.Add(unitGO);
         UpdateVisible();
         //item.Owner.Units.Add(item);

@@ -12,8 +12,7 @@ import utility.Log;
  */
 public class ResponseAttack extends GameResponse {
     private Player player;
-    private int targetIndex;
-    private int index;
+    private int attPid, defPid, attUid, defUid;
 
     public ResponseAttack() {
         responseCode = Constants.SMSG_ATTACK;
@@ -22,12 +21,13 @@ public class ResponseAttack extends GameResponse {
     @Override
     public byte[] constructResponseInBytes() {
         GamePacket packet = new GamePacket(responseCode);
-        packet.addInt32(player.getID());
-        packet.addInt32(index);
-        packet.addInt32(targetIndex);
+        packet.addInt32(attPid);
+        packet.addInt32(defPid);
+        packet.addInt32(attUid);
+        packet.addInt32(defUid);
 
-        Log.printf("Player with id %d has had a piece at index %d attack another player's piece at index %d.",
-                player.getID(), index, targetIndex);
+        Log.printf("Player with id %d has had a piece at id %d attack another player's piece at id %d.",
+                player.getID(), attUid, defUid);
 
         return packet.getBytes();
     }
@@ -36,8 +36,10 @@ public class ResponseAttack extends GameResponse {
         this.player = player;
     }
 
-    public void setData(int index, int targetIndex) {
-        this.index = index;
-        this.targetIndex = targetIndex;
+    public void setData(int attPid, int defPid, int attUid, int defUid) {
+        this.attPid = attPid;
+        this.defPid = defPid;
+        this.attUid = attUid;
+        this.defUid = defUid;
     }
 }
