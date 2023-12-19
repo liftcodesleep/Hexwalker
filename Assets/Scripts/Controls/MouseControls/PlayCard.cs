@@ -135,6 +135,12 @@ public class PlayCard : MonoBehaviour, IMouseController {
         unitGOComp.unit = (Unit)card;
         unitGOComp.unit.Location = hex;
         card.Owner.Units.Add((Construct)card);
+
+        if(card.type == Card.Type.UNIT)
+            {
+                hex.Constructs.Add((Unit)card);
+            }
+        
       }
       if (card.type == Card.Type.CHARGE) {
         //this.transform.localRotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
