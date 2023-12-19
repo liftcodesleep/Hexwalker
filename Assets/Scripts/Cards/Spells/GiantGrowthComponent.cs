@@ -7,18 +7,23 @@ public class GiantGrowthComponent : MonoBehaviour {
   int startTurn;
   Vector3 originalSize;
   float growth_scale = 1.5f;
+
+    [SerializeField]
+    GameObject effect;
   // Start is called before the first frame update
   void Start() {
     unit = this.transform.parent.GetComponentInChildren<UnitComponent>();
     startTurn = Game.turnCount;
     this.originalSize = unit.transform.localScale;
     StartCoroutine(Grow());
+    this.transform.parent = unit.transform;
     //unit.transform.localScale *= 2;
   }
   // Update is called once per frame
   void Update() {
     if(startTurn != Game.turnCount) {
       unit.transform.localScale = originalSize;
+      Destroy(effect);
       Destroy(this);
     }
   }
