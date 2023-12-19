@@ -35,6 +35,8 @@ public class MainMenu : MonoBehaviour
 	private bool ready = false;
 	private bool opReady = false;
 
+	private bool first = true;
+
     // Start is called before the first frame update
     void Start() {
 		rootMenuPanel = GameObject.Find("Root Menu");
@@ -60,10 +62,14 @@ public class MainMenu : MonoBehaviour
 		networkMenuPanel.SetActive(false);
         settingsMenuPanel.SetActive(false);
         messageBox.SetActive(false);
-	}
+		first = false;
 
-	#region RootMenu
-	public void OnHotseatClick() {
+    }
+
+
+
+    #region RootMenu
+    public void OnHotseatClick() {
 		rootMenuPanel.SetActive(false);
 		hotseatMenuPanel.SetActive(true);
 	}
@@ -286,4 +292,6 @@ public class MainMenu : MonoBehaviour
 		Game.networking = true;
 		SceneManager.LoadScene("TutorialScene 1");
 	}
+
+	
 }

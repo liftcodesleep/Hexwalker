@@ -16,9 +16,11 @@ public class KeyControls : MonoBehaviour
     private Vector3 shiftingTarget;
     private Vector3 shiftingTargetz;
     public static float shiftingSpeed = 3f;
-    public float zoomSpeed = 10;
+    public static float zoomSpeed = 10;
     public float minZoom = 10.0f;
     public float maxZoom = 100.0f;
+
+    [SerializeField] GameObject ExcapeMenu;
 
     void Start() {
         oldPosition = this.transform.position;
@@ -40,6 +42,10 @@ public class KeyControls : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             TogglePauseStack();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Escape)){
+            ExcapeMenu.SetActive(!ExcapeMenu.active);
         }
 
     }
