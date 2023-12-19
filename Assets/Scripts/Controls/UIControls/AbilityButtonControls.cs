@@ -32,9 +32,9 @@ public class AbilityButtonControls : MonoBehaviour, IMouseController
         }
 
 
-        //_abilityEffect.ImmediateEffect();
+        _abilityEffect.ImmediateEffect();
 
-        Effect.PutOnStack(_abilityEffect);
+        //Effect.PutOnStack(_abilityEffect);
 
         MasterMouse.taskOwner.close();
         MasterMouse.SetTask(MasterMouse.Task.StandBy, null);

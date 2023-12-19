@@ -122,8 +122,10 @@ public class ConstructControls : MonoBehaviour, IMouseController
             networkManager.SendMoveRequest(Game.GetCurrentPlayer().Units.IndexOf(selectedUnit),
             targetHexGO.hex.row, targetHexGO.hex.column);
         }
-        else { 
-            this.selectedUnit.Move(targetHexGO.hex); 
+        else {
+            List<Hex> path = AStartPathfinding.AStartPath(selectedUnit, selectedUnit.Location, targetHexGO.hex);
+            StartCoroutine(MoveOneHexAtATime(selectedUnit, path ));
+            //this.selectedUnit.Move(targetHexGO.hex); 
         }
     close();
   }
@@ -133,10 +135,24 @@ public class ConstructControls : MonoBehaviour, IMouseController
     List<Hex> hexes = Game.map.GetHexList();
     List<Hex> hexesToHighlight = new List<Hex>();
     foreach(Hex hex in hexes) {
-      if(selectedUnit.Location.DistanceFrom(hex) <= selectedUnit.ActionPoints && selectedUnit.ValidMove(hex)) {
-        hexesToHighlight.Add(hex);
-      }
-    }
+
+
+            //if(selectedUnit.Location.DistanceFrom(hex) <= selectedUnit.ActionPoints && selectedUnit.ValidMove(hex)) {
+            //  hexesToHighlight.Add(hex);
+            //}
+            if (selectedUnit.Location.DistanceFrom(hex)-2 > selectedUnit.ActionPoints || !selectedUnit.ValidMove(hex))
+            {
+                continue;
+            }
+
+                List<Hex> path = AStartPathfinding.AStartPath(selectedUnit, selectedUnit.Location, hex);
+            Debug.Log("Distance is" + path.Count);
+
+            if (path.Count <= selectedUnit.ActionPoints+1) {
+            hexesToHighlight.Add(hex);
+            }
+
+        }
     hexesToHighlight.Add(selectedUnit.Location);
 
     //Game.map.HighlightHexes(new List<Hex>());
@@ -159,14 +175,18 @@ public class ConstructControls : MonoBehaviour, IMouseController
 
   //TODO conditionals only let avatar move
   public void OnResponseMove(ExtendedEventArgs eventArgs) {
-    Debug.Log("OnResponseMove: begin");
-	  ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
-    Unit unit = (Unit) Game.GetCurrentPlayer().Units[args.piece_idx];
-    unit.Move(Game.map.GetHex(args.x, args.y));
-	  }
+        Debug.Log("OnResponseMove: begin");
+	    ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
+        Unit unit = (Unit) Game.GetCurrentPlayer().Units[args.piece_idx];
+        //unit.Move(Game.map.GetHex(args.x, args.y));
+
+        List<Hex> path = AStartPathfinding.AStartPath(unit, unit.Location, Game.map.GetHex(args.x, args.y));
+        StartCoroutine(MoveOneHexAtATime(unit, path ));
+
+    }
 
 
-  public void OnResponseAttack(ExtendedEventArgs eventArgs){
+    public void OnResponseAttack(ExtendedEventArgs eventArgs){
     Debug.Log("Received attack callback");
   	ResponseAttackEventArgs args = eventArgs as ResponseAttackEventArgs;
     Debug.Log("args.attPid: " + args.attPid);
