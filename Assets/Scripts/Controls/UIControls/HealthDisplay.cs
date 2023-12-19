@@ -16,11 +16,11 @@ public class HealthDisplay : MonoBehaviour
     void Update()
     {
 
-        if (Game.players[0].Avatar != null)
+        if (Game.players[Game.HumanPlayer].Avatar != null)
         {
 
             
-            m_TextMeshPro.text = Game.players[0].Avatar.Health.ToString();
+            m_TextMeshPro.text = Game.players[Game.HumanPlayer].Avatar.Health.ToString();
         }
         else
         {

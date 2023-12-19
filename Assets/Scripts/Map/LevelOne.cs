@@ -16,7 +16,7 @@ public class LevelOne : Level
         _stage = Stage.Starting;
         _levelUnits = new Dictionary<string, Construct>();
         _levelEffects = new Dictionary<string, GameObject>();
-        _levelUnits.Add("Player", Game.players[0].Avatar);
+        _levelUnits.Add("Player", Game.players[Game.HumanPlayer].Avatar);
         _levelUnits.Add("AI", Game.players[1].Avatar);
         _levelUnits.Add("Knight1", new Knight(Game.players[1]));
         _levelUnits.Add("Knight2", new Knight(Game.players[1]));
@@ -30,7 +30,7 @@ public class LevelOne : Level
 
     public override void StartLevel() {
         //PlaceStartingUnits();
-        Game.players[0].Draw(5);
+        Game.players[Game.HumanPlayer].Draw(5);
         Game.map.PlaceItem(_levelUnits["Player"], Game.map.GetHex(14, 10));
         //owner.Units.Add(this);
         Game.map.PlaceItem(_levelUnits["AI"], Game.map.GetHex(14, 11));
@@ -126,7 +126,7 @@ public class LevelOne : Level
     public override void UpdateLevel()
     {
         
-        if (_stage == Stage.Starting && Game.players[0].Avatar.Location == Game.map.GetHex(16, 8))
+        if (_stage == Stage.Starting && Game.players[Game.HumanPlayer].Avatar.Location == Game.map.GetHex(16, 8))
         {
             //Map.DestroyObject();
             _levelEffects["MoveMarker"].SetActive(false);
@@ -148,7 +148,7 @@ public class LevelOne : Level
 
         }
 
-        if (_stage == Stage.PlayedMana && Game.players[0].Pool.Essence > 0)
+        if (_stage == Stage.PlayedMana && Game.players[Game.HumanPlayer].Pool.Essence > 0)
         {
             _levelEffects["MoveMarker"].SetActive(false);
             
@@ -156,7 +156,7 @@ public class LevelOne : Level
             Game.map.TalkingDialog.NextLine();
         }
 
-        if (_stage == Stage.Tappedmana && Game.players[0].Units.Count > 3)
+        if (_stage == Stage.Tappedmana && Game.players[Game.HumanPlayer].Units.Count > 3)
         {
             _levelEffects["MoveMarker"].SetActive(false);
 
@@ -176,7 +176,7 @@ public class LevelOne : Level
         if (_stage == Stage.TryPlayingASpell)
         {
             bool found = false;
-            foreach(Card card in Game.players[0].Hand.Cards) 
+            foreach(Card card in Game.players[Game.HumanPlayer].Hand.Cards) 
             {
                 if (card.Name.Equals("GiantGrowth"))
                 {

@@ -42,7 +42,7 @@ public class CameraMovement : MonoBehaviour
         }
         
 
-        //target = Game.map.GetHexGO(Game.players[0].Avatar.Location).transform;
+        //target = Game.map.GetHexGO(Game.players[Game.HumanPlayer].Avatar.Location).transform;
 
         Vector3 targetPosition = new Vector3(target.position.x, target.position.y, target.position.z - 8);
 
@@ -106,7 +106,7 @@ public class CameraMovement : MonoBehaviour
             target.GetChild(target.childCount - 1).Find("HelperText").gameObject.SetActive(false);
         }
 
-        target = Game.map.GetHexGO(Game.players[0].Avatar.Location).transform;
+        target = Game.map.GetHexGO(Game.players[Game.HumanPlayer].Avatar.Location).transform;
 
         targetPosition = new Vector3(target.position.x, target.position.y, target.position.z - 5);
 

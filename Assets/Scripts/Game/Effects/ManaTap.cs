@@ -33,7 +33,7 @@ public class ManaTap : Effect
         Card.Tapped = true;
         this.Resolved = true;
 
-        Debug.Log("Added mana, Player mana now: " + Game.players[0].Pool.Holy );
+        Debug.Log("Added mana, Player mana now: " + Game.players[Game.HumanPlayer].Pool.Holy );
     }
 
     public override void TargetedEffect(Type typeTargeted)
