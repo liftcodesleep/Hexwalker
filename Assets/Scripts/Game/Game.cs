@@ -20,14 +20,15 @@ public class Game : MonoBehaviour {
   private NetworkManager networkManager;
 
   static Game() {
-    Player P1 = new Player();
-    Player P2 = new Player();
-    players = new Player[] {P1, P2};
-    P1.Name = "Player 1";
-    P2.Name = "Player 2";
-    P1.Deck = new TestDeck1(P1);
-    P2.Deck = new TutorialDeck(P2);
-    stack = new EffectStack();
+    //Player P1 = new Player();
+    //Player P2 = new Player();
+    //players = new Player[] {P1, P2};
+    //P1.Name = "Player 1";
+    //P2.Name = "Player 2";
+    //P1.Deck = new TutorialDeck(P1);
+    //P2.Deck = new TestDeck1(P2);
+    //
+    //stack = new EffectStack();
     //map.CurrentLevel.OnStartTurn(0);
   }
 

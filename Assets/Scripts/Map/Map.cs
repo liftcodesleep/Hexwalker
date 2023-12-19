@@ -37,6 +37,7 @@ public class Map : MonoBehaviour {
   private List<GameObject> highlightedHexes;
   public Level CurrentLevel;
   public enum Direction { Left, Right, UpLeft, UpRight, DownLeft, DownRight }
+  public static Level SetLevel;
 
     private void Start() {
         Game.map = this;
@@ -47,7 +48,15 @@ public class Map : MonoBehaviour {
         }
         GenerateMap();
         seed = Random.Range(0, 1000);
-        CurrentLevel = new TestLevel();
+        if(SetLevel == null)
+        {
+            CurrentLevel = new TestLevel();
+        }
+        else
+        {
+            CurrentLevel = SetLevel;
+        }
+        
         CurrentLevel.StartLevel();
         _filter = Game.GetFilter();
         _playableHexes = new List<HexComponent>();

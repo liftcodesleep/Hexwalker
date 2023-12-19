@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing;
 using static UnityEngine.UI.GridLayoutGroup;
 
@@ -13,6 +14,17 @@ public class LevelOne : Level
     private enum Stage { Starting, WalkedToFirst, PlayedMana, Tappedmana, PlayedUnit, AttackedUnit, TryPlayingASpell, PlayedSpell}
     private Stage _stage;
     public LevelOne() : base(1, "Tutorial", "Learn To play Hexwalker") {
+
+        Player P1 = new Player();
+        Player P2 = new AI();
+        Game.players = new Player[] { P1, P2 };
+        P1.Name = "Player 1";
+        P2.Name = "Player 2";
+        P1.Deck = new TutorialDeck(P1);
+        P2.Deck = new TestDeck1(P2);
+
+        Game.stack = new EffectStack();
+
         _stage = Stage.Starting;
         _levelUnits = new Dictionary<string, Construct>();
         _levelEffects = new Dictionary<string, GameObject>();

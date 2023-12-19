@@ -10,6 +10,17 @@ public class TestLevel : Level
     private Dictionary<string, Construct> _levelUnits;
     private Dictionary<string, GameObject> _levelEffects;
     public TestLevel() : base(1, "Test", "Demo") {
+
+        Player P1 = new Player();
+        Player P2 = new Player();
+        Game.players = new Player[] { P1, P2 };
+        P1.Name = "Player 1";
+        P2.Name = "Player 2";
+        P1.Deck = new TutorialDeck(P1);
+        P2.Deck = new TestDeck1(P2);
+
+        Game.stack = new EffectStack();
+
         _levelUnits = new Dictionary<string, Construct>();
         _levelEffects = new Dictionary<string, GameObject>();
         _levelUnits.Add("Player", Game.players[Game.GetHumanPlayer()].Avatar);
@@ -17,6 +28,9 @@ public class TestLevel : Level
     }
 
     public override void StartLevel() {
+
+
+
         Game.players[Game.GetHumanPlayer()].Draw(5);
         //Debug.Log("Player " + (Game.GetHumanPlayer() + 1) % 2 + " Drawing 5 cards");
         Game.players[(Game.GetHumanPlayer() + 1) % 2].Draw(5);

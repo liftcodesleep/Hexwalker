@@ -248,20 +248,23 @@ public class MainMenu : MonoBehaviour
 		string p1Name = GameObject.Find("HotPlayer1Name").GetComponent<TMPro.TextMeshProUGUI>().text;
 		if (p1Name.Length == 1) {
 			p1Name = "Player 1";
-			Debug.Log("Setting player to 0");
-			Game.SetHumanPlayer(0);
-		}
-		string p2Name = GameObject.Find("HotPlayer2Name").GetComponent<TMPro.TextMeshProUGUI>().text;
-		if (p2Name.Length == 1) {
-			p2Name = "Player 2";
-            //Debug.Log("Setting player to 1");
-            Game.SetHumanPlayer(1);
+			Debug.Log("Setting player to 1");
+			
         }
-		
-		// Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), true);
-		// Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), true);
-		// gameManager.Init(player1, player2);
-		Game.networking = false;
+        Game.SetHumanPlayer(0);
+        Map.SetLevel = new LevelOne();
+        //string p2Name = GameObject.Find("HotPlayer2Name").GetComponent<TMPro.TextMeshProUGUI>().text;
+        //if (p2Name.Length == 1) {
+        //	p2Name = "Player 2";
+        //    //Debug.Log("Setting player to 1");
+        //    Game.SetHumanPlayer(1);
+        //    Map.SetLevel = new LevelOne();
+        //}
+
+        // Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), true);
+        // Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), true);
+        // gameManager.Init(player1, player2);
+        Game.networking = false;
 		SceneManager.LoadScene("TutorialScene 1");
 	}
 
@@ -269,10 +272,14 @@ public class MainMenu : MonoBehaviour
 		Game gameManager = GameObject.Find("Game Manager").GetComponent<Game>();
 		if (p1Name.Length == 0) {
 			p1Name = "Player 1";
-		}
+            Game.SetHumanPlayer(0);
+            Map.SetLevel = new TestLevel();
+        }
 		if (p2Name.Length == 0) {
 			p2Name = "Player 2";
-		}
+            Game.SetHumanPlayer(1);
+            Map.SetLevel = new TestLevel();
+        }
 		// Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), Constants.USER_ID == 1);
 		// Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), Constants.USER_ID == 2);
 		// gameManager.Init(player1, player2);
