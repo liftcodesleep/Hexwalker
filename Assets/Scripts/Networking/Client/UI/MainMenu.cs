@@ -248,11 +248,16 @@ public class MainMenu : MonoBehaviour
 		string p1Name = GameObject.Find("HotPlayer1Name").GetComponent<TMPro.TextMeshProUGUI>().text;
 		if (p1Name.Length == 1) {
 			p1Name = "Player 1";
+			Debug.Log("Setting player to 0");
+			Game.SetHumanPlayer(0);
 		}
 		string p2Name = GameObject.Find("HotPlayer2Name").GetComponent<TMPro.TextMeshProUGUI>().text;
 		if (p2Name.Length == 1) {
 			p2Name = "Player 2";
-		}
+            //Debug.Log("Setting player to 1");
+            Game.SetHumanPlayer(1);
+        }
+		
 		// Player player1 = new Player(1, p1Name, new Color(0.9f, 0.1f, 0.1f), true);
 		// Player player2 = new Player(2, p2Name, new Color(0.2f, 0.2f, 1.0f), true);
 		// gameManager.Init(player1, player2);

@@ -38,7 +38,7 @@ public class NextTurnButton : MonoBehaviour {
       _nextTurnPlaying = false;
       illumination.transform.rotation = startingRotation;
     }
-    if (Game.GetCurrentPlayer() != Game.players[Game.HumanPlayer]) {
+    if (Game.GetCurrentPlayer() != Game.players[Game.GetHumanPlayer()]) {
       thisButton.interactable = false;
     }
     else {

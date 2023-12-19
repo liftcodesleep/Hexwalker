@@ -20,7 +20,7 @@ public class AI : Player {
     }
     foreach (Unit construct in Units) {
       if (AIAttack(construct) ) yield return new WaitForSeconds(1f);
-      MoveUnitToLocation(construct, Game.players[0].Avatar.Location);
+      MoveUnitToLocation(construct, Game.players[Game.GetHumanPlayer()].Avatar.Location);
       yield return new WaitForSeconds(2f);
       if (AIAttack(construct)) yield return new WaitForSeconds(1f);
     }
@@ -29,7 +29,7 @@ public class AI : Player {
   }
 
   IEnumerator Move() {
-    List<Hex> path = FindPath(this.Avatar, Game.players[0].Avatar.Location, new List<Hex>());
+    List<Hex> path = FindPath(this.Avatar, Game.players[Game.GetHumanPlayer()].Avatar.Location, new List<Hex>());
     Debug.Log("The found path size was " + path.Count);
     foreach (Hex hex in path) {
       yield return new WaitForSeconds(1f);

@@ -10,10 +10,10 @@ public class PlayerChargeUpdater : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
-        manaText[0].text = Game.players[0].Pool.Holy.ToString() ;
-        manaText[1].text = Game.players[0].Pool.Unholy.ToString();
-        manaText[2].text = Game.players[0].Pool.Slip.ToString();
-        manaText[3].text = Game.players[0].Pool.Essence.ToString();
-        manaText[4].text = Game.players[0].Pool.Holy.ToString();
+        manaText[0].text = Game.players[Game.GetHumanPlayer()].Pool.Holy.ToString() ;
+        manaText[1].text = Game.players[Game.GetHumanPlayer()].Pool.Unholy.ToString();
+        manaText[2].text = Game.players[Game.GetHumanPlayer()].Pool.Slip.ToString();
+        manaText[3].text = Game.players[Game.GetHumanPlayer()].Pool.Essence.ToString();
+        manaText[4].text = Game.players[Game.GetHumanPlayer()].Pool.Holy.ToString();
     }
 }

@@ -33,7 +33,7 @@ public class Identifier : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        if( mesh.material != friendMat && card.Owner == Game.players[0]) {
+        if( mesh.material != friendMat && card.Owner == Game.players[Game.GetHumanPlayer()]) {
             mesh.material = friendMat;
 
             if(objectToChange) {
@@ -44,7 +44,7 @@ public class Identifier : MonoBehaviour
             }
             
         }
-        else if(mesh.material != enemyMat && card.Owner != Game.players[0]) {
+        else if(mesh.material != enemyMat && card.Owner != Game.players[Game.GetHumanPlayer()]) {
             //Debug.Log("Player: " + card.Owner.Name);
             mesh.material = enemyMat;
             if (objectToChange) {

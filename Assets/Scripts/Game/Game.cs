@@ -10,7 +10,7 @@ public class Game : MonoBehaviour {
   private static int _currentPlayer = 0;
   public static int turnCount = 0;
   public static Player[] players;
-  public static int HumanPlayer = 0;
+  private static int HumanPlayer = 0;
   public static Map map;
   public static EffectStack stack;
   // public static Stack<Effect> stack;
@@ -26,7 +26,7 @@ public class Game : MonoBehaviour {
     P1.Name = "Player 1";
     P2.Name = "Player 2";
     P1.Deck = new TestDeck1(P1);
-    P2.Deck = new TestDeck2(P2);
+    P2.Deck = new TutorialDeck(P2);
     stack = new EffectStack();
     //map.CurrentLevel.OnStartTurn(0);
   }
@@ -65,7 +65,18 @@ public class Game : MonoBehaviour {
     // GetCurrentPlayer().OnTurnEnd();
     _currentPlayer++;
     GetCurrentPlayer().OnTurnStart();
-    if(GetCurrentPlayer() == players[Game.HumanPlayer]) turnCount++;
+    if(GetCurrentPlayer() == players[Game.GetHumanPlayer()]) turnCount++;
     map.CurrentLevel.OnStartTurn(turnCount);
   }
+
+  public static void SetHumanPlayer(int value)
+    {
+        Debug.Log("Setting human to " + value);
+        Game.HumanPlayer = value;
+    }
+
+    public static int GetHumanPlayer()
+    {
+        return Game.HumanPlayer;
+    }
 }

@@ -35,10 +35,15 @@ public class TalkingText : MonoBehaviour
   
   void StartDialogue() {
     this.index = 0;
-    StartCoroutine(TypeLine());
+    if(lines.Length > 0)
+    {
+        StartCoroutine(TypeLine());
+    }
+    
   }
 
   IEnumerator TypeLine() {
+    
     foreach(char c in lines[index].ToCharArray()) {
       textComponent.text += c;
       yield return new WaitForSeconds(textSpeed);

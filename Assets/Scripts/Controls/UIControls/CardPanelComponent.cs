@@ -14,7 +14,7 @@ public class CardPanelComponent : MonoBehaviour
 
   void Start() {
     oldHand = new CardZone(); 
-    playerHand = Game.players[Game.HumanPlayer].Hand;
+    playerHand = Game.players[Game.GetHumanPlayer()].Hand;
 
     updateCards();
   }

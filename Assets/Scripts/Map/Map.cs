@@ -47,7 +47,7 @@ public class Map : MonoBehaviour {
         }
         GenerateMap();
         seed = Random.Range(0, 1000);
-        CurrentLevel = new LevelOne();
+        CurrentLevel = new TestLevel();
         CurrentLevel.StartLevel();
         _filter = Game.GetFilter();
         _playableHexes = new List<HexComponent>();
@@ -67,7 +67,7 @@ public class Map : MonoBehaviour {
         item.Owner.Units.Add(item);
         //unitGO.transform.rotation = Quaternion.Euler(0, 60 * (int)Random.Range(0, 6), 0);
         unitGO.transform.rotation = Quaternion.Euler(0, 180, 0);
-        if (item.Owner == Game.players[0]) {
+        if (item.Owner == Game.players[Game.GetHumanPlayer()]) {
             //GameObject playereffect = data.GetPrefab("PlayerAura");
             //Instantiate(playereffect, unitGO.transform.position, Quaternion.identity, unitGO.transform);
         }
@@ -215,9 +215,10 @@ public class Map : MonoBehaviour {
 
   public void UpdateVisible() {
     UnhighlightHexes();
-    Debug.Log("Updating visible range");
+    //Debug.Log("Updating visible range");
     List<Hex> visibleHexes = new List<Hex>();
-    foreach (Construct unit in Game.players[0].Units) {
+        Debug.Log("Human player is " + Game.GetHumanPlayer());
+    foreach (Construct unit in Game.players[Game.GetHumanPlayer()].Units) {
       foreach (Hex hex in Game.map.GetHexList()) {
         if (hex.DistanceFrom(unit.Location) < 4) {
           visibleHexes.Add(hex);
