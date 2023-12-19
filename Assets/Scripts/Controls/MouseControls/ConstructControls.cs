@@ -161,18 +161,10 @@ public class ConstructControls : MonoBehaviour, IMouseController
   public void OnResponseMove(ExtendedEventArgs eventArgs) {
     Debug.Log("OnResponseMove: begin");
 	  ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
-	  if (args.user_id == Constants.OP_ID) {
-	    Unit unit = (Unit) Game.GetCurrentPlayer().Units[args.piece_idx];
-        unit.Move(Game.map.GetHex(args.x, args.y));
+    Unit unit = (Unit) Game.GetCurrentPlayer().Units[args.piece_idx];
+    unit.Move(Game.map.GetHex(args.x, args.y));
 	  }
-	  else if (args.user_id == Constants.USER_ID) {
-      Game.GetCurrentPlayer().Avatar.Move(Game.map.GetHex(args.x, args.y));
-  
-	  }
-	  else {
-	  	Debug.Log("ERROR: Invalid user_id in ResponseReady: " + args.user_id);
-	  }
-  }
+
 
   public void OnResponseAttack(ExtendedEventArgs eventArgs){
     Debug.Log("Received attack callback");

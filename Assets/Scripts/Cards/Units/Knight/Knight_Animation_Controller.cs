@@ -41,11 +41,11 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnimator
 
     }
     public void DeathAnimation() {
-        StartCoroutine(deathAnimationplay());
+        StartCoroutine(DeathAnimationplay());
 
     }
 
-    IEnumerator deathAnimationplay() {
+    IEnumerator DeathAnimationplay() {
         //Debug.Log("Aniimation Attack");
         _animator.SetBool("attacked", true);
         yield return new WaitForSeconds(.1f);
@@ -54,7 +54,6 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnimator
     }
 
     public void IdleAnimation() {
-        
         if (!_animator.GetBool("Moving")) {
             return;
         }
@@ -64,7 +63,6 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnimator
     }
 
     public void MoveAnimation() {
-        
         if (_animator.GetBool("Moving")) {
             return;
         }
@@ -85,38 +83,27 @@ public class Knight_Animation_Controller : MonoBehaviour, IUnitAnimator
         _animator.SetBool("damaged", true);
         yield return new WaitForSeconds(1f);
         _animator.SetBool("damaged", false);
-
     }
-
     public void UseSpellAnimation() {
         throw new System.NotImplementedException();
     }
 
     private void Start() {
         _animator = GetComponent<Animator>();
-
         _animator.applyRootMotion = false;
-
         unitGO = this.transform.parent.gameObject.GetComponent<UnitComponent>();
         if(!unitGO) {
             throw new System.Exception("Animator is not attached to a unit");
         }
-
-
     }
 
     private void Update() {
-        //_animator.SetBool("attacked", false);
-
-        //if(unitGO.currentVelocity.magnitude > 1)
-        //{
-        //    MoveAnimation();
-        //}
-        //else
-        //{
-        //    IdleAnimation();
-        //}
-        
-
+        _animator.SetBool("attacked", false);
+        if(unitGO.currentVelocity.magnitude > 1) {
+           MoveAnimation();
+        }
+        else {
+           IdleAnimation();
+        }
     }
 }
